@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+热门标签
+User: Created by auto build
+Date: 2016-08-06 00:12:23
+-->
+<sqlMap namespace="lab_hot_lable">
+
+    <typeAlias alias="lab_hot_lable" type="com.rogrand.buynew.domain.HotLable" />
+
+    <!--热门标签分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <!--id最小值-->
+            <isNotEmpty prepend="and" property="id_min">
+                <![CDATA[ id >= #id_min# ]]>
+            </isNotEmpty>
+            <!--id等于-->
+            <isNotEmpty prepend="and" property="id">
+                <![CDATA[ id = #id# ]]>
+            </isNotEmpty>
+            <!--id最大值-->
+            <isNotEmpty prepend="and" property="id_max">
+                <![CDATA[ id <= #id_max# ]]>
+            </isNotEmpty>
+            <!--类目ID最小值-->
+            <isNotEmpty prepend="and" property="classify_id_min">
+                <![CDATA[ classify_id >= #classify_id_min# ]]>
+            </isNotEmpty>
+            <!--类目ID等于-->
+            <isNotEmpty prepend="and" property="classify_id">
+                <![CDATA[ classify_id = #classify_id# ]]>
+            </isNotEmpty>
+            <!--类目ID最大值-->
+            <isNotEmpty prepend="and" property="classify_id_max">
+                <![CDATA[ classify_id <= #classify_id_max# ]]>
+            </isNotEmpty>
+            <!--标签名称-->
+            <isNotEmpty prepend="and" property="name">
+                <![CDATA[ instr(name, #name#) > 0 ]]>
+            </isNotEmpty>
+            <!--置顶时间开始-->
+            <isNotEmpty prepend="and" property="stick_time_begin">
+                <![CDATA[ stick_time >= str_to_date(#stick_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--置顶时间结束-->
+            <isNotEmpty prepend="and" property="stick_time_end">
+                <![CDATA[ stick_time <= str_to_date('$stick_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建人-->
+            <isNotEmpty prepend="and" property="create_user">
+                <![CDATA[ instr(create_user, #create_user#) > 0 ]]>
+            </isNotEmpty>
+            <!--创建时间开始-->
+            <isNotEmpty prepend="and" property="create_time_begin">
+                <![CDATA[ create_time >= str_to_date(#create_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建时间结束-->
+            <isNotEmpty prepend="and" property="create_time_end">
+                <![CDATA[ create_time <= str_to_date('$create_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!---->
+            <isNotEmpty prepend="and" property="update_user">
+                <![CDATA[ instr(update_user, #update_user#) > 0 ]]>
+            </isNotEmpty>
+            <!--更新时间开始-->
+            <isNotEmpty prepend="and" property="update_time_begin">
+                <![CDATA[ update_time >= str_to_date(#update_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新时间结束-->
+            <isNotEmpty prepend="and" property="update_time_end">
+                <![CDATA[ update_time <= str_to_date('$update_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!-- 用于数据导出 -->
+            <isNotEmpty prepend="and" property="exportIds">
+                <![CDATA[ id in ($exportIds$) ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--热门标签分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Long">
+        <![CDATA[
+            select count(*) total from lab_hot_lable
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--热门标签分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="lab_hot_lable">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                id,
+                classify_id,
+                (select name from lab_fashion_classify where id = t1.classify_id) classify_name,
+				(select parent_name from lab_fashion_classify where id = t1.classify_id) classify_parent,
+                name,
+                stick_time,
+                create_user,
+                create_time,
+                update_user,
+                update_time
+            from lab_hot_lable t1
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建热门标签-->
+    <insert id="create" parameterClass="lab_hot_lable">
+        <![CDATA[
+            insert into lab_hot_lable(
+                classify_id,
+                name,
+                stick_time,
+                create_user,
+                create_time,
+                update_user,
+                update_time
+            ) values (
+                #classify_id:NUMERIC#,
+                #name:VARCHAR#,
+                #stick_time:TIMESTAMP#,
+                #create_user:VARCHAR#,
+                #create_time:TIMESTAMP#,
+                #update_user:VARCHAR#,
+                #update_time:TIMESTAMP#
+            )
+        ]]>
+        <!--
+        <selectKey keyProperty="id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        -->
+        <selectKey resultClass="int" >
+            select last_insert_id() as id
+        </selectKey>
+    </insert>
+    
+    <!--批量创建热门标签-->
+    <insert id="createBatch" parameterClass="java.util.List">
+        <![CDATA[
+            insert into lab_hot_lable(
+                classify_id,
+                name,
+                stick_time,
+                create_user,
+                create_time,
+                update_user,
+                update_time
+            ) values
+        ]]>
+        <iterate  conjunction =",">
+            <![CDATA[  
+                (
+                    #[].classify_id:NUMERIC#,
+                    #[].name:VARCHAR#,
+                    #[].stick_time:TIMESTAMP#,
+                    #[].create_user:VARCHAR#,
+                    #[].create_time:TIMESTAMP#,
+                    #[].update_user:VARCHAR#,
+                    #[].update_time:TIMESTAMP#
+                )
+            ]]>   
+        </iterate>
+    </insert>
+
+    <!--更新热门标签-->
+    <update id="update" parameterClass="lab_hot_lable">
+        <![CDATA[ update lab_hot_lable ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.classify_id">
+                <![CDATA[ classify_id=#classify_id:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.name">
+                <![CDATA[ name=#name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.stick_time">
+                <![CDATA[ stick_time=#stick_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_user">
+                <![CDATA[ create_user=#create_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_time">
+                <![CDATA[ create_time=#create_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_user">
+                <![CDATA[ update_user=#update_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_time">
+                <![CDATA[ update_time=#update_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where id = #id#  ]]>
+    </update>
+
+    <!--删除热门标签-->
+    <delete id="delete" parameterClass="lab_hot_lable">
+        <![CDATA[
+            delete from lab_hot_lable where id = #id#
+        ]]>
+    </delete>
+
+</sqlMap>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+应用系统表
+User: Created by auto build
+Date: 2011-08-16 16:56:50
+-->
+<sqlMap namespace="sys_app">
+
+    <typeAlias alias="sys_app" type="com.rogrand.sys.domain.App" />
+
+
+    <!--查询应用系统表-->
+    <select id="query" parameterClass="sys_app" resultClass="sys_app">
+        <![CDATA[
+            select
+                sap_id,
+                sap_code,
+                sap_name
+            from sys_app
+        ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sap_id"><![CDATA[ sap_id=#sap_id# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--应用系统表分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="sap_code"><!--应用系统编号-->
+                <![CDATA[ sap_code like '%$sap_code$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sap_name"><!--应用系统名称-->
+                <![CDATA[ sap_name like '%$sap_name$%' ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--应用系统表分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Integer">
+        <![CDATA[
+            select count(1) total from sys_app
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--应用系统表分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_app">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                sap_id,
+                sap_code,
+                sap_name
+            from sys_app
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建应用系统表-->
+    <insert id="create" parameterClass="sys_app">
+        <selectKey keyProperty="sap_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_app(
+                sap_id,
+                sap_code,
+                sap_name
+            ) values (
+                #sap_id:VARCHAR#,
+                #sap_code:VARCHAR#,
+                #sap_name:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新应用系统表-->
+    <update id="update" parameterClass="sys_app">
+        <![CDATA[ update sys_app ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sap_code">
+                <![CDATA[ sap_code=#sap_code:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sap_name">
+                <![CDATA[ sap_name=#sap_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sap_id = #sap_id#  ]]>
+    </update>
+
+    <!--删除应用系统表-->
+    <delete id="delete" parameterClass="sys_app">
+        <![CDATA[
+            delete from sys_app where sap_id = #sap_id#
+        ]]>
+    </delete>
+</sqlMap>

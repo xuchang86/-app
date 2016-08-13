@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_user">
+
+    <typeAlias alias="sys_user" type="com.rogrand.sys.domain.User" />
+
+    <sql id="selectSql">
+        <![CDATA[
+            select
+                a.su_id,
+                a.su_code,
+                a.su_name,
+                a.su_sex,
+                a.su_password,
+                a.su_status,
+                a.su_contact,
+                a.su_email,
+                a.su_admin,
+                a.su_content,
+                a.su_random,
+                a.so_id,
+                a.su_last_ip,
+                a.su_add_time,
+                a.su_last_time,
+                a.su_login_count,
+                b.so_code,
+                b.so_name
+            from sys_user a
+            left join sys_org b on a.so_id=b.so_id
+        ]]>
+    </sql>
+
+    <!--查询记录-->
+    <select id="query" parameterClass="sys_user" resultClass="sys_user">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="su_id">
+                <![CDATA[ su_id = #su_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="su_code">
+                <![CDATA[ su_code = #su_code:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+    </select>
+
+    <sql id="whereTemplate">
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="so_code_parent">
+                <![CDATA[ b.so_code like '$so_code_parent$%']]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="so_code">
+                <![CDATA[ b.so_code like '%$so_code$%']]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_code">
+                <![CDATA[ a.su_code like '%$su_code$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_name">
+                <![CDATA[ a.su_name like '%$su_name$%']]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_sex">
+                <![CDATA[ a.su_sex=#su_sex:VARCHAR# ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_status">
+                <![CDATA[ a.su_status=#su_status:VARCHAR# ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_contact">
+                <![CDATA[ a.su_contact like '%$su_contact$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="su_email">
+                <![CDATA[ a.su_email like '%$su_email$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty property="su_admin">
+                <isEqual prepend="and" property="su_admin" compareValue="0">
+                    <![CDATA[ a.su_admin=#su_admin:VARCHAR# ]]>
+                </isEqual>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--翻页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Integer">
+        <![CDATA[
+            select count(*) total from sys_user a
+            left join sys_org b on a.so_id=b.so_id
+        ]]>
+        <include refid="whereTemplate"/>
+    </select>
+
+    <!--翻页列表-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_user">
+        <![CDATA[ $head$ ]]>
+        <include refid="selectSql"/>
+        <include refid="whereTemplate"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--插入-->
+    <insert id="create" parameterClass="sys_user">
+        <selectKey keyProperty="su_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_user(
+                su_id,
+                su_code,
+                su_name,
+                su_sex,
+                su_password,
+                su_status,
+                su_contact,
+                su_email,
+                su_admin,
+                su_content,
+                su_random,
+                so_id,
+                su_last_ip,
+                su_add_time,
+                su_last_time,
+                su_login_count
+            ) values (
+                #su_id:VARCHAR#,
+                #su_code:VARCHAR#,
+                #su_name:VARCHAR#,
+                #su_sex:VARCHAR#,
+                #su_password:VARCHAR#,
+                #su_status:VARCHAR#,
+                #su_contact:VARCHAR#,
+                #su_email:VARCHAR#,
+                #su_admin:VARCHAR#,
+                #su_content:VARCHAR#,
+                #su_random:VARCHAR#,
+                #so_id:VARCHAR#,
+                #su_last_ip:VARCHAR#,
+                #su_add_time:TIMESTAMP#,
+                #su_last_time:TIMESTAMP#,
+                #su_login_count:NUMERIC#
+            )
+        ]]>
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterClass="sys_user">
+    <![CDATA[ update sys_user ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.su_code">
+                <![CDATA[ su_code=#su_code:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_name">
+                <![CDATA[ su_name=#su_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_sex">
+                <![CDATA[ su_sex=#su_sex:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_password">
+                <![CDATA[ su_password=#su_password:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_status">
+                <![CDATA[ su_status=#su_status:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_contact">
+                <![CDATA[ su_contact=#su_contact:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_email">
+                <![CDATA[ su_email=#su_email:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_admin">
+                <![CDATA[ su_admin=#su_admin:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_content">
+                <![CDATA[ su_content=#su_content:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_id">
+                <![CDATA[ so_id=#so_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_last_ip">
+                <![CDATA[ su_last_ip=#su_last_ip:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_add_time">
+                <![CDATA[ su_add_time=#su_add_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_last_time">
+                <![CDATA[ su_last_time=#su_last_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.su_login_count">
+                <![CDATA[ su_login_count=#su_login_count:NUMERIC# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where su_id = #su_id:VARCHAR# ]]>
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterClass="sys_user">
+    <![CDATA[
+        delete from sys_user where su_id=#su_id:VARCHAR#
+    ]]>
+    </delete>
+
+</sqlMap>
+       
+           

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+系统配置
+User: Created by auto build
+Date: 2013-12-17 14:14:59
+-->
+<sqlMap namespace="sys_config">
+
+    <typeAlias alias="sys_config" type="com.rogrand.sys.domain.Sysconfig" />
+
+
+    <!--查询系统配置-->
+    <select id="query" parameterClass="sys_config" resultClass="sys_config">
+        <![CDATA[
+            select
+                configid,
+                configkey,
+                configvalue,
+                configdesc,
+                configaddtime,
+                configtype
+            from sys_config
+        ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="configid"><![CDATA[ configid=#configid# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--系统配置分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <!--配置KEY-->
+            <isNotEmpty prepend="and" property="configkey">
+                <![CDATA[ configkey like '%$configkey$%' ]]>
+            </isNotEmpty>
+            <!--配置值-->
+            <isNotEmpty prepend="and" property="configvalue">
+                <![CDATA[ configvalue like '%$configvalue$%' ]]>
+            </isNotEmpty>
+            <!--配置描述-->
+            <isNotEmpty prepend="and" property="configdesc">
+                <![CDATA[ configdesc like '%$configdesc$%' ]]>
+            </isNotEmpty>
+            <!--配置时间开始-->
+            <isNotEmpty prepend="and" property="configaddtime_begin">
+                <![CDATA[ configaddtime >= str_to_date(#configaddtime_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--配置时间结束-->
+            <isNotEmpty prepend="and" property="configaddtime_end">
+                <![CDATA[ configaddtime <= str_to_date('$configaddtime_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--系统配置分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Long">
+        <![CDATA[
+            select count(*) total from sys_config
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--系统配置分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_config">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                configid,
+                configkey,
+                configvalue,
+                configdesc,
+                configaddtime,
+                configtype
+            from sys_config
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建系统配置-->
+    <insert id="create" parameterClass="sys_config">
+        <![CDATA[
+            insert into sys_config(
+                configkey,
+                configvalue,
+                configdesc,
+                configaddtime,
+                configtype
+            ) values (
+                #configkey:VARCHAR#,
+                #configvalue:VARCHAR#,
+                #configdesc:VARCHAR#,
+                #configaddtime:TIMESTAMP#,
+                #configtype:NUMERIC#
+            )
+        ]]>
+        <!--
+        <selectKey keyProperty="configid" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        -->
+        <selectKey resultClass="int" >
+            select last_insert_id() as configid
+        </selectKey>
+    </insert>
+
+    <!--更新系统配置-->
+    <update id="update" parameterClass="sys_config">
+        <![CDATA[ update sys_config ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.configkey">
+                <![CDATA[ configkey=#configkey:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.configvalue">
+                <![CDATA[ configvalue=#configvalue:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.configdesc">
+                <![CDATA[ configdesc=#configdesc:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.configaddtime">
+                <![CDATA[ configaddtime=#configaddtime:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.configtype">
+                <![CDATA[ configtype=#configtype:NUMERIC# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where configid = #configid#  ]]>
+    </update>
+
+    <!--删除系统配置-->
+    <delete id="delete" parameterClass="sys_config">
+        <![CDATA[
+            delete from sys_config where configid = #configid#
+        ]]>
+    </delete>
+    
+    
+    <!--通过key值查询系统配置-->
+    <select id="queryByKey" parameterClass="java.lang.String" resultClass="sys_config">
+        <![CDATA[
+            select
+                configid,
+                configkey,
+                configvalue,
+                configdesc,
+                configaddtime,
+                configtype
+            from sys_config
+            where configkey=#configkey# 
+        ]]>
+    </select>
+
+</sqlMap>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+ <!-- 
+   版权：融贯资讯 <br/>
+  作者：jian.mei@rogrand.com <br/>
+  生成日期：2013-10-24 <br/>
+ -->
+ 
+<sqlMap namespace="common">
+
+    <sql id="pkSql">
+        <![CDATA[ select pk()]]>
+    </sql>
+    
+	 <!--查询一条32位主键-->
+    <select id="queryPk" resultClass="java.lang.String">
+        <include refid="pkSql"/>
+    </select>
+    
+	<!--查询count的SQL语句-->
+    <select id="queryCount" parameterClass="java.lang.String" resultClass="java.lang.Long" remapResults="true">
+        $sql$
+    </select>
+    
+	<!--查询SQL语句，返回ResultMap中的key，value全部都是小写--> 
+    <select id="queryRecord" parameterClass="java.lang.String" resultClass="ResultMap" remapResults="true">
+        $sql$
+    </select>
+    
+    <!--查询一个字段的SQL语句--> 
+	<select id="queryString" parameterClass="java.lang.String" resultClass="java.lang.String" remapResults="true">
+        $sql$
+    </select>
+    
+    
+	<!--执行删除，修改SQL语句-->
+    <statement id="executeSql" parameterClass="java.lang.String" remapResults="true">
+        $sql$
+    </statement>   
+    
+    <insert id="insertSql" parameterClass="java.lang.String" >
+    	$sql$
+    </insert> 
+
+</sqlMap>         
+       
+           

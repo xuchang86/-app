@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_user_role">
+
+    <typeAlias alias="sys_user_role" type="com.rogrand.sys.domain.UserRole" />
+    <typeAlias alias="sys_role" type="com.rogrand.sys.domain.Role" />
+    <typeAlias alias="sys_user" type="com.rogrand.sys.domain.User" />
+
+    <sql id="selectSql">
+    <![CDATA[
+        select
+            sur_id,
+            su_id,
+            sr_id
+        from sys_user_role
+    ]]>
+    </sql>
+
+    <select id="query" parameterClass="sys_user_role" resultClass="sys_user_role">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sur_id">
+            <![CDATA[ sur_id=#sur_id:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+    </select>
+
+    <select id="queryRole" parameterClass="sys_user" resultClass="sys_role">
+        <![CDATA[
+            select
+                a.sr_id,
+                a.sr_code,
+                a.sr_name,
+                a.sr_status,
+                (case when exists(select 1 from sys_user_role b where b.sr_id = a.sr_id and b.su_id=#su_id#)
+                      then '1' else '0' end) as status
+            from sys_role a
+            order by a.sr_id
+    ]]>
+    </select>
+
+    <!--插入-->
+    <insert id="create" parameterClass="sys_user_role">
+        <selectKey keyProperty="sur_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_user_role(
+                sur_id,
+                su_id,
+                sr_id
+            ) values (
+                #sur_id:VARCHAR#,
+                #su_id:VARCHAR#,
+                #sr_id:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterClass="sys_user_role">
+    <![CDATA[ update sys_user_role ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.su_id">
+                <![CDATA[ su_id=#su_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sr_id">
+                <![CDATA[ sr_id=#sr_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sur_id = #sur_id:VARCHAR# ]]>
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterClass="sys_user_role">
+        <![CDATA[ delete from sys_user_role ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="su_id">
+                <![CDATA[ su_id=#su_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sr_id">
+                <![CDATA[ sr_id=#sr_id:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+    </delete>
+
+
+</sqlMap>
+       
+           

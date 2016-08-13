@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_login">
+
+    <typeAlias alias="sys_app" type="com.rogrand.sys.domain.App" />
+    <typeAlias alias="sys_user" type="com.rogrand.sys.domain.User" />
+    <typeAlias alias="sys_role" type="com.rogrand.sys.domain.Role" />
+    <typeAlias alias="sys_menu" type="com.rogrand.sys.domain.Menu" />
+    <typeAlias alias="sys_action" type="com.rogrand.sys.domain.Action" />
+
+    <!--查询系统-->
+    <select id="querySystem" parameterClass="sys_app" resultClass="sys_app">
+        <![CDATA[
+            select
+                sap_id,
+                sap_code,
+                sap_name
+            from sys_app
+        ]]>
+        <dynamic prepend="where">
+            <isNotEmpty property="sap_code"><![CDATA[ sap_code = #sap_code:VARCHAR# ]]></isNotEmpty>
+            <isEmpty property="sap_code"><![CDATA[ rownum=1 ]]></isEmpty>
+        </dynamic>
+    </select>
+
+    <!--查询用户信息-->
+    <select id="queryUser" parameterClass="sys_user" resultClass="sys_user">
+        <![CDATA[
+        select
+            a.su_id,
+            a.su_code,
+            a.su_name,
+            a.su_sex,
+            a.su_password,
+            a.su_status,
+            a.su_contact,
+            a.su_email,
+            a.su_admin,
+            a.su_content,
+            a.so_id,
+            a.su_login_count,
+            b.so_code,
+            b.so_name,
+            b.so_parentid,
+            b.so_purview          
+        from sys_user a
+        left join sys_org b on a.so_id=b.so_id
+        where a.su_status='1' and a.su_code = #su_code:VARCHAR# 
+        ]]>
+    </select>
+
+    <!--查询用户的角色列表-->
+    <select id="queryRole" parameterClass="sys_user" resultClass="sys_role">
+        <![CDATA[
+            select a.sr_id, a.sr_code, a.sr_name, a.sr_status
+            from sys_role a
+            where exists(select 1 from sys_user_role b
+                         where a.sr_id = b.sr_id and b.su_id=#su_id:VARCHAR#)
+            and exists(select 1 from sys_role_menu c
+                       where a.sr_id = c.sr_id
+                       and exists(select 1 from sys_menu d
+                                  where c.sm_id = d.sm_id
+                                  and d.sap_id = #sap_id:VARCHAR#))
+        ]]>
+    </select>
+
+    <!--查询用户的登录菜单-->
+    <select id="queryMenu" parameterClass="sys_user" resultClass="sys_menu">
+        <![CDATA[
+            select
+                a.sm_id,
+                a.sm_name,
+                a.sm_parentid,
+                a.sm_icon,
+                a.sm_type,
+                a.sm_action,
+                a.sm_order,
+                a.sm_content,
+                a.sm_admin,
+                a.sap_id,
+                (case when exists(select 1 from sys_menu d where d.sm_parentid=a.sm_id)
+                      then '1' else '0' end) as sm_child
+            from sys_menu a
+            where a.sap_id=#sap_id:VARCHAR#
+        ]]>
+        <dynamic prepend="and">
+            <isEqual property="su_admin" compareValue="0">
+                <![CDATA[
+                    exists(select 1 from sys_role_menu b where a.sm_id = b.sm_id
+                               and exists(select 1 from sys_user_role c
+                                          where b.sr_id=c.sr_id and c.su_id=#su_id:VARCHAR#))
+                ]]>
+             </isEqual>
+       </dynamic>
+        <![CDATA[
+            order by a.sm_parentid,a.sm_order,a.sm_id
+        ]]>
+    </select>
+
+    <!--查询用户可访问的动作组-->
+    <select id="queryAction" parameterClass="sys_user" resultClass="sys_action">
+        <![CDATA[
+            select
+                sa_id,
+                sm_id,
+                sa_class,
+                sa_group
+            from sys_action a
+            where exists (select 1 from sys_menu b
+                          where a.sm_id = b.sm_id and b.sap_id=#sap_id:VARCHAR#)
+            and exists (select 1 from sys_role_action c where a.sa_id=c.sa_id
+                        and exists(select 1 from sys_user_role d
+                                   where c.sr_id=d.sr_id and d.su_id=#su_id:VARCHAR#))
+        ]]>
+    </select>
+
+
+</sqlMap>

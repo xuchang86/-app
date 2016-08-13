@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sys_log">
+
+    <typeAlias alias="sys_log" type="com.rogrand.sys.domain.Log" />
+
+    <!--查询系统日志表-->
+    <select id="query" parameterClass="sys_log" resultClass="sys_log">
+        <![CDATA[
+            select
+                sl_id,
+                sl_date,
+                sl_user_code,
+                sl_user_name,
+                sl_org_name,
+                sl_ip,
+                sl_class,
+                sl_method,
+                sl_description,
+                sl_content
+            from sys_log
+        ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sl_id"><![CDATA[ sl_id=#sl_id# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--系统日志表分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="sl_date_begin"><!--日志时间开始-->
+                <![CDATA[ sl_date >= str_to_date(#sl_date_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_date_end"><!--日志时间结束-->
+                <![CDATA[ sl_date <= str_to_date(#sl_date_end#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_user_code"><!--登录账号-->
+                <![CDATA[ sl_user_code like '%$sl_user_code$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_user_name"><!--用户名称-->
+                <![CDATA[ sl_user_name like '%$sl_user_name$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_org_name"><!--机构名称-->
+                <![CDATA[ sl_org_name like '%$sl_org_name$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_ip"><!--IP地址-->
+                <![CDATA[ sl_ip like '%$sl_ip$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_class"><!--类名称-->
+                <![CDATA[ sl_class like '%$sl_class$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_method"><!--方法名称-->
+                <![CDATA[ sl_method like '%$sl_method$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sl_description"><!--方法描述-->
+                <![CDATA[ sl_description like '%$sl_description$%' ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--系统日志表分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Integer">
+        <![CDATA[
+            select count(1) total from sys_log
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--系统日志表分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_log">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                sl_id,
+                sl_date,
+                sl_user_code,
+                sl_user_name,
+                sl_org_name,
+                sl_ip,
+                sl_class,
+                sl_method,
+                sl_description
+            from sys_log
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建系统日志表-->
+    <insert id="create" parameterClass="sys_log">
+        <selectKey keyProperty="sl_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_log(
+                sl_id,
+                sl_date,
+                sl_user_code,
+                sl_user_name,
+                sl_org_name,
+                sl_ip,
+                sl_class,
+                sl_method,
+                sl_description,
+                sl_content
+            ) values (
+                #sl_id:NUMERIC#,
+                #sl_date:TIMESTAMP#,
+                #sl_user_code:VARCHAR#,
+                #sl_user_name:VARCHAR#,
+                #sl_org_name:VARCHAR#,
+                #sl_ip:VARCHAR#,
+                #sl_class:VARCHAR#,
+                #sl_method:VARCHAR#,
+                #sl_description:VARCHAR#,
+                #sl_content:CLOB#
+            )
+        ]]>
+    </insert>
+
+    <!--更新系统日志表-->
+    <update id="update" parameterClass="sys_log">
+        <![CDATA[ update sys_log ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sl_date">
+                <![CDATA[ sl_date=#sl_date:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_user_code">
+                <![CDATA[ sl_user_code=#sl_user_code:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_user_name">
+                <![CDATA[ sl_user_name=#sl_user_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_org_name">
+                <![CDATA[ sl_org_name=#sl_org_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_ip">
+                <![CDATA[ sl_ip=#sl_ip:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_class">
+                <![CDATA[ sl_class=#sl_class:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_method">
+                <![CDATA[ sl_method=#sl_method:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_description">
+                <![CDATA[ sl_description=#sl_description:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sl_content">
+                <![CDATA[ sl_content=#sl_content:CLOB# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sl_id = #sl_id#  ]]>
+    </update>
+
+    <!--删除系统日志表-->
+    <delete id="delete" parameterClass="sys_log">
+        <![CDATA[
+            delete from sys_log
+        ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sl_id">
+                <![CDATA[ sl_id=#sl_id#  ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sl_date">
+                <![CDATA[ sl_date <= #sl_date# ]]>
+            </isEqual>
+        </isParameterPresent>
+
+    </delete>
+</sqlMap>

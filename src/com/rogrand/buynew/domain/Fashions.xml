@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+服装款式
+User: Created by auto build
+Date: 2016-08-01 22:24:43
+-->
+<sqlMap namespace="lab_fashions">
+
+    <typeAlias alias="lab_fashions" type="com.rogrand.buynew.domain.Fashions" />
+
+    <!--服装款式分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <!--商品明文ID-->
+            <isNotEmpty prepend="and" property="num_iid">
+                <![CDATA[ instr(num_iid, #num_iid#) > 0 ]]>
+            </isNotEmpty>
+            <!--款式名称-->
+            <isNotEmpty prepend="and" property="name">
+                <![CDATA[ instr(name, #name#) > 0 ]]>
+            </isNotEmpty>
+            <!--款式主图-->
+            <isNotEmpty prepend="and" property="main_image">
+                <![CDATA[ instr(main_image, #main_image#) > 0 ]]>
+            </isNotEmpty>
+            <!--款式详情链接-->
+            <isNotEmpty prepend="and" property="detail_url">
+                <![CDATA[ instr(detail_url, #detail_url#) > 0 ]]>
+            </isNotEmpty>
+            <!--店铺名称-->
+            <isNotEmpty prepend="and" property="shop_name">
+                <![CDATA[ instr(shop_name, #shop_name#) > 0 ]]>
+            </isNotEmpty>
+            <!--商品价格最小值-->
+            <isNotEmpty prepend="and" property="price_min">
+                <![CDATA[ price >= #price_min# ]]>
+            </isNotEmpty>
+            <!--商品价格等于-->
+            <isNotEmpty prepend="and" property="price">
+                <![CDATA[ price = #price# ]]>
+            </isNotEmpty>
+            <!--商品价格最大值-->
+            <isNotEmpty prepend="and" property="price_max">
+                <![CDATA[ price <= #price_max# ]]>
+            </isNotEmpty>
+            <!--月销量最小值-->
+            <isNotEmpty prepend="and" property="month_count_min">
+                <![CDATA[ month_count >= #month_count_min# ]]>
+            </isNotEmpty>
+            <!--月销量等于-->
+            <isNotEmpty prepend="and" property="month_count">
+                <![CDATA[ month_count = #month_count# ]]>
+            </isNotEmpty>
+            <!--月销量最大值-->
+            <isNotEmpty prepend="and" property="month_count_max">
+                <![CDATA[ month_count <= #month_count_max# ]]>
+            </isNotEmpty>
+            <!--收入比率(%)最小值-->
+            <isNotEmpty prepend="and" property="rate_min">
+                <![CDATA[ rate >= #rate_min# ]]>
+            </isNotEmpty>
+            <!--收入比率(%)等于-->
+            <isNotEmpty prepend="and" property="rate">
+                <![CDATA[ rate = #rate# ]]>
+            </isNotEmpty>
+            <!--收入比率(%)最大值-->
+            <isNotEmpty prepend="and" property="rate_max">
+                <![CDATA[ rate <= #rate_max# ]]>
+            </isNotEmpty>
+            <!--佣金最小值-->
+            <isNotEmpty prepend="and" property="commision_min">
+                <![CDATA[ commision >= #commision_min# ]]>
+            </isNotEmpty>
+            <!--佣金等于-->
+            <isNotEmpty prepend="and" property="commision">
+                <![CDATA[ commision = #commision# ]]>
+            </isNotEmpty>
+            <!--佣金最大值-->
+            <isNotEmpty prepend="and" property="commision_max">
+                <![CDATA[ commision <= #commision_max# ]]>
+            </isNotEmpty>
+            <!--卖家昵称-->
+            <isNotEmpty prepend="and" property="nick">
+                <![CDATA[ instr(nick, #nick#) > 0 ]]>
+            </isNotEmpty>
+            <!--淘宝客短链接-->
+            <isNotEmpty prepend="and" property="tbk_shot_url">
+                <![CDATA[ instr(tbk_shot_url, #tbk_shot_url#) > 0 ]]>
+            </isNotEmpty>
+            <!--淘宝客链接-->
+            <isNotEmpty prepend="and" property="tbk_url">
+                <![CDATA[ instr(tbk_url, #tbk_url#) > 0 ]]>
+            </isNotEmpty>
+            <!--淘口令-->
+            <isNotEmpty prepend="and" property="tkl">
+                <![CDATA[ instr(tkl, #tkl#) > 0 ]]>
+            </isNotEmpty>
+            <!--LAB价格最小值-->
+            <isNotEmpty prepend="and" property="lab_price_min">
+                <![CDATA[ lab_price >= #lab_price_min# ]]>
+            </isNotEmpty>
+            <!--LAB价格等于-->
+            <isNotEmpty prepend="and" property="lab_price">
+                <![CDATA[ lab_price = #lab_price# ]]>
+            </isNotEmpty>
+            <!--LAB价格最大值-->
+            <isNotEmpty prepend="and" property="lab_price_max">
+                <![CDATA[ lab_price <= #lab_price_max# ]]>
+            </isNotEmpty>
+            <!--说明-->
+            <isNotEmpty prepend="and" property="cue">
+                <![CDATA[ instr(cue, #cue#) > 0 ]]>
+            </isNotEmpty>
+            <!--分类ID最小值-->
+            <isNotEmpty prepend="and" property="classify_id_min">
+                <![CDATA[ classify_id >= #classify_id_min# ]]>
+            </isNotEmpty>
+            <!--分类ID等于-->
+            <isNotEmpty prepend="and" property="classify_id">
+                <![CDATA[ classify_id = #classify_id# ]]>
+            </isNotEmpty>
+            <!--分类ID最大值-->
+            <isNotEmpty prepend="and" property="classify_id_max">
+                <![CDATA[ classify_id <= #classify_id_max# ]]>
+            </isNotEmpty>
+            <!--LAB上架时间开始-->
+            <isNotEmpty prepend="and" property="sale_time_begin">
+                <![CDATA[ sale_time >= str_to_date(#sale_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--LAB上架时间结束-->
+            <isNotEmpty prepend="and" property="sale_time_end">
+                <![CDATA[ sale_time <= str_to_date('$sale_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建人-->
+            <isNotEmpty prepend="and" property="create_user">
+                <![CDATA[ instr(create_user, #create_user#) > 0 ]]>
+            </isNotEmpty>
+            <!--创建时间开始-->
+            <isNotEmpty prepend="and" property="create_time_begin">
+                <![CDATA[ create_time >= str_to_date(#create_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建时间结束-->
+            <isNotEmpty prepend="and" property="create_time_end">
+                <![CDATA[ create_time <= str_to_date('$create_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新人-->
+            <isNotEmpty prepend="and" property="update_user">
+                <![CDATA[ instr(update_user, #update_user#) > 0 ]]>
+            </isNotEmpty>
+            <!--更新时间开始-->
+            <isNotEmpty prepend="and" property="update_time_begin">
+                <![CDATA[ update_time >= str_to_date(#update_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新时间结束-->
+            <isNotEmpty prepend="and" property="update_time_end">
+                <![CDATA[ update_time <= str_to_date('$update_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!-- 用于数据导出 -->
+            <isNotEmpty prepend="and" property="exportIds">
+                <![CDATA[ num_iid in ($exportIds$) ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--服装款式分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Long">
+        <![CDATA[
+            select count(*) total from lab_fashions
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--服装款式分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="lab_fashions">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                num_iid,
+                name,
+                main_image,
+                detail_url,
+                shop_name,
+                price,
+                month_count,
+                rate,
+                commision,
+                nick,
+                tbk_shot_url,
+                tbk_url,
+                tkl,
+                lab_price,
+                cue,
+                classify_id,
+                sale_time,
+                create_user,
+                create_time,
+                update_user,
+                update_time
+            from lab_fashions
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建服装款式-->
+    <insert id="create" parameterClass="lab_fashions">
+        <![CDATA[
+            insert into lab_fashions(
+                name,
+                main_image,
+                detail_url,
+                shop_name,
+                price,
+                month_count,
+                rate,
+                commision,
+                nick,
+                tbk_shot_url,
+                tbk_url,
+                tkl,
+                lab_price,
+                cue,
+                classify_id,
+                sale_time,
+                create_user,
+                create_time,
+                update_user,
+                update_time
+            ) values (
+                #name:VARCHAR#,
+                #main_image:VARCHAR#,
+                #detail_url:VARCHAR#,
+                #shop_name:VARCHAR#,
+                #price:NUMERIC#,
+                #month_count:NUMERIC#,
+                #rate:NUMERIC#,
+                #commision:NUMERIC#,
+                #nick:VARCHAR#,
+                #tbk_shot_url:VARCHAR#,
+                #tbk_url:VARCHAR#,
+                #tkl:VARCHAR#,
+                #lab_price:NUMERIC#,
+                #cue:VARCHAR#,
+                #classify_id:NUMERIC#,
+                #sale_time:TIMESTAMP#,
+                #create_user:VARCHAR#,
+                #create_time:TIMESTAMP#,
+                #update_user:VARCHAR#,
+                #update_time:TIMESTAMP#
+            )
+        ]]>
+        <!--
+        <selectKey keyProperty="num_iid" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        -->
+        <selectKey resultClass="int" >
+            select last_insert_id() as num_iid
+        </selectKey>
+    </insert>
+
+    <!--更新服装款式-->
+    <update id="update" parameterClass="lab_fashions">
+        <![CDATA[ update lab_fashions ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.name">
+                <![CDATA[ name=#name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.main_image">
+                <![CDATA[ main_image=#main_image:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.detail_url">
+                <![CDATA[ detail_url=#detail_url:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.shop_name">
+                <![CDATA[ shop_name=#shop_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.price">
+                <![CDATA[ price=#price:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.month_count">
+                <![CDATA[ month_count=#month_count:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.rate">
+                <![CDATA[ rate=#rate:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.commision">
+                <![CDATA[ commision=#commision:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.nick">
+                <![CDATA[ nick=#nick:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.tbk_shot_url">
+                <![CDATA[ tbk_shot_url=#tbk_shot_url:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.tbk_url">
+                <![CDATA[ tbk_url=#tbk_url:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.tkl">
+                <![CDATA[ tkl=#tkl:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.lab_price">
+                <![CDATA[ lab_price=#lab_price:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.cue">
+                <![CDATA[ cue=#cue:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.classify_id">
+                <![CDATA[ classify_id=#classify_id:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sale_time">
+                <![CDATA[ sale_time=#sale_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_user">
+                <![CDATA[ create_user=#create_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_time">
+                <![CDATA[ create_time=#create_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_user">
+                <![CDATA[ update_user=#update_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_time">
+                <![CDATA[ update_time=#update_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where num_iid = #num_iid#  ]]>
+    </update>
+
+    <!--删除服装款式-->
+    <delete id="delete" parameterClass="lab_fashions">
+        <![CDATA[
+            delete from lab_fashions where num_iid = #num_iid#
+        ]]>
+    </delete>
+
+
+	<!-- 自定义sql -->
+	<!-- 查询服装区下的服装 -->
+	<select id="selectAreaFashionsCount" parameterClass="PageParam" resultClass="Long">
+		select count(*) total
+		from lab_area_fashions t1
+		where t1.area_type = #area_type# and t1.area_id = #area_id#
+	</select>
+	<select id="selectAreaFashions" parameterClass="PageParam" resultClass="lab_fashions">
+		select t2.* 
+		from lab_area_fashions t1 left join lab_fashions t2 on t1.num_iid = t2.num_iid
+		where t1.area_type = #area_type# and t1.area_id = #area_id#
+	</select>
+</sqlMap>

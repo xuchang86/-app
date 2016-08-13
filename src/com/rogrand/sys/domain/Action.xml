@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_action">
+
+    <typeAlias alias="sys_action" type="com.rogrand.sys.domain.Action"/>
+
+    <!--查询模板-->
+    <sql id="selectSql">
+    <![CDATA[
+        select
+            sa_id,
+            sm_id,
+            sa_class,
+            sa_group
+        from sys_action
+    ]]>
+    </sql>
+
+    <!--查询记录-->
+    <select id="query" parameterClass="sys_action" resultClass="sys_action">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sa_id">
+                <![CDATA[ sa_id = #sa_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sm_id">
+                <![CDATA[ sm_id = #sm_id:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--创建-->
+    <insert id="create" parameterClass="sys_action">
+        <selectKey keyProperty="sa_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_action(
+                sa_id,
+                sm_id,
+                sa_class,
+                sa_group
+            ) values (
+                #sa_id:VARCHAR#,
+                #sm_id:VARCHAR#,
+                #sa_class:VARCHAR#,
+                #sa_group:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterClass="sys_action">
+        <![CDATA[ update sys_action ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sm_id">
+                <![CDATA[ sm_id=#sm_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sa_class">
+                <![CDATA[ sa_class=#sa_class:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sa_group">
+                <![CDATA[ sa_group=#sa_group:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sa_id = #sa_id:VARCHAR# ]]>
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterClass="sys_action">
+        <![CDATA[ delete from sys_action ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sm_id">
+                <![CDATA[ sm_id=#sm_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sa_id">
+                <![CDATA[ sa_id=#sa_id:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+    </delete>
+
+</sqlMap>
+       
+           

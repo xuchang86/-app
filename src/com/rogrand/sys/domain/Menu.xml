@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_menu">
+
+    <typeAlias alias="sys_menu" type="com.rogrand.sys.domain.Menu"/>
+
+    <sql id="selectSql">
+        <![CDATA[
+        select
+            a.sm_id,
+            a.sap_id,
+            b.sap_name,
+            a.sm_name,
+            a.sm_parentid,
+            c.sm_name as sm_parentname,
+            a.sm_type,
+            a.sm_action,
+            a.sm_order,
+            a.sm_content,
+            a.sm_icon,
+            a.sm_admin,
+            (case when exists(select 1 from sys_menu d where d.sm_parentid=a.sm_id)
+                  then '1' else '0' end) as sm_child
+        from sys_menu a
+        inner join sys_app b on a.sap_id=b.sap_id
+        left join sys_menu c on a.sm_parentid=c.sm_id
+        ]]>
+    </sql>
+
+    <!--查询单条菜单记录-->
+    <select id="query" parameterClass="sys_menu" resultClass="sys_menu">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sm_id"><![CDATA[ a.sm_id=#sm_id# ]]></isEqual>
+            <isEqual property="mode" compareValue="list">
+                <![CDATA[ a.sap_id=#sap_id# and (a.sm_id=#sm_parentid# or a.sm_parentid = #sm_parentid#) ]]></isEqual>
+            <isEqual property="mode" compareValue="order">
+                <![CDATA[ a.sap_id=#sap_id# and a.sm_parentid = #sm_parentid# ]]></isEqual>
+            <isEqual property="mode" compareValue="treeForMain"><![CDATA[ a.sap_id=#sap_id# ]]></isEqual>
+            <isEqual property="mode" compareValue="treeForAdd">
+                <![CDATA[ a.sap_id=#sap_id# and a.sm_type='1' and a.sm_admin in('0','1')]]></isEqual>
+            <isEqual property="mode" compareValue="treeForEdit">
+                <![CDATA[ a.sap_id=#sap_id# and a.sm_type='1' and a.sm_admin in('0','1') and a.sm_id<>#sm_id#  ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--创建菜单表-->
+    <insert id="create" parameterClass="sys_menu">
+        <selectKey keyProperty="sm_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_menu(
+                sm_id,
+                sap_id,
+                sm_name,
+                sm_parentid,
+                sm_icon,
+                sm_type,
+                sm_action,
+                sm_order,
+                sm_content,
+                sm_admin
+            ) values (
+                #sm_id:VARCHAR#,
+                #sap_id:VARCHAR#,
+                #sm_name:VARCHAR#,
+                #sm_parentid:VARCHAR#,
+                #sm_icon:VARCHAR#,
+                #sm_type:VARCHAR#,
+                #sm_action:VARCHAR#,
+                #sm_order:NUMERIC#,
+                #sm_content:VARCHAR#,
+                #sm_admin:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新菜单表-->
+    <update id="update" parameterClass="sys_menu">
+        <![CDATA[ update sys_menu ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sap_id">
+                <![CDATA[ sap_id=#sap_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_name">
+                <![CDATA[ sm_name=#sm_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_parentid">
+                <![CDATA[ sm_parentid=#sm_parentid:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_icon">
+                <![CDATA[ sm_icon=#sm_icon:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_type">
+                <![CDATA[ sm_type=#sm_type:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_action">
+                <![CDATA[ sm_action=#sm_action:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_order">
+                <![CDATA[ sm_order=#sm_order:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_content">
+                <![CDATA[ sm_content=#sm_content:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_admin">
+                <![CDATA[ sm_admin=#sm_admin:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sm_id = #sm_id#  ]]>
+    </update>
+
+    <!--删除菜单表-->
+    <delete id="delete" parameterClass="sys_menu">
+        <![CDATA[
+            delete from sys_menu where sm_id = #sm_id#
+        ]]>
+    </delete>
+
+</sqlMap>
+       
+           

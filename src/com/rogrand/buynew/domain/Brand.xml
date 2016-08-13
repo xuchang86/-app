@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+品牌
+User: Created by auto build
+Date: 2016-08-02 21:46:41
+-->
+<sqlMap namespace="lab_brand">
+
+    <typeAlias alias="lab_brand" type="com.rogrand.buynew.domain.Brand" />
+
+    <!--品牌分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <!--brand_id最小值-->
+            <isNotEmpty prepend="and" property="brand_id_min">
+                <![CDATA[ brand_id >= #brand_id_min# ]]>
+            </isNotEmpty>
+            <!--brand_id等于-->
+            <isNotEmpty prepend="and" property="brand_id">
+                <![CDATA[ brand_id = #brand_id# ]]>
+            </isNotEmpty>
+            <!--brand_id最大值-->
+            <isNotEmpty prepend="and" property="brand_id_max">
+                <![CDATA[ brand_id <= #brand_id_max# ]]>
+            </isNotEmpty>
+            <!--品牌名称-->
+            <isNotEmpty prepend="and" property="name">
+                <![CDATA[ instr(name, #name#) > 0 ]]>
+            </isNotEmpty>
+            <!--英文名称-->
+            <isNotEmpty prepend="and" property="en_name">
+                <![CDATA[ instr(en_name, #en_name#) > 0 ]]>
+            </isNotEmpty>
+            <!--品牌logo-->
+            <isNotEmpty prepend="and" property="logo">
+                <![CDATA[ instr(logo, #logo#) > 0 ]]>
+            </isNotEmpty>
+            <!--国家-->
+            <isNotEmpty prepend="and" property="country">
+                <![CDATA[ instr(country, #country#) > 0 ]]>
+            </isNotEmpty>
+            <!--国旗-->
+            <isNotEmpty prepend="and" property="flag">
+                <![CDATA[ instr(flag, #flag#) > 0 ]]>
+            </isNotEmpty>
+            <!--简介-->
+            <isNotEmpty prepend="and" property="synopsis">
+                <![CDATA[ instr(synopsis, #synopsis#) > 0 ]]>
+            </isNotEmpty>
+            <!--是否主推-->
+            <isNotEmpty prepend="and" property="is_main">
+                <![CDATA[ instr(is_main, #is_main#) > 0 ]]>
+            </isNotEmpty>
+            <!--是否筛选热门-->
+            <isNotEmpty prepend="and" property="is_hot">
+                <![CDATA[ instr(is_hot, #is_hot#) > 0 ]]>
+            </isNotEmpty>
+            <!--品牌馆最小值-->
+            <isNotEmpty prepend="and" property="venue_id_min">
+                <![CDATA[ venue_id >= #venue_id_min# ]]>
+            </isNotEmpty>
+            <!--品牌馆等于-->
+            <isNotEmpty prepend="and" property="venue_id">
+                <![CDATA[ venue_id = #venue_id# ]]>
+            </isNotEmpty>
+            <!--品牌馆最大值-->
+            <isNotEmpty prepend="and" property="venue_id_max">
+                <![CDATA[ venue_id <= #venue_id_max# ]]>
+            </isNotEmpty>
+            <!--创建时间开始-->
+            <isNotEmpty prepend="and" property="create_time_begin">
+                <![CDATA[ create_time >= str_to_date(#create_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建时间结束-->
+            <isNotEmpty prepend="and" property="create_time_end">
+                <![CDATA[ create_time <= str_to_date('$create_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--创建人-->
+            <isNotEmpty prepend="and" property="create_user">
+                <![CDATA[ instr(create_user, #create_user#) > 0 ]]>
+            </isNotEmpty>
+            <!--置顶时间开始-->
+            <isNotEmpty prepend="and" property="stick_time_begin">
+                <![CDATA[ stick_time >= str_to_date(#stick_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--置顶时间结束-->
+            <isNotEmpty prepend="and" property="stick_time_end">
+                <![CDATA[ stick_time <= str_to_date('$stick_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新时间开始-->
+            <isNotEmpty prepend="and" property="update_time_begin">
+                <![CDATA[ update_time >= str_to_date(#update_time_begin#,'%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新时间结束-->
+            <isNotEmpty prepend="and" property="update_time_end">
+                <![CDATA[ update_time <= str_to_date('$update_time_end$ 23:59:59','%Y-%m-%d %T') ]]>
+            </isNotEmpty>
+            <!--更新人-->
+            <isNotEmpty prepend="and" property="update_user">
+                <![CDATA[ instr(update_user, #update_user#) > 0 ]]>
+            </isNotEmpty>
+            <!-- 用于数据导出 -->
+            <isNotEmpty prepend="and" property="exportIds">
+                <![CDATA[ brand_id in ($exportIds$) ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--品牌分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Long">
+        <![CDATA[
+            select count(*) total from lab_brand
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--品牌分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="lab_brand">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                brand_id,
+                name,
+                en_name,
+                logo,
+                country,
+                flag,
+                synopsis,
+                is_main,
+                is_hot,
+                venue_id,
+                create_time,
+                create_user,
+                stick_time,
+                update_time,
+                update_user
+            from lab_brand
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建品牌-->
+    <insert id="create" parameterClass="lab_brand">
+        <![CDATA[
+            insert into lab_brand(
+                name,
+                en_name,
+                logo,
+                country,
+                flag,
+                synopsis,
+                is_main,
+                is_hot,
+                venue_id,
+                create_time,
+                create_user,
+                stick_time,
+                update_time,
+                update_user
+            ) values (
+                #name:VARCHAR#,
+                #en_name:VARCHAR#,
+                #logo:VARCHAR#,
+                #country:VARCHAR#,
+                #flag:VARCHAR#,
+                #synopsis:VARCHAR#,
+                #is_main:VARCHAR#,
+                #is_hot:VARCHAR#,
+                #venue_id:NUMERIC#,
+                #create_time:TIMESTAMP#,
+                #create_user:VARCHAR#,
+                #stick_time:TIMESTAMP#,
+                #update_time:TIMESTAMP#,
+                #update_user:VARCHAR#
+            )
+        ]]>
+        <!--
+        <selectKey keyProperty="brand_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        -->
+        <selectKey resultClass="int" >
+            select last_insert_id() as brand_id
+        </selectKey>
+    </insert>
+
+    <!--更新品牌-->
+    <update id="update" parameterClass="lab_brand">
+        <![CDATA[ update lab_brand ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.name">
+                <![CDATA[ name=#name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.en_name">
+                <![CDATA[ en_name=#en_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.logo">
+                <![CDATA[ logo=#logo:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.country">
+                <![CDATA[ country=#country:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.flag">
+                <![CDATA[ flag=#flag:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.synopsis">
+                <![CDATA[ synopsis=#synopsis:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.is_main">
+                <![CDATA[ is_main=#is_main:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.is_hot">
+                <![CDATA[ is_hot=#is_hot:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.venue_id">
+                <![CDATA[ venue_id=#venue_id:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_time">
+                <![CDATA[ create_time=#create_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.create_user">
+                <![CDATA[ create_user=#create_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.stick_time">
+                <![CDATA[ stick_time=#stick_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_time">
+                <![CDATA[ update_time=#update_time:TIMESTAMP# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.update_user">
+                <![CDATA[ update_user=#update_user:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where brand_id = #brand_id#  ]]>
+    </update>
+
+    <!--删除品牌-->
+    <delete id="delete" parameterClass="lab_brand">
+        <![CDATA[
+            delete from lab_brand where brand_id = #brand_id#
+        ]]>
+    </delete>
+
+</sqlMap>

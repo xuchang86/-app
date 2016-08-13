@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!--
+角色表
+User: Created by auto build
+Date: 2011-08-19 09:14:18
+-->
+<sqlMap namespace="sys_role">
+
+    <typeAlias alias="sys_role" type="com.rogrand.sys.domain.Role" />
+
+
+    <!--查询角色表-->
+    <select id="query" parameterClass="sys_role" resultClass="sys_role">
+        <![CDATA[
+            select
+                sr_id,
+                sr_code,
+                sr_name,
+                sr_status
+            from sys_role
+        ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sr_id"><![CDATA[ sr_id=#sr_id# ]]></isEqual>
+            <isEqual property="mode" compareValue="sr_code"><![CDATA[ sr_code=#sr_code# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--角色表分页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="sr_code"><!--角色编码-->
+                <![CDATA[ sr_code like '%$sr_code$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sr_name"><!--角色名称-->
+                <![CDATA[ sr_name like '%$sr_name$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="sr_status"><!--状态-->
+                <![CDATA[ sr_status like '%$sr_status$%' ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--角色表分页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Integer">
+        <![CDATA[
+            select count(1) total from sys_role
+        ]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--角色表分页记录集-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_role">
+        <![CDATA[ $head$ ]]>
+        <![CDATA[
+            select
+                sr_id,
+                sr_code,
+                sr_name,
+                sr_status
+            from sys_role
+        ]]>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--创建角色表-->
+    <insert id="create" parameterClass="sys_role">
+        <selectKey keyProperty="sr_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_role(
+                sr_id,
+                sr_code,
+                sr_name,
+                sr_status
+            ) values (
+                #sr_id:VARCHAR#,
+                #sr_code:VARCHAR#,
+                #sr_name:VARCHAR#,
+                #sr_status:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新角色表-->
+    <update id="update" parameterClass="sys_role">
+        <![CDATA[ update sys_role ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sr_code">
+                <![CDATA[ sr_code=#sr_code:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sr_name">
+                <![CDATA[ sr_name=#sr_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sr_status">
+                <![CDATA[ sr_status=#sr_status:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sr_id = #sr_id#  ]]>
+    </update>
+
+    <!--删除角色表-->
+    <delete id="delete" parameterClass="sys_role">
+        <![CDATA[
+            delete from sys_role where sr_id = #sr_id#
+        ]]>
+    </delete>
+</sqlMap>

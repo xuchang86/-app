@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_org">
+
+    <typeAlias alias="sys_org" type="com.rogrand.sys.domain.Org" />
+
+    <sql id="selectSql">
+        <![CDATA[
+            select
+                a.so_id,
+                a.so_name,
+                a.so_parentid,
+                a.so_order,
+                a.so_code,
+                a.so_contact,
+                a.so_email,
+                a.so_post,
+                a.so_purview,
+                d.so_name as so_parentname,
+                (case when exists(select 1 from sys_org b where b.so_parentid=a.so_id) then '1' else '0' end) as so_child,
+                (case when exists(select 1 from sys_user c where c.so_id=a.so_id) then '1' else '0' end) as so_used
+            from sys_org a
+            left join sys_org d on d.so_id=a.so_parentid
+        ]]>
+    </sql>
+
+    <!--查询记录-->
+    <select id="query" parameterClass="sys_org" resultClass="sys_org">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="so_id"><![CDATA[ a.so_id = #so_id:VARCHAR# ]]></isEqual>
+            <isEqual property="mode" compareValue="so_code"><![CDATA[ a.so_code = #so_code:VARCHAR# ]]></isEqual>
+            <isEqual property="mode" compareValue="treeForEdit"><![CDATA[ a.so_id <> #so_id:VARCHAR# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty property="order"><![CDATA[ $order$ ]]></isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--翻页条件-->
+    <sql id="pageWhere">
+        <dynamic prepend="where">
+<!--
+            <isNotEmpty prepend="and" property="so_id" open="(" close=")">
+                <![CDATA[ a.so_id=#so_id# or a.so_parentid=#so_id# ]]>
+            </isNotEmpty>
+-->
+            <isNotEmpty prepend="and" property="so_name">
+                <![CDATA[ a.so_name like '%$so_name$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="so_code">
+                <![CDATA[ a.so_code like '%$so_code$%' ]]>
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="so_code_parent">
+                <![CDATA[ a.so_code like '$so_code_parent$%' ]]>
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <!--翻页记录数-->
+    <select id="pageCount" parameterClass="PageParam" resultClass="Integer">
+        <![CDATA[  select count(*) from sys_org a]]>
+        <include refid="pageWhere"/>
+    </select>
+
+    <!--翻页列表-->
+    <select id="pageList" parameterClass="PageParam" resultClass="sys_org">
+        <![CDATA[ $head$ ]]>
+        <include refid="selectSql"/>
+        <include refid="pageWhere"/>
+        <![CDATA[ $sortOrder$ ]]>
+        <![CDATA[ $foot$ ]]>
+    </select>
+
+    <!--插入-->
+    <insert id="create" parameterClass="sys_org">
+        <selectKey keyProperty="so_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_org(
+                so_id,
+                so_name,
+                so_parentid,
+                so_order,
+                so_code,
+                so_contact,
+                so_email,
+                so_post,
+                so_purview
+            ) values (
+                #so_id:VARCHAR#,
+                #so_name:VARCHAR#,
+                #so_parentid:VARCHAR#,
+                #so_order:NUMERIC#,
+                #so_code:VARCHAR#,
+                #so_contact:VARCHAR#,
+                #so_email:VARCHAR#,
+                #so_post:VARCHAR#,
+                #so_purview:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterClass="sys_org">
+    <![CDATA[ update sys_org ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.so_name">
+                <![CDATA[ so_name=#so_name:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_parentid">
+                <![CDATA[ so_parentid=#so_parentid:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_order">
+                <![CDATA[ so_order=#so_order:NUMERIC# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_code">
+                <![CDATA[ so_code=#so_code:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_contact">
+                <![CDATA[ so_contact=#so_contact:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_email">
+                <![CDATA[ so_email=#so_email:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_post">
+                <![CDATA[ so_post=#so_post:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.so_purview">
+                <![CDATA[ so_purview=#so_purview:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where so_id = #so_id:VARCHAR# ]]>
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterClass="sys_org">
+    <![CDATA[
+        delete from sys_org where so_id=#so_id:VARCHAR#
+    ]]>
+    </delete>
+
+
+</sqlMap>
+       
+           

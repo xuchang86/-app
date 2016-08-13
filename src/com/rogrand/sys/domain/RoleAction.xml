@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="sys_role_action">
+
+    <typeAlias alias="sys_role_action" type="com.rogrand.sys.domain.RoleAction" />
+    <typeAlias alias="sys_role" type="com.rogrand.sys.domain.Role" />
+    <typeAlias alias="sys_action" type="com.rogrand.sys.domain.Action" />
+
+    <sql id="selectSql">
+    <![CDATA[
+        select
+            sra_id,
+            sr_id,
+            sm_id,
+            sa_id
+        from sys_role_action
+    ]]>
+    </sql>
+
+    <!--查询记录-->
+    <select id="query" parameterClass="sys_role_action" resultClass="sys_role_action">
+        <include refid="selectSql"/>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sra_id"><![CDATA[ sra_id=#sra_id:VARCHAR# ]]></isEqual>
+            <isEqual property="mode" compareValue="sr_id"><![CDATA[ sr_id=#sr_id:VARCHAR# ]]></isEqual>
+            <isEqual property="mode" compareValue="sm_id"><![CDATA[ sm_id=#sm_id:VARCHAR# ]]></isEqual>
+        </isParameterPresent>
+        <isParameterPresent prepend="order by">
+            <isNotEmpty prepend="order">$order$</isNotEmpty>
+        </isParameterPresent>
+    </select>
+
+    <!--查询角色分配的菜单动作-->
+    <select id="queryAction" parameterClass="sys_role" resultClass="sys_action">
+        <![CDATA[
+        select
+            a.sa_id,
+            a.sm_id,
+            a.sa_group,
+            (case when exists(select 1 from sys_role_action c
+                              where c.sr_id = #sr_id:VARCHAR# and c.sa_id = a.sa_id)
+                  then '1' else '0' end) as status
+        from sys_action a
+        inner join sys_menu b on a.sm_id = b.sm_id
+        where b.sap_id = #sap_id:VARCHAR# and b.sm_admin = '0'
+        order by a.sm_id,a.sa_id
+        ]]>
+    </select>
+
+    <!--插入-->
+    <insert id="create" parameterClass="sys_role_action">
+        <selectKey keyProperty="sra_id" resultClass="String" type="pre">
+            <include refid="common.pkSql"/>
+        </selectKey>
+        <![CDATA[
+            insert into sys_role_action(
+                sra_id,
+                sr_id,
+                sm_id,
+                sa_id
+            ) values (
+                #sra_id:VARCHAR#,
+                #sr_id:VARCHAR#,
+                #sm_id:VARCHAR#,
+                #sa_id:VARCHAR#
+            )
+        ]]>
+    </insert>
+
+    <!--更新-->
+    <update id="update" parameterClass="sys_role_action">
+    <![CDATA[ update sys_role_action ]]>
+        <dynamic prepend="set">
+            <isPropertyAvailable prepend="," property="fields.sr_id">
+                <![CDATA[ sr_id=#sr_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sm_id">
+                <![CDATA[ sm_id=#sm_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+            <isPropertyAvailable prepend="," property="fields.sa_id">
+                <![CDATA[ sa_id=#sa_id:VARCHAR# ]]>
+            </isPropertyAvailable>
+        </dynamic>
+        <![CDATA[ where sra_id = #sra_id:VARCHAR# ]]>
+    </update>
+
+    <delete id="delete" parameterClass="sys_role_action">
+        <![CDATA[ delete from sys_role_action ]]>
+        <isParameterPresent prepend="where">
+            <isEqual property="mode" compareValue="sr_id">
+                <![CDATA[ sr_id=#sr_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sm_id">
+                <![CDATA[ sm_id=#sm_id:VARCHAR# ]]>
+            </isEqual>
+            <isEqual property="mode" compareValue="sa_id">
+                <![CDATA[ sa_id=#sa_id:VARCHAR# ]]>
+            </isEqual>
+        </isParameterPresent>
+    </delete>
+
+</sqlMap>
+       
+           
