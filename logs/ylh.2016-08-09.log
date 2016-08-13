@@ -1,0 +1,35 @@
+00:01:38.024 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:01:38.029 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:01:38.029 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:01:39.565 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:01:39.565 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:01:39.565 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:01:40.037 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:01:40.038 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:01:40.038 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:02:05.799 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:02:05.800 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:02:05.800 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:02:06.205 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:02:06.206 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:02:06.206 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:03:04.726 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:03:04.726 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:03:04.726 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:06:16.250 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 请求接口：getVenueBrands
+00:06:16.250 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:06:16.250 [1829990955@qtp-2047033626-7] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:06:39.122 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 请求接口：getVenueFashions
+00:06:39.122 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:06:39.122 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:08:47.710 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 请求接口：getVenueFashions
+00:08:47.710 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:08:47.710 [732674977@qtp-2047033626-8] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:09:19.145 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 请求接口：getBrands
+00:09:19.155 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:09:36.175 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 请求接口：getBrands
+00:09:36.175 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 【text-- the key:venueId ,value :1】
+00:11:29.743 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 请求接口：getBrandFashions
+00:11:29.743 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 【text-- the key:brandId ,value :7】
+00:11:29.743 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 【text-- the key:pageNo ,value :1】
+00:12:47.150 [1411579401@qtp-2047033626-9] INFO  c.g.core.controller.BaseController - 请求接口：getHotLabels

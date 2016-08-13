@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.group.lab.dao.FashionsMapper" >
+  <resultMap id="BaseResultMap" type="com.group.lab.model.Fashions" >
+    <id column="num_iid" property="numIid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="month_count" property="monthCount" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="commision" property="commision" jdbcType="DECIMAL" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="tbk_shot_url" property="tbkShotUrl" jdbcType="VARCHAR" />
+    <result column="tbk_url" property="tbkUrl" jdbcType="VARCHAR" />
+    <result column="tkl" property="tkl" jdbcType="VARCHAR" />
+    <result column="lab_price" property="labPrice" jdbcType="DECIMAL" />
+    <result column="cue" property="cue" jdbcType="VARCHAR" />
+    <result column="classify_id" property="classifyId" jdbcType="INTEGER" />
+    <result column="is_sale" property="isSale" jdbcType="CHAR" />
+    <result column="sale_time" property="saleTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    num_iid, name, main_image, detail_url, shop_name, price, month_count, rate, commision, 
+    nick, tbk_shot_url, tbk_url, tkl, lab_price, cue, classify_id, is_sale, sale_time, 
+    create_user, create_time, update_user, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.group.lab.model.FashionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lab_fashions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from lab_fashions
+    where num_iid = #{numIid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from lab_fashions
+    where num_iid = #{numIid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.group.lab.model.FashionsExample" >
+    delete from lab_fashions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.group.lab.model.Fashions" >
+    insert into lab_fashions (num_iid, name, main_image, 
+      detail_url, shop_name, price, 
+      month_count, rate, commision, 
+      nick, tbk_shot_url, tbk_url, 
+      tkl, lab_price, cue, 
+      classify_id, is_sale, sale_time, 
+      create_user, create_time, update_user, 
+      update_time)
+    values (#{numIid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, 
+      #{detailUrl,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{monthCount,jdbcType=INTEGER}, #{rate,jdbcType=DECIMAL}, #{commision,jdbcType=DECIMAL}, 
+      #{nick,jdbcType=VARCHAR}, #{tbkShotUrl,jdbcType=VARCHAR}, #{tbkUrl,jdbcType=VARCHAR}, 
+      #{tkl,jdbcType=VARCHAR}, #{labPrice,jdbcType=DECIMAL}, #{cue,jdbcType=VARCHAR}, 
+      #{classifyId,jdbcType=INTEGER}, #{isSale,jdbcType=CHAR}, #{saleTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.group.lab.model.Fashions" >
+    insert into lab_fashions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="numIid != null" >
+        num_iid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mainImage != null" >
+        main_image,
+      </if>
+      <if test="detailUrl != null" >
+        detail_url,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="monthCount != null" >
+        month_count,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="commision != null" >
+        commision,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="tbkShotUrl != null" >
+        tbk_shot_url,
+      </if>
+      <if test="tbkUrl != null" >
+        tbk_url,
+      </if>
+      <if test="tkl != null" >
+        tkl,
+      </if>
+      <if test="labPrice != null" >
+        lab_price,
+      </if>
+      <if test="cue != null" >
+        cue,
+      </if>
+      <if test="classifyId != null" >
+        classify_id,
+      </if>
+      <if test="isSale != null" >
+        is_sale,
+      </if>
+      <if test="saleTime != null" >
+        sale_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="numIid != null" >
+        #{numIid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null" >
+        #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="monthCount != null" >
+        #{monthCount,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="commision != null" >
+        #{commision,jdbcType=DECIMAL},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="tbkShotUrl != null" >
+        #{tbkShotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tbkUrl != null" >
+        #{tbkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkl != null" >
+        #{tkl,jdbcType=VARCHAR},
+      </if>
+      <if test="labPrice != null" >
+        #{labPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cue != null" >
+        #{cue,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyId != null" >
+        #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="isSale != null" >
+        #{isSale,jdbcType=CHAR},
+      </if>
+      <if test="saleTime != null" >
+        #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.group.lab.model.FashionsExample" resultType="java.lang.Integer" >
+    select count(*) from lab_fashions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lab_fashions
+    <set >
+      <if test="record.numIid != null" >
+        num_iid = #{record.numIid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainImage != null" >
+        main_image = #{record.mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailUrl != null" >
+        detail_url = #{record.detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.monthCount != null" >
+        month_count = #{record.monthCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.commision != null" >
+        commision = #{record.commision,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nick != null" >
+        nick = #{record.nick,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tbkShotUrl != null" >
+        tbk_shot_url = #{record.tbkShotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tbkUrl != null" >
+        tbk_url = #{record.tbkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tkl != null" >
+        tkl = #{record.tkl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.labPrice != null" >
+        lab_price = #{record.labPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cue != null" >
+        cue = #{record.cue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classifyId != null" >
+        classify_id = #{record.classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isSale != null" >
+        is_sale = #{record.isSale,jdbcType=CHAR},
+      </if>
+      <if test="record.saleTime != null" >
+        sale_time = #{record.saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lab_fashions
+    set num_iid = #{record.numIid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      main_image = #{record.mainImage,jdbcType=VARCHAR},
+      detail_url = #{record.detailUrl,jdbcType=VARCHAR},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      month_count = #{record.monthCount,jdbcType=INTEGER},
+      rate = #{record.rate,jdbcType=DECIMAL},
+      commision = #{record.commision,jdbcType=DECIMAL},
+      nick = #{record.nick,jdbcType=VARCHAR},
+      tbk_shot_url = #{record.tbkShotUrl,jdbcType=VARCHAR},
+      tbk_url = #{record.tbkUrl,jdbcType=VARCHAR},
+      tkl = #{record.tkl,jdbcType=VARCHAR},
+      lab_price = #{record.labPrice,jdbcType=DECIMAL},
+      cue = #{record.cue,jdbcType=VARCHAR},
+      classify_id = #{record.classifyId,jdbcType=INTEGER},
+      is_sale = #{record.isSale,jdbcType=CHAR},
+      sale_time = #{record.saleTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.group.lab.model.Fashions" >
+    update lab_fashions
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        main_image = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null" >
+        detail_url = #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="monthCount != null" >
+        month_count = #{monthCount,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="commision != null" >
+        commision = #{commision,jdbcType=DECIMAL},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="tbkShotUrl != null" >
+        tbk_shot_url = #{tbkShotUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tbkUrl != null" >
+        tbk_url = #{tbkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkl != null" >
+        tkl = #{tkl,jdbcType=VARCHAR},
+      </if>
+      <if test="labPrice != null" >
+        lab_price = #{labPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="cue != null" >
+        cue = #{cue,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyId != null" >
+        classify_id = #{classifyId,jdbcType=INTEGER},
+      </if>
+      <if test="isSale != null" >
+        is_sale = #{isSale,jdbcType=CHAR},
+      </if>
+      <if test="saleTime != null" >
+        sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where num_iid = #{numIid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.group.lab.model.Fashions" >
+    update lab_fashions
+    set name = #{name,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      detail_url = #{detailUrl,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      month_count = #{monthCount,jdbcType=INTEGER},
+      rate = #{rate,jdbcType=DECIMAL},
+      commision = #{commision,jdbcType=DECIMAL},
+      nick = #{nick,jdbcType=VARCHAR},
+      tbk_shot_url = #{tbkShotUrl,jdbcType=VARCHAR},
+      tbk_url = #{tbkUrl,jdbcType=VARCHAR},
+      tkl = #{tkl,jdbcType=VARCHAR},
+      lab_price = #{labPrice,jdbcType=DECIMAL},
+      cue = #{cue,jdbcType=VARCHAR},
+      classify_id = #{classifyId,jdbcType=INTEGER},
+      is_sale = #{isSale,jdbcType=CHAR},
+      sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where num_iid = #{numIid,jdbcType=VARCHAR}
+  </update>
+</mapper>

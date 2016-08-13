@@ -1,0 +1,859 @@
+20:20:05.109 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+20:20:05.547 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 20:20:05 CST 2016]; root of context hierarchy
+20:20:05.840 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-mybatis.xml]
+20:20:06.129 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-service.xml]
+20:20:07.260 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+20:20:07.321 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@709a1411: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+20:20:08.229 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3114 ms
+20:20:08.324 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization started
+20:20:08.329 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-alibaba-servlet': startup date [Sat Aug 06 20:20:08 CST 2016]; parent: Root WebApplicationContext
+20:20:08.330 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+20:20:08.618 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7d01acff: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@709a1411
+20:20:08.789 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemsList],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemsList(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+20:20:08.790 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemDetailGet],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemDetailGet(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+20:20:09.057 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+20:20:09.198 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization completed in 874 ms
+20:20:27.082 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+20:20:27.194 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 20:20:27 CST 2016]; root of context hierarchy
+20:20:27.273 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+20:20:27.440 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+20:20:28.214 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+20:20:28.350 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@661eef2c: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,brandFashionMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+20:20:31.494 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 4407 ms
+20:20:31.557 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+20:20:31.560 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 20:20:31 CST 2016]; parent: Root WebApplicationContext
+20:20:31.561 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+20:20:31.851 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2ec50561: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@661eef2c
+20:20:31.895 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.896 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+20:20:31.897 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.897 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.898 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.898 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.898 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.899 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.900 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.900 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.901 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.901 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.904 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.904 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.905 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.906 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.906 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.906 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.907 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.907 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:31.908 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+20:20:32.105 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+20:20:32.166 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 609 ms
+20:21:36.162 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºögetFashionClassify
+20:24:03.254 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºögetFashionClassify
+21:47:25.184 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+21:47:25.305 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 21:47:25 CST 2016]; root of context hierarchy
+21:47:25.380 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-mybatis.xml]
+21:47:25.580 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-service.xml]
+21:47:26.210 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+21:47:26.250 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2602585e: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+21:47:27.254 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2065 ms
+21:47:27.855 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization started
+21:47:27.860 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-alibaba-servlet': startup date [Sat Aug 06 21:47:27 CST 2016]; parent: Root WebApplicationContext
+21:47:27.861 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+21:47:28.131 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+21:47:28.226 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@17bf9b45: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@2602585e
+21:47:28.290 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemsList],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemsList(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+21:47:28.291 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemDetailGet],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemDetailGet(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+21:47:28.528 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+21:47:28.627 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization completed in 771 ms
+21:47:28.741 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 21:47:28 CST 2016]; root of context hierarchy
+21:47:28.920 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+21:47:29.179 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+21:47:30.695 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+21:47:30.799 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1e8809ce: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,brandFashionMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+21:47:33.732 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 5594 ms
+21:47:33.791 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+21:47:33.794 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 21:47:33 CST 2016]; parent: Root WebApplicationContext
+21:47:33.795 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+21:47:34.088 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@c723704: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@1e8809ce
+21:47:34.153 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.154 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+21:47:34.155 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.156 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.156 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.157 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.157 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.158 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.158 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.159 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.173 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.174 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.174 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.175 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.175 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.176 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.176 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.191 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.192 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.193 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.193 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+21:47:34.396 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+21:47:34.492 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 701 ms
+21:47:50.627 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getFashionClassify
+21:48:38.245 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getFashionClassify
+21:48:41.674 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getFashionClassify
+22:09:50.485 [318135525@qtp-1936269821-4] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:09:50.503 [318135525@qtp-1936269821-4] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:09:50.932 [318135525@qtp-1936269821-4] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+22:09:50.977 [318135525@qtp-1936269821-4] INFO  o.s.j.support.SQLErrorCodesFactory - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+22:09:51.417 [318135525@qtp-1936269821-4] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\BrandFashionMapper.xml]
+### The error may involve com.group.lab.dao.BrandFashionMapper.selectByExample-Inline
+### The error occurred while setting parameters
+### SQL: select                 id, brand_id, num_iid, create_time, create_user, stick_time, update_time, update_user         from lab_brand_fashion                    WHERE (  brand_id = ? )                       limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\BrandFashionMapper.xml]
+### The error may involve com.group.lab.dao.BrandFashionMapper.selectByExample-Inline
+### The error occurred while setting parameters
+### SQL: select                 id, brand_id, num_iid, create_time, create_user, stick_time, update_time, update_user         from lab_brand_fashion                    WHERE (  brand_id = ? )                       limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:237) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at $Proxy5.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:198) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:114) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:58) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43) ~[mybatis-3.2.4.jar:3.2.4]
+	at $Proxy12.selectByExample(Unknown Source) ~[na:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:281) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27) ~[na:1.6.0_37]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:513) ~[na:1.6.0_37]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:386) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1054) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4237) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4169) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2617) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2778) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2834) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2156) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1379) ~[mysql-connector-java-5.1.29.jar:na]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:56) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:259) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:132) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:105) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:81) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:104) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:98) ~[mybatis-3.2.4.jar:3.2.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	... 44 common frames omitted
+22:10:02.453 [318135525@qtp-1936269821-4] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:10:02.454 [318135525@qtp-1936269821-4] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:10:21.198 [318135525@qtp-1936269821-4] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\BrandFashionMapper.xml]
+### The error may involve com.group.lab.dao.BrandFashionMapper.selectByExample-Inline
+### The error occurred while setting parameters
+### SQL: select                 id, brand_id, num_iid, create_time, create_user, stick_time, update_time, update_user         from lab_brand_fashion                    WHERE (  brand_id = ? )                       limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\BrandFashionMapper.xml]
+### The error may involve com.group.lab.dao.BrandFashionMapper.selectByExample-Inline
+### The error occurred while setting parameters
+### SQL: select                 id, brand_id, num_iid, create_time, create_user, stick_time, update_time, update_user         from lab_brand_fashion                    WHERE (  brand_id = ? )                       limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:237) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at $Proxy5.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:198) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:114) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:58) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43) ~[mybatis-3.2.4.jar:3.2.4]
+	at $Proxy12.selectByExample(Unknown Source) ~[na:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:281) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27) ~[na:1.6.0_37]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:513) ~[na:1.6.0_37]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:386) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1054) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4237) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4169) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2617) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2778) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2834) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2156) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1379) ~[mysql-connector-java-5.1.29.jar:na]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:56) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:259) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:132) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:105) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:81) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:104) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:98) ~[mybatis-3.2.4.jar:3.2.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	... 44 common frames omitted
+22:46:51.004 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:46:51.112 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:46:51 CST 2016]; root of context hierarchy
+22:46:51.189 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+22:46:51.356 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+22:46:51.972 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+22:46:52.059 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@753bc30a: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,areaFashionsMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,fashionsMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+22:46:54.597 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3589 ms
+22:46:54.652 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+22:46:54.760 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 22:46:54 CST 2016]; parent: Root WebApplicationContext
+22:46:54.761 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:46:54.996 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@11696cdb: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@753bc30a
+22:46:55.050 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.051 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+22:46:55.051 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.052 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.052 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.053 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.053 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.053 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.054 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.054 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.054 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.055 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.055 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.055 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.056 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.056 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.057 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.057 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.057 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.058 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.058 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:46:55.188 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:46:55.247 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 595 ms
+22:47:01.025 [2047033626@qtp-1566695349-1] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:47:01.033 [2047033626@qtp-1566695349-1] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:47:15.506 [2047033626@qtp-1566695349-1] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-error parse true
+com.alibaba.fastjson.JSONException: error parse true
+	at com.alibaba.fastjson.parser.JSONLexerBase.scanNullOrNew(JSONLexerBase.java:2436) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:152) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:333) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer.parseField(StringFieldDeserializer.java:29) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:74) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer$InnerJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:86) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:310) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseRest(ASMJavaBeanDeserializer.java:96) ~[fastjson-1.1.41.jar:na]
+	at Fastjson_ASM_FashionExt_1.deserialze(Unknown Source) ~[na:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:598) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:534) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:529) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.JSON.parseArray(JSON.java:371) ~[fastjson-1.1.41.jar:na]
+	at com.group.lab.service.AlibaichuanService.getFashionByNumIid(AlibaichuanService.java:49) ~[classes/:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:285) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+22:47:37.929 [2047033626@qtp-1566695349-1] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:47:37.930 [2047033626@qtp-1566695349-1] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:48:00.975 [2047033626@qtp-1566695349-1] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-error parse true
+com.alibaba.fastjson.JSONException: error parse true
+	at com.alibaba.fastjson.parser.JSONLexerBase.scanNullOrNew(JSONLexerBase.java:2436) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:152) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:333) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer.parseField(StringFieldDeserializer.java:29) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:74) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer$InnerJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:86) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:310) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseRest(ASMJavaBeanDeserializer.java:96) ~[fastjson-1.1.41.jar:na]
+	at Fastjson_ASM_FashionExt_1.deserialze(Unknown Source) ~[na:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:598) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:534) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:529) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.JSON.parseArray(JSON.java:371) ~[fastjson-1.1.41.jar:na]
+	at com.group.lab.service.AlibaichuanService.getFashionByNumIid(AlibaichuanService.java:49) ~[classes/:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:285) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+22:49:32.030 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:49:32.137 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:49:32 CST 2016]; root of context hierarchy
+22:49:32.219 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-mybatis.xml]
+22:49:32.376 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-service.xml]
+22:49:32.757 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+22:49:32.784 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@53465ca2: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+22:49:33.266 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1232 ms
+22:49:33.332 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization started
+22:49:33.336 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-alibaba-servlet': startup date [Sat Aug 06 22:49:33 CST 2016]; parent: Root WebApplicationContext
+22:49:33.337 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:49:33.460 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@246adb31: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@53465ca2
+22:49:33.626 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemsList],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemsList(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+22:49:33.627 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemDetailGet],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemDetailGet(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+22:49:33.844 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:49:33.941 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization completed in 609 ms
+22:49:40.473 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:49:40.603 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:49:40 CST 2016]; root of context hierarchy
+22:49:40.691 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+22:49:40.872 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+22:49:41.453 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_local.properties]
+22:49:41.521 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@268201a7: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,areaFashionsMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,fashionsMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+22:49:44.124 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3651 ms
+22:49:44.183 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+22:49:44.192 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 22:49:44 CST 2016]; parent: Root WebApplicationContext
+22:49:44.193 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:49:44.356 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@2cdf88d2: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@268201a7
+22:49:44.602 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.603 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+22:49:44.604 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.604 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.605 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.605 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.605 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.606 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.606 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.607 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.607 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.607 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.608 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.608 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.609 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.609 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.609 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.610 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.610 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.611 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.611 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:49:44.786 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:49:44.844 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 661 ms
+22:50:14.514 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:50:14.533 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:50:18.499 [1079549526@qtp-1151734776-0] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫taobaoTaeItemsList
+22:50:18.502 [1079549526@qtp-1151734776-0] INFO  c.g.core.controller.BaseController - °ætext-- the key:numIids ,value :45472253890,520463760002,525978217918,526142386831,527025034469,527046962535,527860664419,527904985452,528230997150,528922937723,°ø
+22:50:19.879 [1806127242@qtp-1151734776-1] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-error parse true
+com.alibaba.fastjson.JSONException: error parse true
+	at com.alibaba.fastjson.parser.JSONLexerBase.scanNullOrNew(JSONLexerBase.java:2436) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:152) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:333) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer.parseField(StringFieldDeserializer.java:29) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:74) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer$InnerJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:86) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:310) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseRest(ASMJavaBeanDeserializer.java:96) ~[fastjson-1.1.41.jar:na]
+	at Fastjson_ASM_FashionExt_1.deserialze(Unknown Source) ~[na:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:598) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:534) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:529) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.JSON.parseArray(JSON.java:371) ~[fastjson-1.1.41.jar:na]
+	at com.group.lab.service.AlibaichuanService.getFashionByNumIid(AlibaichuanService.java:49) ~[classes/:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:285) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+22:50:24.660 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:50:24.669 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:50:24.931 [873697925@qtp-1151734776-2] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫taobaoTaeItemsList
+22:50:24.931 [873697925@qtp-1151734776-2] INFO  c.g.core.controller.BaseController - °ætext-- the key:numIids ,value :45472253890,520463760002,525978217918,526142386831,527025034469,527046962535,527860664419,527904985452,528230997150,528922937723,°ø
+22:50:25.156 [1806127242@qtp-1151734776-1] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-error parse true
+com.alibaba.fastjson.JSONException: error parse true
+	at com.alibaba.fastjson.parser.JSONLexerBase.scanNullOrNew(JSONLexerBase.java:2436) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:152) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:333) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer.parseField(StringFieldDeserializer.java:29) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:74) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer$InnerJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:86) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:310) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseRest(ASMJavaBeanDeserializer.java:96) ~[fastjson-1.1.41.jar:na]
+	at Fastjson_ASM_FashionExt_1.deserialze(Unknown Source) ~[na:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:598) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:534) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:529) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.JSON.parseArray(JSON.java:371) ~[fastjson-1.1.41.jar:na]
+	at com.group.lab.service.AlibaichuanService.getFashionByNumIid(AlibaichuanService.java:49) ~[classes/:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:285) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+22:50:51.880 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫getMainBrandData
+22:50:51.881 [1806127242@qtp-1151734776-1] INFO  c.g.core.controller.BaseController - °ætext-- the key:pageNo ,value :1°ø
+22:51:07.305 [1079549526@qtp-1151734776-0] INFO  c.g.core.controller.BaseController - «Î«ÛΩ”ø⁄£∫taobaoTaeItemsList
+22:51:07.306 [1079549526@qtp-1151734776-0] INFO  c.g.core.controller.BaseController - °ætext-- the key:numIids ,value :45472253890,520463760002,525978217918,526142386831,527025034469,527046962535,527860664419,527904985452,528230997150,528922937723,°ø
+22:51:23.266 [1806127242@qtp-1151734776-1] ERROR o.s.w.s.HandlerExceptionResolver - ≤Ÿ◊˜¥ÌŒÛ-error parse true
+com.alibaba.fastjson.JSONException: error parse true
+	at com.alibaba.fastjson.parser.JSONLexerBase.scanNullOrNew(JSONLexerBase.java:2436) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:152) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.JSONLexerBase.nextToken(JSONLexerBase.java:333) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.StringFieldDeserializer.parseField(StringFieldDeserializer.java:29) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:74) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer$InnerJavaBeanDeserializer.parseField(ASMJavaBeanDeserializer.java:86) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.JavaBeanDeserializer.deserialze(JavaBeanDeserializer.java:310) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.deserializer.ASMJavaBeanDeserializer.parseRest(ASMJavaBeanDeserializer.java:96) ~[fastjson-1.1.41.jar:na]
+	at Fastjson_ASM_FashionExt_1.deserialze(Unknown Source) ~[na:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:598) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:534) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:529) ~[fastjson-1.1.41.jar:na]
+	at com.alibaba.fastjson.JSON.parseArray(JSON.java:371) ~[fastjson-1.1.41.jar:na]
+	at com.group.lab.service.AlibaichuanService.getFashionByNumIid(AlibaichuanService.java:49) ~[classes/:na]
+	at com.group.lab.service.BuyNewService.getMainBrandData(BuyNewService.java:285) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getMainBrandData(BuyNewController.java:209) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+22:52:07.257 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:52:07.375 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:52:07 CST 2016]; root of context hierarchy
+22:52:07.451 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-mybatis.xml]
+22:52:07.607 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-alibaba\target\classes\config\spring-service.xml]
+22:52:07.990 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_test.properties]
+22:52:08.018 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@306bba64: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+22:52:08.469 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1207 ms
+22:52:08.537 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization started
+22:52:08.541 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-alibaba-servlet': startup date [Sat Aug 06 22:52:08 CST 2016]; parent: Root WebApplicationContext
+22:52:08.543 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:52:08.839 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@17bf9b45: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,aliBaichuanController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@306bba64
+22:52:08.881 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemsList],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemsList(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+22:52:08.882 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/baichuan/taobaoTaeItemDetailGet],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.alibaba.controller.AliBaichuanController.taobaoTaeItemDetailGet(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.ApiException
+22:52:09.039 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:52:09.097 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-alibaba': initialization completed in 560 ms
+22:52:24.558 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:52:24.672 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:52:24 CST 2016]; root of context hierarchy
+22:52:24.746 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+22:52:24.910 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+22:52:25.418 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_local.properties]
+22:52:25.508 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@753bc30a: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,areaFashionsMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,fashionsMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+22:52:28.041 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3478 ms
+22:52:28.100 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+22:52:28.104 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 22:52:28 CST 2016]; parent: Root WebApplicationContext
+22:52:28.106 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:52:28.301 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@7f54e38b: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@753bc30a
+22:52:28.488 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.488 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+22:52:28.489 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.489 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.490 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.491 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.491 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.492 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.492 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.493 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.493 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.493 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.494 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.494 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.495 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.495 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.496 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.496 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.496 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.497 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.497 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:52:28.667 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:52:28.727 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 626 ms
+22:52:51.117 [899205949@qtp-1079549526-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºögetMainBrandData
+22:52:51.121 [899205949@qtp-1079549526-0] INFO  c.g.core.controller.BaseController - „Äêtext-- the key:pageNo ,value :1„Äë
+22:52:58.477 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºötaobaoTaeItemsList
+22:52:58.481 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - „Äêtext-- the key:numIids ,value :45472253890,520463760002,525978217918,526142386831,527025034469,527046962535,527860664419,527904985452,528230997150,528922937723,„Äë
+22:55:44.608 [899205949@qtp-1079549526-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºögetBrandData
+22:55:44.609 [899205949@qtp-1079549526-0] INFO  c.g.core.controller.BaseController - „Äêtext-- the key:pageNo ,value :1„Äë
+22:55:44.795 [899205949@qtp-1079549526-0] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [org/springframework/jdbc/support/sql-error-codes.xml]
+22:55:44.827 [899205949@qtp-1079549526-0] INFO  o.s.j.support.SQLErrorCodesFactory - SQLErrorCodes loaded: [DB2, Derby, H2, HSQL, Informix, MS-SQL, MySQL, Oracle, PostgreSQL, Sybase]
+22:55:45.113 [899205949@qtp-1079549526-0] ERROR o.s.w.s.HandlerExceptionResolver - Êìç‰ΩúÈîôËØØ-
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\AreaFashionsMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: select   t1.brand_id,t1.name,t1.logo,  (select num_iid from lab_brand_fashion where brand_id = t1.brand_id order by stick_time DESC limit 1) num_iid  from lab_brand t1  where (t1.is_main is null or t1.is_main != 'Y')     limit 0,8
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+### The error may exist in file [D:\projects\kkmy\lab\lab-web\target\classes\mappers\AreaFashionsMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: select   t1.brand_id,t1.name,t1.logo,  (select num_iid from lab_brand_fashion where brand_id = t1.brand_id order by stick_time DESC limit 1) num_iid  from lab_brand t1  where (t1.is_main is null or t1.is_main != 'Y')     limit 0,8
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:237) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:72) ~[spring-jdbc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:371) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at $Proxy5.selectList(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:198) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:114) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:58) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:43) ~[mybatis-3.2.4.jar:3.2.4]
+	at $Proxy12.selectBrandFirstFashion(Unknown Source) ~[na:na]
+	at com.group.lab.service.BuyNewService.getBrandData(BuyNewService.java:304) ~[classes/:na]
+	at com.group.lab.controller.BuyNewController.getBrandData(BuyNewController.java:237) ~[classes/:na]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:219) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:132) ~[spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandleMethod(RequestMappingHandlerAdapter.java:745) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:686) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:80) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:925) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:856) ~[spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:936) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:827) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:707) [servlet-api-2.5-20081211.jar:na]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:812) [spring-webmvc-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820) [servlet-api-2.5-20081211.jar:na]
+	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1221) [jetty-6.1.26.jar:6.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-3.2.4.RELEASE.jar:3.2.4.RELEASE]
+	at org.mortbay.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:399) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.security.SecurityHandler.handle(SecurityHandler.java:216) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:766) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:450) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.Server.handle(Server.java:326) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection$RequestHandler.headerComplete(HttpConnection.java:928) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:549) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:212) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410) [jetty-6.1.26.jar:6.1.26]
+	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582) [jetty-util-6.1.26.jar:6.1.26]
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Table 'lab_test.lab_brand_fashion' doesn't exist
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:27) ~[na:1.6.0_37]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:513) ~[na:1.6.0_37]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:411) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.Util.getInstance(Util.java:386) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:1054) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4237) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:4169) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2617) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2778) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2834) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:2156) ~[mysql-connector-java-5.1.29.jar:na]
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1379) ~[mysql-connector-java-5.1.29.jar:na]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.commons.dbcp.DelegatingPreparedStatement.execute(DelegatingPreparedStatement.java:172) ~[commons-dbcp-1.4.jar:1.4]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:56) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:70) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:57) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:259) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:132) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:105) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:81) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:104) ~[mybatis-3.2.4.jar:3.2.4]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:98) ~[mybatis-3.2.4.jar:3.2.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.6.0_37]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39) ~[na:1.6.0_37]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25) ~[na:1.6.0_37]
+	at java.lang.reflect.Method.invoke(Method.java:597) ~[na:1.6.0_37]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:358) ~[mybatis-spring-1.2.2.jar:1.2.2]
+	... 44 common frames omitted
+22:57:03.664 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization started
+22:57:03.773 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing Root WebApplicationContext: startup date [Sat Aug 06 22:57:03 CST 2016]; root of context hierarchy
+22:57:03.876 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-mybatis.xml]
+22:57:04.044 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from file [D:\projects\kkmy\lab\lab-web\target\classes\config\spring-service.xml]
+22:57:04.555 [main] INFO  o.s.b.f.c.PropertyPlaceholderConfigurer - Loading properties file from class path resource [config/config_local.properties]
+22:57:04.623 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@661eef2c: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sqlSessionFactory,org.mybatis.spring.mapper.MapperScannerConfigurer#0,mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,alibaichuanService,buyNewService,imageService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,redisCacheManager,transactionManager,org.springframework.aop.config.internalAutoProxyCreator,org.springframework.transaction.annotation.AnnotationTransactionAttributeSource#0,org.springframework.transaction.interceptor.TransactionInterceptor#0,org.springframework.transaction.config.internalTransactionAdvisor,jedisPoolConfig,jedisConnectionFactory,redisTemplate,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor,activityDetailMapper,areaFashionsMapper,brandMapper,buynewActivityMapper,buyPoolsMapper,fashionClassifyMapper,fashionMapper,fashionsMapper,hotClassFashionMapper,hotClassMapper,hotLableMapper,poolFashionMapper,searchMapper,venueMapper]; root of factory hierarchy
+22:57:07.242 [main] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3574 ms
+22:57:07.301 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization started
+22:57:07.305 [main] INFO  o.s.w.c.s.XmlWebApplicationContext - Refreshing WebApplicationContext for namespace 'lab-web-servlet': startup date [Sat Aug 06 22:57:07 CST 2016]; parent: Root WebApplicationContext
+22:57:07.306 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [config/springmvc.xml]
+22:57:07.616 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@281c35ec: defining beans [mvcContentNegotiationManager,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping#0,org.springframework.format.support.FormattingConversionServiceFactoryBean#0,org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#0,org.springframework.web.servlet.handler.MappedInterceptor#0,org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver#0,org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#0,org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver#0,org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,buyNewController,exceptionController,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,viewResolver,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; parent: org.springframework.beans.factory.support.DefaultListableBeanFactory@661eef2c
+22:57:07.667 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/search],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.search(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.668 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/receiveMsg],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.receiveMsg(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws com.taobao.api.internal.toplink.LinkException
+22:57:07.669 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivitys],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivitys(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.669 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSYFashionPoolData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSYFashionPoolData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.669 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getPoolFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getPoolFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.670 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getSaleFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getSaleFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.670 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getMainBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getMainBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.671 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.671 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotClassData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotClassData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.672 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueData],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueData(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.672 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenues],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenues(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.672 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.673 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getVenueFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getVenueFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.673 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrands],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrands(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.674 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getBrandFashions],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getBrandFashions(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.674 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.675 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getLeafClassify],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getLeafClassify(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.675 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotLabels],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotLabels(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.676 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getHotSearch],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getHotSearch(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.676 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getFashionDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getFashionDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.676 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped "{[/buynew/V1/getActivityDetail],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}" onto public void com.group.lab.controller.BuyNewController.getActivityDetail(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+22:57:07.821 [main] INFO  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Detected @ExceptionHandler methods in exceptionController
+22:57:07.877 [main] INFO  o.s.web.servlet.DispatcherServlet - FrameworkServlet 'lab-web': initialization completed in 576 ms
+22:57:15.534 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - ËØ∑Ê±ÇÊé•Âè£ÔºögetBrandData
+22:57:15.537 [2047033626@qtp-1936269821-0] INFO  c.g.core.controller.BaseController - „Äêtext-- the key:pageNo ,value :1„Äë
