@@ -35,7 +35,7 @@
         <property name="mapperLocations" value="classpath:mappers/*.xml" />
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.group.*.dao" />
+        <property name="basePackage" value="com.*.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 

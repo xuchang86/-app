@@ -129,7 +129,7 @@ public class BuyNewService {
 	 */
 	public List<ActivityDetailTwo> getActivityDetailTwo(int activityId){
 		ActivityDetailExample example = new ActivityDetailExample();
-		example.or().andActivityIdEqualTo(activityId);
+		example.or().andActivityIdEqualTo(activityId);// where activityId = "111"
 		List<ActivityDetail> activityDetails = activityDetailMapper.selectByExample(example);
 		if(activityDetails!=null && activityDetails.size()>0){
 			List<ActivityDetailTwo> list = new ArrayList<ActivityDetailTwo>();
