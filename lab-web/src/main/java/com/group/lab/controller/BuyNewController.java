@@ -36,7 +36,7 @@ import com.taobao.api.internal.toplink.LinkException;
  * 2016-07-16 9:45
  */
 @Controller
-@RequestMapping("buynew/V1")
+@RequestMapping(value = "/buynew")
 public class BuyNewController extends BaseController{
 
 	@Autowired
@@ -50,7 +50,7 @@ public class BuyNewController extends BaseController{
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("getActivitys")
+	@RequestMapping(value = "/getActivitys")
 	public void getActivitys(HttpServletRequest request, HttpServletResponse response){
 		String[] paramKey = {};
         String method = "getActivitys";

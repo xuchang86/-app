@@ -320,4 +320,13 @@
       isPay = #{ispay,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 通过phone 校验是否已注册 -->
+  <select id="verifyRegist" resultMap="BaseResultMap" parameterType="com.xiaoyao.login.model.User" >
+    SELECT 
+    t.id,
+    t.phone 
+    FROM T_LOGIN_USER t
+    WHERE t.phone = #{phone}
+  </select>
 </mapper>
