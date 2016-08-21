@@ -36,6 +36,12 @@
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
+	<!-- commonServlet用做特殊业务  -->
+	<servlet>
+		<servlet-name>xiaoyao</servlet-name>
+		<servlet-class>com.xiaoyao.base.servlet.CommonServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>lab-web</servlet-name>
 		<url-pattern>*.do</url-pattern>

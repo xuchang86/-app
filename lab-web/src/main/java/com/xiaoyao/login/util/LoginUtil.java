@@ -6,12 +6,18 @@
  *****************************************************************************/
 package com.xiaoyao.login.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.fastjson.util.IOUtils;
 
 /**
  * 登录工具类
@@ -25,11 +31,34 @@ public final class LoginUtil {
 	/** 日志 */
 	private static Logger LOGGER = LoggerFactory.getLogger(LoginUtil.class);
 
+	/** 登陆配置文件 */
+	private static final String LOGIN_PROP = "config/login.properties";
+
+	/** 邀请码默认创建数量 */
+	private static final String INVITE_CODE_COUNT = "10";
+
+	/** 登陆配置文件 */
+	private static final Properties p = new Properties();
+
 	/**
 	 * 构造方法
 	 */
 	private LoginUtil() {
 
+	}
+
+	/** 读取登陆配置文件 */
+	static {
+		InputStream in = Thread.currentThread().getContextClassLoader()
+				.getResourceAsStream(LOGIN_PROP);
+		try {
+			if (in != null)
+				p.load(in);
+		} catch (IOException e) {
+			LOGGER.error("读取config/login.properties配置文件失败:" + e.getMessage(), e);
+		} finally {
+			IOUtils.close(in);
+		}
 	}
 
 	/**
@@ -77,8 +106,36 @@ public final class LoginUtil {
 		return Integer.parseInt(code);
 	}
 
-	public static void main(String[] args) {
-		System.out.println("验证码:" + getSixCode());
+	/**
+	 * 获取配置文件值
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public static String getPropertyValue(String key) {
+		return p.getProperty(key);
+	}
+
+	/**
+	 * 获取配置文件值
+	 * 
+	 * @param key
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String getPropertyValue(String key, String defaultValue) {
+		return p.getProperty(key, defaultValue);
+	}
+
+	/**
+	 * 获取邀请码数量
+	 * 
+	 * @return
+	 */
+	public static int getInviteCodeCount() {
+		int count = Integer.valueOf(getPropertyValue("invite_code_count",
+				INVITE_CODE_COUNT));
+		return count;
 	}
 
 }

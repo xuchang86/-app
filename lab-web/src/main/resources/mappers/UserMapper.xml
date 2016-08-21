@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.login.dao.UserMapper" >
+<mapper namespace="com.xiaoyao.login.dao.UserMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.login.model.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -328,5 +328,14 @@
     t.phone 
     FROM T_LOGIN_USER t
     WHERE t.phone = #{phone}
+  </select>
+  
+  <!-- 登录验证  -->
+  <select id="login" parameterType="com.xiaoyao.login.model.User" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List" />
+     FROM T_LOGIN_USER t
+     WHERE (t.phone = #{phone} OR t.username = #{username})
+     AND t.password = #{password}
   </select>
 </mapper>
