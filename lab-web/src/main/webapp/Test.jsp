@@ -57,8 +57,8 @@
   				phone: '18627014275',
   				birthday: '2016-08-21',
   				address: '深圳市南山区',
-  				providerid: '111',
-  				requiredid: '2121',
+  				providerid: '黄金万两',
+  				requiredid: '美女如云',
   				city: '深圳市',
   				sex: 0,
   				username: 'xcxc1990'
@@ -130,7 +130,6 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				phone: '18627014275'
   			},
   			success: function(data) {
   				console.log(data);
