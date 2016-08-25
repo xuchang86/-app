@@ -12,7 +12,8 @@ import java.math.BigDecimal;
 public class Rule {
 	private Integer id;
 
-	private Integer level;
+	/** 级别{@com.xiaoyao.base.model.Level} */
+	private Integer level = Level.JIAN_XI_DIZI.getValue();
 
 	private Integer levelCount;
 
