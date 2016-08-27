@@ -266,4 +266,16 @@ public class UserLoginController extends BizBaseController {
 		return userLoginService.verifyRegist(user);
 	}
 
+	/**
+	 * 付款成功生成订单号
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("payOrder")
+	public void payOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+
+	}
+
 }
