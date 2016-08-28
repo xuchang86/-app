@@ -20,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xiaoyao.base.controller.BizBaseController;
+import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.base.util.MD5Util;
@@ -74,7 +75,7 @@ public class UserLoginController extends BizBaseController {
 				JSONUtils.ERROR(response, "当前用户注册时未付款,不能登录.");
 			} else {
 				// 将当前用户信息放入session中
-				setCurrentUser(request, user);
+				setCurrentUserAndPerson(request, user);
 				JSONUtils.SUCCESS(response, "登录成功.");
 				System.out.println("用户:" + user.getName() + " login in...");
 			}
@@ -136,14 +137,11 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("payment")
 	public void payment(HttpServletRequest request, HttpServletResponse response) {
-		String payAmount = request(request, "payAmount");// 付款金额
 		String inviteCode = request(request, "inviteCode");// 邀请码
-		String payWay = request(request, "payWay");// 付款方式
+		String isPay = request(request, "isPay");// 是否已付款
 		// 校验参数是否为空
 		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("payAmount", "付款金额不能为空.");
 		validateResult.put("inviteCode", "邀请码不能为空.");
-		validateResult.put("payWay", "付款方式不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 		// 校验邀请码是否有效
@@ -151,17 +149,20 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.ERROR(response, "当前邀请码不存在,请检查邀请码的正确性.");
 			return;
 		}
+		// 是否已付款
+		int ispay = IsPay.UN_PAY.getValue();
+		if (StringUtils.isNotEmpty(isPay)) {
+			ispay = Boolean.valueOf(isPay) ? IsPay.IS_PAY.getValue()
+					: IsPay.UN_PAY.getValue();
+		}
 		// 付款并保存用户信息并删除验证码
 		User user = getCurrentUser(request);
-		user.setIspay(1);
-		Object code = request.getSession().getAttribute("code");
-		Map<String, String> result = userLoginService.payAndSaveUser(user,
-				String.valueOf(code), payWay, payAmount);
-		if (CollectionUtils.isEmpty(result)) {
-			JSONUtils.SUCCESS(response, "付款成功.");
-		} else {
-			JSONUtils.ERROR(response, result.get("error"));
-		}
+		user.setIspay(ispay);
+		Person person = userLoginService.saveUser(user,
+				String.valueOf(inviteCode));
+		setCurrentPerson(request, person);
+		setCurrentUser(request, user);
+		JSONUtils.SUCCESS(response, "保存用户信息成功.");
 	}
 
 	/**
@@ -189,11 +190,14 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.PARAM_ERROR(response, "当前手机号与注册手机号不一致,请检查手机号码是否正确.");
 			return;
 		}
-		User u = BeanUtils.mapConvertToBean(User.class, request);
-		u.setPassword(user.getPassword());
-		setCurrentUser(request, u);
+		Map<String, Object> userMap = BeanUtils.beanConverToMap(user);
+		@SuppressWarnings("unchecked")
+		Map<String, Object> param = request.getParameterMap();
+		userMap.putAll(param);
+		user = BeanUtils.mapConvert2ToBean(User.class, userMap);
+		setCurrentUser(request, user);
 		// 更新User信息
-		if (userLoginService.updateUser(u)) {
+		if (userLoginService.updateUser(user)) {
 			JSONUtils.SUCCESS(response, "完善个人信息成功.");
 		} else {
 			JSONUtils.ERROR(response, "个人信息更新失败.");

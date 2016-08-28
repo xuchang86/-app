@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.dao.InviteCodeMapper;
 import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.InviteCodeExample;
@@ -25,7 +26,7 @@ import com.xiaoyao.login.util.LoginUtil;
  * @version 2016年8月20日 许畅 新建
  */
 @Service
-public class InviteCodeService {
+public class InviteCodeService extends BaseService {
 
 	/** 注入InviteCodeMapper */
 	@Autowired

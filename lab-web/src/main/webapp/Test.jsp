@@ -52,13 +52,13 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				name: '许畅',
+  				name: '许畅222',
   				password: '121121',
-  				phone: '18627014275',
+  				phone: '18627014277',
   				birthday: '2016-08-21',
   				address: '深圳市南山区',
-  				providerid: '黄金万两',
-  				requiredid: '美女如云',
+  				providerid: '黄金万两22',
+  				requiredid: '美女如云22',
   				city: '深圳市',
   				sex: 0,
   				username: 'xcxc1990'
@@ -76,9 +76,9 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				code: '289601',
+  				code: '930687',
   				password: '121121',
-  				phone: '18627014275'
+  				phone: '18627014277'
   			},
   			success: function(data) {
   				console.log(data);
@@ -94,7 +94,8 @@
   			type: 'POST',
   			data: {
   				payAmount: '100',
-  				inviteCode: '113714',
+  				inviteCode: '557439',
+          isPay : true,
   				payWay: 'wechart' //微信支付
   			},
   			success: function(data) {
@@ -110,7 +111,7 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				phone: '18627014275'
+  				phone: '18627014277'
   			},
   			success: function(data) {
   				console.log(data);
@@ -149,7 +150,7 @@
 			dataType: 'json',
 			type: 'POST',
 			data: {
-				username: '18627014275',
+				username: '18627014277',
 				password:'121121'
 			},
 			success: function(data) {

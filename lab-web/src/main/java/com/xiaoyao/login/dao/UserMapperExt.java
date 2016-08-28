@@ -19,8 +19,36 @@ import com.xiaoyao.login.model.User;
  */
 public interface UserMapperExt extends UserMapper {
 
+	/**
+	 * 校验是否已注册
+	 * 
+	 * @param user
+	 * @return
+	 */
 	List<User> verifyRegist(User user);
 
+	/**
+	 * 登陆查询该用户是否已存在
+	 * 
+	 * @param user
+	 * @return
+	 */
 	List<User> login(User user);
+
+	/**
+	 * 更新用户为已付款
+	 * 
+	 * @param user
+	 * @return
+	 */
+	int updateisPay(User user);
+
+	/**
+	 * 更新人员名称
+	 * 
+	 * @param user
+	 * @return
+	 */
+	int updatePerson(User user);
 
 }

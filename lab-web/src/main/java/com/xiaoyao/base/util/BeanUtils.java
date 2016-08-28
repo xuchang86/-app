@@ -6,9 +6,17 @@
  *****************************************************************************/
 package com.xiaoyao.base.util;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +46,7 @@ public final class BeanUtils {
 			.getLogger(BeanUtils.class);
 
 	/** 日期格式化 */
-	private static final DateFormat dateFormat = new DateFormat();
+	private static final DateFormat _date_format = new DateFormat();
 
 	/**
 	 * 将请求参数map封装成Bean对象
@@ -51,18 +59,154 @@ public final class BeanUtils {
 	 */
 	public static <T> T mapConvertToBean(Class<T> cls,
 			HttpServletRequest request) {
+		return mapConvertToBean(cls, request.getParameterMap());
+	}
+
+	/**
+	 * map转换为Bean对象
+	 * 
+	 * @param cls
+	 * @param map
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	public static <T> T mapConvertToBean(Class<T> cls, Map map) {
 		try {
 			T obj = cls.newInstance();
 			if (obj instanceof Map) {
-				org.apache.commons.beanutils.BeanUtils.populate(obj,
-						request.getParameterMap());
+				org.apache.commons.beanutils.BeanUtils.populate(obj, map);
 			} else {
-				setBeanProperty(obj, request.getParameterMap());
+				setBeanProperty(obj, map);
 			}
 			return obj;
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 			return null;
+		}
+	}
+
+	/**
+	 * java bean转换为map
+	 * 
+	 * @param obj
+	 *            bean对象
+	 * @return map<String, Object>
+	 */
+	public static Map<String, Object> beanConverToMap(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+			PropertyDescriptor[] propertyDescriptors = beanInfo
+					.getPropertyDescriptors();
+			for (PropertyDescriptor property : propertyDescriptors) {
+				String key = property.getName();
+				// 过滤class属性
+				if (!key.equals("class")) {
+					// 得到property对应的getter方法
+					Method getter = property.getReadMethod();
+					Object value = getter.invoke(obj);
+					map.put(key, value);
+				}
+
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return map;
+	}
+
+	/**
+	 * 通过java.beans.Introspector将map转为bean
+	 * 
+	 * @param map
+	 * @param cls
+	 * @return
+	 */
+	public static <T> T mapConvert2ToBean(Class<T> cls, Map<String, Object> map) {
+		T obj = null;
+		try {
+			obj = cls.newInstance();
+			BeanInfo beanInfo = Introspector.getBeanInfo(cls);
+			PropertyDescriptor[] propertyDescriptors = beanInfo
+					.getPropertyDescriptors();
+
+			for (PropertyDescriptor property : propertyDescriptors) {
+				String key = property.getName();
+				if (map.containsKey(key)) {
+					Object value = map.get(key);
+					Method setter = property.getWriteMethod();
+					// 对应的值类型
+					Class<?> type = cls.getDeclaredField(key).getType();
+					if (value instanceof String[]) {
+						String str = ((String[]) value)[0];
+						setter.invoke(obj, stringConverToObj(type, str));
+					} else if (value instanceof String) {
+						String str = String.valueOf(value);
+						setter.invoke(obj, stringConverToObj(type, str));
+					} else {
+						setter.invoke(obj, value);
+					}
+				}
+			}
+		} catch (InstantiationException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (IllegalAccessException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (IntrospectionException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (IllegalArgumentException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (InvocationTargetException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (NoSuchFieldException e) {
+			LOGGER.error(e.getMessage(), e);
+		} catch (SecurityException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return obj;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T mapConvert2ToBean(Class<T> cls,
+			HttpServletRequest request) {
+		return (T) mapConvert2ToBean(cls, request.getParameterMap());
+	}
+
+	/**
+	 * 将String转换为相应的对象类型
+	 * 
+	 * @param type
+	 *            Class类型 包括基本类型,BigDecimal,Date等类型
+	 * @param value
+	 *            String字符串类型
+	 * @return Object
+	 */
+	protected static Object stringConverToObj(Class<?> type, String value) {
+		if (type == Date.class || type == Timestamp.class) {
+			return toDate(value);
+		} else if (type == BigDecimal.class) {
+			return toBigDecimal(value);
+		} else if (type == BigInteger.class) {
+			return toBigInteger(value);
+		} else if (type == Boolean.class) {
+			return toBoolean(value);
+		} else if (type == Double.class) {
+			return toDouble(value);
+		} else if (type == Float.class) {
+			return toFloat(value);
+		} else if (type == Integer.class) {
+			return toInteger(value);
+		} else if (type == Long.class) {
+			return toLong(value);
+		} else if (type == Short.class) {
+			return toShort(value);
+		} else if (type == Byte.class) {
+			return toByte(value);
+		} else {
+			return value;
 		}
 	}
 
@@ -74,6 +218,7 @@ public final class BeanUtils {
 	 * @param map
 	 *            request.getParameterMap()
 	 */
+	@SuppressWarnings("rawtypes")
 	private static void setBeanProperty(Object obj, Map map) {
 		if (map == null)
 			return;
@@ -144,7 +289,7 @@ public final class BeanUtils {
 				else if (cls == Date[].class)
 					PropertyUtils.setProperty(obj, key, toDate(values));
 			} catch (Exception e) {
-
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 	}
@@ -156,7 +301,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return BigDecimal
 	 */
-	public static BigDecimal toBigDecimal(String value) {
+	private static BigDecimal toBigDecimal(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -173,7 +318,7 @@ public final class BeanUtils {
 	 *            字符串数组
 	 * @return BigDecimal[]
 	 */
-	public static BigDecimal[] toBigDecimal(String[] values) {
+	private static BigDecimal[] toBigDecimal(String[] values) {
 		BigDecimal[] result = new BigDecimal[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toBigDecimal(values[i]);
@@ -187,7 +332,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return BigInteger
 	 */
-	public static BigInteger toBigInteger(String value) {
+	private static BigInteger toBigInteger(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -204,7 +349,7 @@ public final class BeanUtils {
 	 *            字符串数组
 	 * @return BigInteger[]
 	 */
-	public static BigInteger[] toBigInteger(String[] values) {
+	private static BigInteger[] toBigInteger(String[] values) {
 		BigInteger[] result = new BigInteger[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toBigInteger(values[i]);
@@ -218,7 +363,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Boolean
 	 */
-	public static Boolean toBoolean(String value) {
+	private static Boolean toBoolean(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -235,7 +380,7 @@ public final class BeanUtils {
 	 *            字符串数组
 	 * @return Boolean[]
 	 */
-	public static Boolean[] toBoolean(String[] values) {
+	private static Boolean[] toBoolean(String[] values) {
 		Boolean[] result = new Boolean[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toBoolean(values[i]);
@@ -249,7 +394,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Double
 	 */
-	public static Double toDouble(String value) {
+	private static Double toDouble(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -266,7 +411,7 @@ public final class BeanUtils {
 	 *            字符串数组
 	 * @return Double[]
 	 */
-	public static Double[] toDouble(String[] values) {
+	private static Double[] toDouble(String[] values) {
 		Double[] result = new Double[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toDouble(values[i]);
@@ -280,7 +425,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Float
 	 */
-	public static Float toFloat(String value) {
+	private static Float toFloat(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -297,7 +442,7 @@ public final class BeanUtils {
 	 *            字符串数组
 	 * @return Float[]
 	 */
-	public static Float[] toFloat(String[] values) {
+	private static Float[] toFloat(String[] values) {
 		Float[] result = new Float[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toFloat(values[i]);
@@ -311,7 +456,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Integer
 	 */
-	public static Integer toInteger(String value) {
+	private static Integer toInteger(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -328,7 +473,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Integer[]
 	 */
-	public static Integer[] toInteger(String[] values) {
+	private static Integer[] toInteger(String[] values) {
 		Integer[] result = new Integer[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toInteger(values[i]);
@@ -342,7 +487,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Long
 	 */
-	public static Long toLong(String value) {
+	private static Long toLong(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -359,7 +504,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Long[]
 	 */
-	public static Long[] toLong(String[] values) {
+	private static Long[] toLong(String[] values) {
 		Long[] result = new Long[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toLong(values[i]);
@@ -373,7 +518,7 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Short
 	 */
-	public static Short toShort(String value) {
+	private static Short toShort(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -390,14 +535,14 @@ public final class BeanUtils {
 	 *            字符串
 	 * @return Short[]
 	 */
-	public static Short[] toShort(String[] values) {
+	private static Short[] toShort(String[] values) {
 		Short[] result = new Short[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toShort(values[i]);
 		return result;
 	}
 
-	public static Byte toByte(String value) {
+	private static Byte toByte(String value) {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
@@ -407,7 +552,7 @@ public final class BeanUtils {
 		}
 	}
 
-	public static Byte[] toByte(String[] values) {
+	private static Byte[] toByte(String[] values) {
 		Byte[] result = new Byte[values.length];
 		for (int i = 0; i < values.length; i++)
 			result[i] = toByte(values[i]);
@@ -425,12 +570,12 @@ public final class BeanUtils {
 		if (value == null || value.equals("") || value.equals("null"))
 			return null;
 		try {
-			// DateFormat dateFormat = new DateFormat();
-			dateFormat.setLenient(false);
-			return dateFormat.parse(value);
+			_date_format.setLenient(false);
+			return _date_format.parse(value);
 		} catch (Exception e) {
-			return null;
+			LOGGER.error(e.getMessage(), e);
 		}
+		return null;
 	}
 
 	/**

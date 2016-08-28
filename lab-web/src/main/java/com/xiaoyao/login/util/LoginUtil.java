@@ -112,7 +112,7 @@ public final class LoginUtil {
 	 * @param key
 	 * @return
 	 */
-	public static String getPropertyValue(String key) {
+	protected static String getPropertyValue(String key) {
 		return p.getProperty(key);
 	}
 
@@ -123,7 +123,7 @@ public final class LoginUtil {
 	 * @param defaultValue
 	 * @return
 	 */
-	public static String getPropertyValue(String key, String defaultValue) {
+	protected static String getPropertyValue(String key, String defaultValue) {
 		return p.getProperty(key, defaultValue);
 	}
 
@@ -136,6 +136,24 @@ public final class LoginUtil {
 		int count = Integer.valueOf(getPropertyValue("invite_code_count",
 				INVITE_CODE_COUNT));
 		return count;
+	}
+
+	/**
+	 * 获取首次注册金额
+	 * 
+	 * @return
+	 */
+	public static String getRegistAmount() {
+		return getPropertyValue("regist_amount", "100");
+	}
+
+	/**
+	 * 获取首次注册支付宝URL
+	 * 
+	 * @return
+	 */
+	public static String getAliapayURL() {
+		return getPropertyValue("aliapay_url");
 	}
 
 }

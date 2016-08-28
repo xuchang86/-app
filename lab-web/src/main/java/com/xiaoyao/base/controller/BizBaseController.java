@@ -6,10 +6,17 @@
  *****************************************************************************/
 package com.xiaoyao.base.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
+
+import com.xiaoyao.base.model.Person;
 import com.xiaoyao.login.exception.LoginException;
 import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.service.PersonManageService;
 
 /**
  * 业务基础Controller
@@ -21,6 +28,12 @@ import com.xiaoyao.login.model.User;
 public class BizBaseController extends BaseController {
 
 	/**
+	 * 注入 PersonManageService
+	 */
+	@Autowired
+	private PersonManageService personManageService;
+
+	/**
 	 * 获取当前登录用户信息
 	 * 
 	 * @param request
@@ -28,10 +41,23 @@ public class BizBaseController extends BaseController {
 	 */
 	public User getCurrentUser(HttpServletRequest request) {
 		if (request.getSession().getAttribute("user") == null) {
-			throw new LoginException("用户session失效,请检查是否存在非法操作.");
+			throw new LoginException("用户session失效,请重新登录.");
 		}
 
 		return (User) request.getSession().getAttribute("user");
+	}
+
+	/**
+	 * 获取当前Person信息
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public Person getCurrentPerson(HttpServletRequest request) {
+		if (request.getSession().getAttribute("person") == null) {
+			throw new LoginException("用户session失效,请重新登录.");
+		}
+		return (Person) request.getSession().getAttribute("person");
 	}
 
 	/**
@@ -42,5 +68,25 @@ public class BizBaseController extends BaseController {
 	 */
 	public void setCurrentUser(HttpServletRequest request, User user) {
 		request.getSession().setAttribute("user", user);
+	}
+
+	public void setCurrentUserAndPerson(HttpServletRequest request, User user) {
+		request.getSession().setAttribute("user", user);
+		if (user.getId() != null) {
+			List<Person> lst = personManageService.getPersonByUser(user);
+			if (!CollectionUtils.isEmpty(lst)) {
+				setCurrentPerson(request, lst.get(0));
+			}
+		}
+	}
+
+	/**
+	 * 设置当前人员信息到session中
+	 * 
+	 * @param request
+	 * @param person
+	 */
+	public void setCurrentPerson(HttpServletRequest request, Person person) {
+		request.getSession().setAttribute("person", person);
 	}
 }

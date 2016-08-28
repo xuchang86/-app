@@ -32,7 +32,7 @@ public final class GlobalCache {
 	}
 
 	/** 缓存对象 */
-	private static final Map<String, Object> cache = new HashMap<String, Object>();
+	private static final Map<Object, Object> cache = new HashMap<Object, Object>();
 
 	/** 会员成长规则key */
 	private static final String RULE_KEY = "rule";
@@ -56,7 +56,7 @@ public final class GlobalCache {
 	 * @param key
 	 * @param value
 	 */
-	public static void put(String key, Object value) {
+	public static void put(Object key, Object value) {
 		cache.put(key, value);
 	}
 
@@ -77,6 +77,8 @@ public final class GlobalCache {
 	 * @param rules
 	 */
 	public static void putRule(List<Rule> rules) {
-		put(RULE_KEY, rules);
+		for (Rule rule : rules) {
+			put(rule.getLevel(), rule);
+		}
 	}
 }

@@ -107,7 +107,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xiaoyao.login.model.User" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+   parameterType="com.xiaoyao.login.model.User" >
     insert into T_LOGIN_USER (id, phone, password, 
       name, birthday, address, 
       providerId, requiredId, city, 
@@ -119,7 +120,8 @@
       #{sex,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{ispay,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaoyao.login.model.User" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
+   parameterType="com.xiaoyao.login.model.User" >
     insert into T_LOGIN_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -338,4 +340,28 @@
      WHERE (t.phone = #{phone} OR t.username = #{username})
      AND t.password = #{password}
   </select>
+  
+  <!-- 更新已付款 -->
+  <update id="updateisPay" parameterType="com.xiaoyao.login.model.User" >
+     UPDATE T_LOGIN_USER t 
+     SET t.ISPAY = 1 
+     WHERE 
+     <trim prefix="" prefixOverrides="or" >
+      <if test="phone!=null and phone!=''" >
+         or t.phone =#{phone} 
+      </if>
+      <if test="username!=null and username!=''" >
+         or t.userName = #{username}
+      </if>  
+     </trim>   
+  </update>
+  
+   <!-- 更新Person -->
+  <update id="updatePerson" parameterType="com.xiaoyao.login.model.User" >
+     UPDATE 
+     T_BASE_PERSON t 
+     SET t.name = #{name}
+     WHERE t.user_id = #{id}
+  </update>
+  
 </mapper>

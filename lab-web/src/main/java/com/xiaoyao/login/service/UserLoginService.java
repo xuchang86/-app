@@ -6,16 +6,19 @@
  *****************************************************************************/
 package com.xiaoyao.login.service;
 
-import java.util.HashMap;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import com.xiaoyao.base.model.Level;
+import com.xiaoyao.base.model.Person;
+import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.dao.UserMapperExt;
-import com.xiaoyao.login.model.PayWay;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
 
@@ -27,7 +30,7 @@ import com.xiaoyao.login.model.UserExample;
  * @version 2016年8月18日 许畅 新建
  */
 @Service
-public class UserLoginService {
+public class UserLoginService extends BaseService {
 
 	/** 注入UserMapper */
 	@Autowired
@@ -36,6 +39,10 @@ public class UserLoginService {
 	/** 注入InviteCodeService */
 	@Autowired
 	private InviteCodeService inviteCodeService;
+
+	/** 注入PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
 
 	/**
 	 * 校验当前用户是否已注册
@@ -50,46 +57,34 @@ public class UserLoginService {
 	}
 
 	/**
-	 * 付款并保存User并删除验证码
+	 * 保存User信息并删除验证码
 	 * 
 	 * @param user
 	 *            用户信息
 	 * @param code
 	 *            邀请码
-	 * @param payWay
-	 *            付款方式
-	 * @param payAmount
-	 *            付款金额
 	 * @return
 	 */
-	public Map<String, String> payAndSaveUser(User user, String code,
-			String payWay, String payAmount) {
-		Map<String, String> result = new HashMap<String, String>();
-
-		if (PayWay.WECHART.getValue().equals(payWay)) {// 微信支付
-			if (!_wechartpay(payAmount)) {
-				result.put("error", "微信支付失败.");
-				return result;
-			}
-		} else if (PayWay.ALIPAY.getValue().equals(payWay)) {// 支付宝支付
-			if (!_alipay(payAmount)) {
-				result.put("error", "支付宝支付失败.");
-				return result;
-			}
-		} else {
-			result.put("error", "当前支付方式不支持,请选择其他支付方式.");
-			return result;
-		}
+	public Person saveUser(User user, String code) {
 		// 保存用户
-		int success = userMapperExt.insertSelective(user);
-		if (success != 1) {
-			result.put("error", "保存用户失败.");
-			// 回滚付款金额
-			return result;
+		if (StringUtils.isEmpty(user.getId())) {
+			userMapperExt.insertSelective(user);
+		} else {
+			UserExample example = new UserExample();
+			example.or().andIdEqualTo(user.getId());
+			userMapperExt.updateByExampleSelective(user, example);
 		}
 		// 删除邀请码
 		inviteCodeService.deleteByCode(code);
-		return result;
+		// 新增Person信息
+		Person person = new Person();
+		person.setBill(BigDecimal.ZERO);
+		person.setCreateDate(new Date());
+		person.setName(user.getName());
+		person.setLevel(Level.JIAN_XI_DIZI.getValue());// 见习弟子
+		person.setUserId(user.getId());
+		personManageService.insertPerson(person);
+		return person;
 	}
 
 	/**
@@ -102,9 +97,11 @@ public class UserLoginService {
 	public boolean updateUser(User user) {
 		UserExample example = new UserExample();
 		example.or().andPhoneEqualTo(user.getPhone());
+		// 更新User表信息
 		int result = userMapperExt.updateByExampleSelective(user, example);
-		System.out.println("更新结果集:" + result);
-		return result == 1 ? true : false;
+		// 更新人员信息名称
+		userMapperExt.updatePerson(user);
+		return wrapperReturnVal(result);
 	}
 
 	/**
@@ -124,22 +121,18 @@ public class UserLoginService {
 	}
 
 	/**
-	 * 微信支付
+	 * 更新已付款
 	 * 
-	 * @param payAmount
+	 * @param user
 	 * @return
 	 */
-	protected boolean _wechartpay(String payAmount) {
-		return true;
+	public boolean updateIsPay(User user) {
+
+		return wrapperReturnVal(userMapperExt.updateisPay(user));
 	}
 
-	/**
-	 * 支付宝支付
-	 * 
-	 * @param payAmount
-	 * @return
-	 */
-	protected boolean _alipay(String payAmount) {
-		return true;
+	public User queryUserByPrimaryKey(Integer pk) {
+		return userMapperExt.selectByPrimaryKey(pk);
 	}
+
 }

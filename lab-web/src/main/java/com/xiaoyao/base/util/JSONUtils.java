@@ -51,7 +51,7 @@ public final class JSONUtils {
 	 * @param excludes
 	 *            排除的字段
 	 */
-	public static void sendMsgToClient(HttpServletRequest request,
+	protected static void sendMsgToClient(HttpServletRequest request,
 			HttpServletResponse response, SysCode sysCode, Object content,
 			Map<Class<?>, String[]> includes, Map<Class<?>, String[]> excludes) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -71,6 +71,17 @@ public final class JSONUtils {
 	}
 
 	/**
+	 * 对象转为JSON字符串传递到前端
+	 * 
+	 * @param response
+	 * @param result
+	 */
+	public static void toJSONString(HttpServletResponse response, Object result) {
+		ResponseUtils.renderJson(response,
+				JsonUtils.toJsonString(result, null, null, false));
+	}
+
+	/**
 	 * 发送消息传递至客户端
 	 * 
 	 * @param request
@@ -82,7 +93,7 @@ public final class JSONUtils {
 	 * @param content
 	 *            消息内容
 	 */
-	public static void sendMsgToClient(HttpServletRequest request,
+	protected static void sendMsgToClient(HttpServletRequest request,
 			HttpServletResponse response, SysCode sysCode, Object content) {
 		sendMsgToClient(request, response, sysCode, content, null, null);
 	}
