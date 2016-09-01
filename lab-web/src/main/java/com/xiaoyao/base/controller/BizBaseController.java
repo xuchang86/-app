@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
@@ -17,6 +18,7 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.login.exception.LoginException;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.PersonManageService;
+import com.xiaoyao.login.service.UserLoginService;
 
 /**
  * 业务基础Controller
@@ -33,6 +35,10 @@ public class BizBaseController extends BaseController {
 	@Autowired
 	private PersonManageService personManageService;
 
+	/** 注入UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
+
 	/**
 	 * 获取当前登录用户信息
 	 * 
@@ -41,7 +47,7 @@ public class BizBaseController extends BaseController {
 	 */
 	public User getCurrentUser(HttpServletRequest request) {
 		if (request.getSession().getAttribute("user") == null) {
-			throw new LoginException("用户session失效,请重新登录.");
+			this.queryCurrentUser(request);
 		}
 
 		return (User) request.getSession().getAttribute("user");
@@ -55,7 +61,7 @@ public class BizBaseController extends BaseController {
 	 */
 	public Person getCurrentPerson(HttpServletRequest request) {
 		if (request.getSession().getAttribute("person") == null) {
-			throw new LoginException("用户session失效,请重新登录.");
+			this.queryCurrentUser(request);
 		}
 		return (Person) request.getSession().getAttribute("person");
 	}
@@ -70,8 +76,14 @@ public class BizBaseController extends BaseController {
 		request.getSession().setAttribute("user", user);
 	}
 
+	/**
+	 * 设置当前登录用户信息和人物信息
+	 * 
+	 * @param request
+	 * @param user
+	 */
 	public void setCurrentUserAndPerson(HttpServletRequest request, User user) {
-		request.getSession().setAttribute("user", user);
+		this.setCurrentUser(request, user);
 		if (user.getId() != null) {
 			List<Person> lst = personManageService.getPersonByUser(user);
 			if (!CollectionUtils.isEmpty(lst)) {
@@ -88,5 +100,21 @@ public class BizBaseController extends BaseController {
 	 */
 	public void setCurrentPerson(HttpServletRequest request, Person person) {
 		request.getSession().setAttribute("person", person);
+	}
+
+	/**
+	 * 后台查询当前用户信息
+	 * 
+	 * @param request
+	 */
+	private void queryCurrentUser(HttpServletRequest request) {
+		String userId = request.getParameter("userId");
+		if (StringUtils.isNotEmpty(userId)) {
+			User user = userLoginService.queryUserByPrimaryKey(Integer
+					.valueOf(userId));
+			setCurrentUserAndPerson(request, user);
+		} else {
+			throw new LoginException("用户session失效,请重新登录.");
+		}
 	}
 }

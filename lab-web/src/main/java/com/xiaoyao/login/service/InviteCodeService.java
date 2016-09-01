@@ -61,10 +61,9 @@ public class InviteCodeService extends BaseService {
 	/**
 	 * 获取邀请码
 	 * 
-	 * @param code
 	 * @return
 	 */
-	public List<InviteCode> queryInviteCodeList(String code) {
+	public List<InviteCode> queryInviteCodeList() {
 		InviteCodeExample vo = new InviteCodeExample();
 		vo.or().andIdIsNotNull();
 		return inviteCodeMapper.selectByExample(vo);

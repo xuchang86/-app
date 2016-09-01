@@ -105,6 +105,20 @@ public class UserLoginService extends BaseService {
 	}
 
 	/**
+	 * 通过条件更新User
+	 * 
+	 * @param user
+	 *            User
+	 * @param example
+	 *            条件
+	 * @return
+	 */
+	public boolean updateByExampleSelective(User user, UserExample example) {
+		int result = userMapperExt.updateByExampleSelective(user, example);
+		return wrapperReturnVal(result);
+	}
+
+	/**
 	 * 用户登录
 	 * 
 	 * @param username

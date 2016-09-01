@@ -24,8 +24,10 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.base.util.MD5Util;
+import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.model.UserExample;
 import com.xiaoyao.login.service.InviteCodeService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
@@ -76,7 +78,7 @@ public class UserLoginController extends BizBaseController {
 			} else {
 				// 将当前用户信息放入session中
 				setCurrentUserAndPerson(request, user);
-				JSONUtils.SUCCESS(response, "登录成功.");
+				JSONUtils.SUCCESS(response, user);
 				System.out.println("用户:" + user.getName() + " login in...");
 			}
 		}
@@ -162,7 +164,7 @@ public class UserLoginController extends BizBaseController {
 				String.valueOf(inviteCode));
 		setCurrentPerson(request, person);
 		setCurrentUser(request, user);
-		JSONUtils.SUCCESS(response, "保存用户信息成功.");
+		JSONUtils.SUCCESS(response, user);
 	}
 
 	/**
@@ -271,15 +273,90 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
-	 * 付款成功生成订单号
+	 * 获取邀请码
 	 * 
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("payOrder")
-	public void payOrder(HttpServletRequest request,
+	@RequestMapping("getInviteCode")
+	public void getInviteCode(HttpServletRequest request,
 			HttpServletResponse response) {
+		List<InviteCode> lst = inviteCodeService.queryInviteCodeList();
+		if (CollectionUtils.isEmpty(lst)) {
+			inviteCodeService.batchInsert();
+			lst = inviteCodeService.queryInviteCodeList();
+			JSONUtils.SUCCESS(response, lst.get(0));
+		} else {
+			JSONUtils.SUCCESS(response, lst.get(0).getNumber());
+		}
+	}
 
+	/**
+	 * 重置密码
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("resetPassword")
+	public void resetPassword(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("phone", "手机号码不能为空.");
+		validateResult.put("code", "手机验证码不能为空.");
+		validateResult.put("password", "密码不能为空.");
+		validateResult.put("repeatpwd", "重复密码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String phone = request(request, "phone");
+		String code = request(request, "code");
+		String password = request(request, "password");
+		String repeatpwd = request(request, "repeatpwd");
+
+		if (!isRegist(phone)) {
+			JSONUtils.ERROR(response, "当前用户尚未注册,不能找回密码.");
+			return;
+		}
+
+		if (!password.equals(repeatpwd)) {
+			JSONUtils.PARAM_ERROR(response, "两次的密码不一致.");
+			return;
+		}
+
+		if (!code.equals(request.getSession().getAttribute("code"))) {
+			JSONUtils.ERROR(response, "验证码已失效,请重新发送验证码.");
+			return;
+		}
+
+		User user = new User();
+		user.setPassword(password);
+		UserExample example = new UserExample();
+		example.or().andPhoneEqualTo(phone);
+		if (userLoginService.updateByExampleSelective(user, example)) {
+			JSONUtils.SUCCESS(response, "修改密码成功.");
+		} else {
+			JSONUtils.ERROR(response, "修改密码失败.");
+		}
+	}
+
+	/**
+	 * 获取重置的验证码
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getResetCode")
+	public void getResetCode(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request(request, "phone");
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("phone", "手机号码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		// 随机参数6位数验证码
+		int code = LoginUtil.generatePhoneCode(request, phone);
+		JSONUtils.SUCCESS(response, code);
 	}
 
 }

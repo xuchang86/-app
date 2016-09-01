@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.activity.dao.ActivityMapper" >
-  <resultMap id="BaseResultMap" type="com.xiaoyao.activity.model.Activity" >
+<mapper namespace="com.xiaoyao.upload.dao.UploadFileMapper" >
+  <resultMap id="BaseResultMap" type="com.xiaoyao.upload.model.UploadFile" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="date" property="date" jdbcType="TIMESTAMP" />
-    <result column="person_id" property="personId" jdbcType="INTEGER" />
-    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, type, address, content, date, person_id, cost
+    id, name, user_id, activity_id, type, create_date
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.upload.model.UploadFileExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from T_PUBLISH_ACTIVITY
+    from T_UPLOAD_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,105 +87,96 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from T_PUBLISH_ACTIVITY
+    from T_UPLOAD_FILE
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from T_PUBLISH_ACTIVITY
+    delete from T_UPLOAD_FILE
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xiaoyao.activity.model.ActivityExample" >
-    delete from T_PUBLISH_ACTIVITY
+  <delete id="deleteByExample" parameterType="com.xiaoyao.upload.model.UploadFileExample" >
+    delete from T_UPLOAD_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
-    insert into T_PUBLISH_ACTIVITY (id, type, address, 
-      content, date, person_id, 
-      cost)
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER}, 
-      #{cost,jdbcType=DECIMAL})
+  <insert id="insert" parameterType="com.xiaoyao.upload.model.UploadFile" useGeneratedKeys="true" keyProperty="id">
+    insert into T_UPLOAD_FILE (id, name, user_id, 
+      activity_id, type, create_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{activityId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
-    insert into T_PUBLISH_ACTIVITY
+  <insert id="insertSelective" parameterType="com.xiaoyao.upload.model.UploadFile" useGeneratedKeys="true" keyProperty="id">
+    insert into T_UPLOAD_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
       <if test="type != null" >
         type,
       </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="date != null" >
-        date,
-      </if>
-      <if test="personId != null" >
-        person_id,
-      </if>
-      <if test="cost != null" >
-        cost,
+      <if test="createDate != null" >
+        create_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="date != null" >
-        #{date,jdbcType=TIMESTAMP},
-      </if>
-      <if test="personId != null" >
-        #{personId,jdbcType=INTEGER},
-      </if>
-      <if test="cost != null" >
-        #{cost,jdbcType=DECIMAL},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xiaoyao.activity.model.ActivityExample" resultType="java.lang.Integer" >
-    select count(*) from T_PUBLISH_ACTIVITY
+  <select id="countByExample" parameterType="com.xiaoyao.upload.model.UploadFileExample" resultType="java.lang.Integer" >
+    select count(*) from T_UPLOAD_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update T_PUBLISH_ACTIVITY
+    update T_UPLOAD_FILE
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=VARCHAR},
       </if>
-      <if test="record.address != null" >
-        address = #{record.address,jdbcType=VARCHAR},
-      </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.date != null" >
-        date = #{record.date,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.personId != null" >
-        person_id = #{record.personId,jdbcType=INTEGER},
-      </if>
-      <if test="record.cost != null" >
-        cost = #{record.cost,jdbcType=DECIMAL},
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=DATE},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -194,50 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update T_PUBLISH_ACTIVITY
+    update T_UPLOAD_FILE
     set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      activity_id = #{record.activityId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=VARCHAR},
-      address = #{record.address,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
-      date = #{record.date,jdbcType=TIMESTAMP},
-      person_id = #{record.personId,jdbcType=INTEGER},
-      cost = #{record.cost,jdbcType=DECIMAL}
+      create_date = #{record.createDate,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoyao.activity.model.Activity" >
-    update T_PUBLISH_ACTIVITY
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoyao.upload.model.UploadFile" >
+    update T_UPLOAD_FILE
     <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="date != null" >
-        date = #{date,jdbcType=TIMESTAMP},
-      </if>
-      <if test="personId != null" >
-        person_id = #{personId,jdbcType=INTEGER},
-      </if>
-      <if test="cost != null" >
-        cost = #{cost,jdbcType=DECIMAL},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaoyao.activity.model.Activity" >
-    update T_PUBLISH_ACTIVITY
-    set type = #{type,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      date = #{date,jdbcType=TIMESTAMP},
-      person_id = #{personId,jdbcType=INTEGER},
-      cost = #{cost,jdbcType=DECIMAL}
+  <update id="updateByPrimaryKey" parameterType="com.xiaoyao.upload.model.UploadFile" >
+    update T_UPLOAD_FILE
+    set name = #{name,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      activity_id = #{activityId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

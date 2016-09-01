@@ -6,6 +6,8 @@
  *****************************************************************************/
 package com.xiaoyao.activity.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.xiaoyao.activity.model.Activity;
 import com.xiaoyao.activity.model.ActivityPerson;
@@ -23,6 +27,11 @@ import com.xiaoyao.activity.service.ActivityService;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
+import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.service.PersonManageService;
+import com.xiaoyao.upload.model.FileType;
+import com.xiaoyao.upload.model.UploadFile;
+import com.xiaoyao.upload.service.UploadFileService;
 
 /**
  * 活动Controller
@@ -39,6 +48,14 @@ public class ActivityController extends BizBaseController {
 	@Autowired
 	private ActivityService activityService;
 
+	/** 注入PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
+
+	/** 注入UploadFileService */
+	@Autowired
+	private UploadFileService uploadFileService;
+
 	/**
 	 * 发布活动
 	 * 
@@ -53,6 +70,7 @@ public class ActivityController extends BizBaseController {
 		validateResult.put("content", "活动内容不能为空");
 		validateResult.put("date", "活动时间不能为空.");
 		validateResult.put("cost", "发布费用不能为空.");
+		validateResult.put("userId", "当前登录用户id不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
@@ -60,7 +78,7 @@ public class ActivityController extends BizBaseController {
 		Activity activity = BeanUtils.mapConvertToBean(Activity.class, request);
 		activity.setPersonId(getCurrentPerson(request).getId());
 		if (activityService.insertActivity(activity)) {
-			JSONUtils.SUCCESS(response, "发布信息成功.");
+			JSONUtils.SUCCESS(response, activity);
 		} else {
 			JSONUtils.ERROR(response, "发布信息失败.");
 		}
@@ -94,7 +112,7 @@ public class ActivityController extends BizBaseController {
 		}
 		// 新增活动参与人
 		activityService.insertActivityPerson(person);
-		JSONUtils.SUCCESS(response, "申请活动成功.");
+		JSONUtils.SUCCESS(response, person);
 	}
 
 	/**
@@ -136,5 +154,54 @@ public class ActivityController extends BizBaseController {
 		JSONUtils.toJSONString(response, result);
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end - start) / 1000 + "秒");
+	}
+
+	/**
+	 * 收弟子
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("addChildPerson")
+	public void addChildPerson(HttpServletRequest request,
+			HttpServletResponse response) {
+
+	}
+
+	/**
+	 * 上传图片
+	 * 
+	 * @param multipartFile
+	 * @param request
+	 * @param response
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping("uploadPicture")
+	public void uploadPicture(
+			@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IllegalStateException, IOException {
+		// 获取当前用户
+		User user = getCurrentUser(request);
+		// 获取upload上传文件真实路径
+		String realPath = request.getSession().getServletContext()
+				.getRealPath("upload");
+		String fileName = multipartFile.getOriginalFilename();
+		// TODO 校验文件必须是jpg等图片格式文件
+
+		File file = new File(realPath, fileName);
+		if (!file.exists())
+			file.mkdirs();
+
+		UploadFile uploadFile = new UploadFile();
+		uploadFile.setType(FileType.ACTIVITY.getValue());
+		uploadFile.setName(fileName);
+		uploadFile.setUserId(user.getId());
+		uploadFileService.insertFile(uploadFile);
+		multipartFile.transferTo(file);
+		System.out.println("fileName文件名:" + fileName);
+		// 返回上传图片id
+		JSONUtils.SUCCESS(response, uploadFile.getId());
 	}
 }
