@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaoyao.base.dao.RuleMapper" >
+  <resultMap id="BaseResultMap" type="com.xiaoyao.base.model.Rule" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="level_count" property="levelCount" jdbcType="INTEGER" />
+    <result column="money_pool" property="moneyPool" jdbcType="DECIMAL" />
+    <result column="packet" property="packet" jdbcType="DECIMAL" />
+    <result column="packet_count" property="packetCount" jdbcType="INTEGER" />
+    <result column="child_packet" property="childPacket" jdbcType="DECIMAL" />
+    <result column="child_packet_count" property="childPacketCount" jdbcType="INTEGER" />
+    <result column="upgrade_awards" property="upgradeAwards" jdbcType="DECIMAL" />
+    <result column="member_income" property="memberIncome" jdbcType="DECIMAL" />
+    <result column="platform_income" property="platformIncome" jdbcType="DECIMAL" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, level, level_count, money_pool, packet, packet_count, child_packet, child_packet_count, 
+    upgrade_awards, member_income, platform_income, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.base.model.RuleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_MEMBERS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_MEMBERS_RULE
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from T_MEMBERS_RULE
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xiaoyao.base.model.RuleExample" >
+    delete from T_MEMBERS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xiaoyao.base.model.Rule" >
+    insert into T_MEMBERS_RULE (id, level, level_count, 
+      money_pool, packet, packet_count, 
+      child_packet, child_packet_count, upgrade_awards, 
+      member_income, platform_income, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{levelCount,jdbcType=INTEGER}, 
+      #{moneyPool,jdbcType=DECIMAL}, #{packet,jdbcType=DECIMAL}, #{packetCount,jdbcType=INTEGER}, 
+      #{childPacket,jdbcType=DECIMAL}, #{childPacketCount,jdbcType=INTEGER}, #{upgradeAwards,jdbcType=DECIMAL}, 
+      #{memberIncome,jdbcType=DECIMAL}, #{platformIncome,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaoyao.base.model.Rule" >
+    insert into T_MEMBERS_RULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="levelCount != null" >
+        level_count,
+      </if>
+      <if test="moneyPool != null" >
+        money_pool,
+      </if>
+      <if test="packet != null" >
+        packet,
+      </if>
+      <if test="packetCount != null" >
+        packet_count,
+      </if>
+      <if test="childPacket != null" >
+        child_packet,
+      </if>
+      <if test="childPacketCount != null" >
+        child_packet_count,
+      </if>
+      <if test="upgradeAwards != null" >
+        upgrade_awards,
+      </if>
+      <if test="memberIncome != null" >
+        member_income,
+      </if>
+      <if test="platformIncome != null" >
+        platform_income,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="levelCount != null" >
+        #{levelCount,jdbcType=INTEGER},
+      </if>
+      <if test="moneyPool != null" >
+        #{moneyPool,jdbcType=DECIMAL},
+      </if>
+      <if test="packet != null" >
+        #{packet,jdbcType=DECIMAL},
+      </if>
+      <if test="packetCount != null" >
+        #{packetCount,jdbcType=INTEGER},
+      </if>
+      <if test="childPacket != null" >
+        #{childPacket,jdbcType=DECIMAL},
+      </if>
+      <if test="childPacketCount != null" >
+        #{childPacketCount,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeAwards != null" >
+        #{upgradeAwards,jdbcType=DECIMAL},
+      </if>
+      <if test="memberIncome != null" >
+        #{memberIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="platformIncome != null" >
+        #{platformIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaoyao.base.model.RuleExample" resultType="java.lang.Integer" >
+    select count(*) from T_MEMBERS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_MEMBERS_RULE
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelCount != null" >
+        level_count = #{record.levelCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.moneyPool != null" >
+        money_pool = #{record.moneyPool,jdbcType=DECIMAL},
+      </if>
+      <if test="record.packet != null" >
+        packet = #{record.packet,jdbcType=DECIMAL},
+      </if>
+      <if test="record.packetCount != null" >
+        packet_count = #{record.packetCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.childPacket != null" >
+        child_packet = #{record.childPacket,jdbcType=DECIMAL},
+      </if>
+      <if test="record.childPacketCount != null" >
+        child_packet_count = #{record.childPacketCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.upgradeAwards != null" >
+        upgrade_awards = #{record.upgradeAwards,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberIncome != null" >
+        member_income = #{record.memberIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="record.platformIncome != null" >
+        platform_income = #{record.platformIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_MEMBERS_RULE
+    set id = #{record.id,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=INTEGER},
+      level_count = #{record.levelCount,jdbcType=INTEGER},
+      money_pool = #{record.moneyPool,jdbcType=DECIMAL},
+      packet = #{record.packet,jdbcType=DECIMAL},
+      packet_count = #{record.packetCount,jdbcType=INTEGER},
+      child_packet = #{record.childPacket,jdbcType=DECIMAL},
+      child_packet_count = #{record.childPacketCount,jdbcType=INTEGER},
+      upgrade_awards = #{record.upgradeAwards,jdbcType=DECIMAL},
+      member_income = #{record.memberIncome,jdbcType=DECIMAL},
+      platform_income = #{record.platformIncome,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoyao.base.model.Rule" >
+    update T_MEMBERS_RULE
+    <set >
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="levelCount != null" >
+        level_count = #{levelCount,jdbcType=INTEGER},
+      </if>
+      <if test="moneyPool != null" >
+        money_pool = #{moneyPool,jdbcType=DECIMAL},
+      </if>
+      <if test="packet != null" >
+        packet = #{packet,jdbcType=DECIMAL},
+      </if>
+      <if test="packetCount != null" >
+        packet_count = #{packetCount,jdbcType=INTEGER},
+      </if>
+      <if test="childPacket != null" >
+        child_packet = #{childPacket,jdbcType=DECIMAL},
+      </if>
+      <if test="childPacketCount != null" >
+        child_packet_count = #{childPacketCount,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeAwards != null" >
+        upgrade_awards = #{upgradeAwards,jdbcType=DECIMAL},
+      </if>
+      <if test="memberIncome != null" >
+        member_income = #{memberIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="platformIncome != null" >
+        platform_income = #{platformIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaoyao.base.model.Rule" >
+    update T_MEMBERS_RULE
+    set level = #{level,jdbcType=INTEGER},
+      level_count = #{levelCount,jdbcType=INTEGER},
+      money_pool = #{moneyPool,jdbcType=DECIMAL},
+      packet = #{packet,jdbcType=DECIMAL},
+      packet_count = #{packetCount,jdbcType=INTEGER},
+      child_packet = #{childPacket,jdbcType=DECIMAL},
+      child_packet_count = #{childPacketCount,jdbcType=INTEGER},
+      upgrade_awards = #{upgradeAwards,jdbcType=DECIMAL},
+      member_income = #{memberIncome,jdbcType=DECIMAL},
+      platform_income = #{platformIncome,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
