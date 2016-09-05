@@ -3,3 +3,6 @@
 /lab-base/target
 /lab-alibaba/target
 /lab-web/src/main/webapp/upload
+/.gradle/
+/lab-web/build
+/lab-base/build
