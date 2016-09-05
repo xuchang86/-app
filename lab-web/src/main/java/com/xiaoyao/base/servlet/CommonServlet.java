@@ -6,9 +6,13 @@
  *****************************************************************************/
 package com.xiaoyao.base.servlet;
 
+import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.xiaoyao.base.cache.GlobalCache;
 import com.xiaoyao.base.service.RuleService;
@@ -33,10 +37,58 @@ public class CommonServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	public void init(ServletConfig config) throws ServletException {
+		System.out.println(getClass().getName() + ":init...");
 		super.init(config);
 		// 将会员成长规则算法放入全局缓存
 		RuleService service = SpringContextBeanUtil.getBean(RuleService.class);
 		GlobalCache.putRule(service.queryRule());
+	}
+
+	/**
+	 * @return
+	 *
+	 * @see javax.servlet.GenericServlet#getServletConfig()
+	 */
+	@Override
+	public ServletConfig getServletConfig() {
+		System.out.println(getClass().getName() + ":getServletConfig");
+		return super.getServletConfig();
+	}
+
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws ServletException
+	 * @throws IOException
+	 *
+	 * @see javax.servlet.http.HttpServlet#service(javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		System.out.println(getClass().getName() + ":service");
+		super.service(req, resp);
+	}
+
+	/**
+	 * @return
+	 *
+	 * @see javax.servlet.GenericServlet#getServletInfo()
+	 */
+	@Override
+	public String getServletInfo() {
+		System.out.println(getClass().getName() + ":getServletInfo");
+		return super.getServletInfo();
+	}
+
+	/**
+	 * @see javax.servlet.GenericServlet#destroy()
+	 */
+	@Override
+	public void destroy() {
+		System.out.println(getClass().getName() + ":destroy");
+		super.destroy();
 	}
 
 }

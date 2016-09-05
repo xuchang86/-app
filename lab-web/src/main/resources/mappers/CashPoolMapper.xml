@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.upload.dao.UploadFileMapperExt" >
-  <resultMap id="BaseResultMap" type="com.xiaoyao.upload.model.UploadFile" >
+<mapper namespace="com.xiaoyao.pay.dao.CashPoolMapper" >
+  <resultMap id="BaseResultMap" type="com.xiaoyao.pay.model.CashPool" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="createDate" property="createdate" jdbcType="DATE" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, user_id, activity_id, type, create_date
+    id, money, user_id, createDate
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.upload.model.UploadFileExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.pay.model.CashPoolExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from T_UPLOAD_FILE
+    from T_CASH_POOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,96 +85,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from T_UPLOAD_FILE
+    from T_CASH_POOL
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from T_UPLOAD_FILE
+    delete from T_CASH_POOL
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xiaoyao.upload.model.UploadFileExample" >
-    delete from T_UPLOAD_FILE
+  <delete id="deleteByExample" parameterType="com.xiaoyao.pay.model.CashPoolExample" >
+    delete from T_CASH_POOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xiaoyao.upload.model.UploadFile" useGeneratedKeys="true" keyProperty="id">
-    insert into T_UPLOAD_FILE (id, name, user_id, 
-      activity_id, type, create_date
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{activityId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
-      )
+  <insert id="insert" parameterType="com.xiaoyao.pay.model.CashPool" >
+    insert into T_CASH_POOL (id, money, user_id, 
+      createDate)
+    values (#{id,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL}, #{userId,jdbcType=INTEGER}, 
+      #{createdate,jdbcType=DATE})
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaoyao.upload.model.UploadFile" useGeneratedKeys="true" keyProperty="id">
-    insert into T_UPLOAD_FILE
+  <insert id="insertSelective" parameterType="com.xiaoyao.pay.model.CashPool" >
+    insert into T_CASH_POOL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="money != null" >
+        money,
       </if>
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="activityId != null" >
-        activity_id,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="createDate != null" >
-        create_date,
+      <if test="createdate != null" >
+        createDate,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="activityId != null" >
-        #{activityId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=DATE},
+      <if test="createdate != null" >
+        #{createdate,jdbcType=DATE},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xiaoyao.upload.model.UploadFileExample" resultType="java.lang.Integer" >
-    select count(*) from T_UPLOAD_FILE
+  <select id="countByExample" parameterType="com.xiaoyao.pay.model.CashPoolExample" resultType="java.lang.Integer" >
+    select count(*) from T_CASH_POOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update T_UPLOAD_FILE
+    update T_CASH_POOL
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
       </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.activityId != null" >
-        activity_id = #{record.activityId,jdbcType=INTEGER},
-      </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createDate != null" >
-        create_date = #{record.createDate,jdbcType=DATE},
+      <if test="record.createdate != null" >
+        createDate = #{record.createdate,jdbcType=DATE},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -184,67 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update T_UPLOAD_FILE
+    update T_CASH_POOL
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DECIMAL},
       user_id = #{record.userId,jdbcType=INTEGER},
-      activity_id = #{record.activityId,jdbcType=INTEGER},
-      type = #{record.type,jdbcType=VARCHAR},
-      create_date = #{record.createDate,jdbcType=DATE}
+      createDate = #{record.createdate,jdbcType=DATE}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoyao.upload.model.UploadFile" >
-    update T_UPLOAD_FILE
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaoyao.pay.model.CashPool" >
+    update T_CASH_POOL
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="activityId != null" >
-        activity_id = #{activityId,jdbcType=INTEGER},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=DATE},
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=DATE},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xiaoyao.upload.model.UploadFile" >
-    update T_UPLOAD_FILE
-    set name = #{name,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.xiaoyao.pay.model.CashPool" >
+    update T_CASH_POOL
+    set money = #{money,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=INTEGER},
-      activity_id = #{activityId,jdbcType=INTEGER},
-      type = #{type,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=DATE}
+      createDate = #{createdate,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
-  <!-- 查询T_UPLOAD_FILE中最大值 -->
-  <select id="queryMaxIndex" resultType="java.lang.Integer">
-     SELECT max(t.id) MAXINDEX FROM T_UPLOAD_FILE t
-  </select>
-  
-  <!-- 根据id或者名称查询uploadFile对象 -->
-  <select id="loadModel" parameterType="com.xiaoyao.upload.model.UploadFile" resultType="com.xiaoyao.upload.model.UploadFile"  >
-     SELECT 
-     <include refid="Base_Column_List" />
-     FROM T_UPLOAD_FILE
-     WHERE
-      <trim prefix="(" suffix=")" prefixOverrides="AND|OR" >
-      <if test="id != null" >
-        id = #{id}
-      </if>
-      <if test="name != null" >
-        OR name =#{name}
-      </if>
-    </trim>
-  </select>
-  
 </mapper>

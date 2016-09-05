@@ -8,6 +8,9 @@ package com.xiaoyao.base.util;
 
 import java.security.MessageDigest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * MD5加密解密工具类
  * 
@@ -24,6 +27,13 @@ public final class MD5Util {
 		super();
 	}
 
+	/** 日志记录 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(MD5Util.class);
+
+	/** 基础字符 */
+	private static final char hexDigits[] = { '0', '1', '2', '3', '4', '5',
+			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
 	/**
 	 * 利用JDK MD5单向加密
 	 * 
@@ -32,8 +42,6 @@ public final class MD5Util {
 	 * @return 加密为MD5类型
 	 */
 	public static String encodeToMD5(String s) {
-		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-				'a', 'b', 'c', 'd', 'e', 'f' };
 		try {
 			byte[] btInput = s.getBytes();
 			// 获得MD5摘要算法的 MessageDigest 对象
@@ -53,7 +61,7 @@ public final class MD5Util {
 			}
 			return new String(str);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("MD5加密失败:" + e.getMessage(), e);
 		}
 		return null;
 	}

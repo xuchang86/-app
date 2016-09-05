@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.alipay.util.AlipayNotify;
 import com.xiaoyao.base.controller.BizBaseController;
+import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.pay.model.Order;
+import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;
 
 /**
@@ -42,6 +44,10 @@ public class PayController extends BizBaseController {
 	/** 注入PayService */
 	@Autowired
 	private PayService payService;
+
+	/** 注入 CashPoolService */
+	@Autowired
+	private CashPoolService cashPoolService;
 
 	/**
 	 * 支付宝支付成功反馈信息
@@ -139,6 +145,20 @@ public class PayController extends BizBaseController {
 	public void getRegistAmount(HttpServletRequest request,
 			HttpServletResponse response) {
 		ResponseUtils.renderText(response, LoginUtil.getRegistAmount());
+	}
+
+	/**
+	 * 初始化资金池
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("initCashPool")
+	public void initCashPool(HttpServletRequest request,
+			HttpServletResponse response) {
+		if (cashPoolService.initCashPool()) {
+			JSONUtils.SUCCESS(response, "资金池初始化成功");
+		}
 	}
 
 }

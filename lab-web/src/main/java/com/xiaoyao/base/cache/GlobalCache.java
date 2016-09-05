@@ -6,13 +6,13 @@
  *****************************************************************************/
 package com.xiaoyao.base.cache;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
 
+import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Rule;
 
 /**
@@ -34,8 +34,14 @@ public final class GlobalCache {
 	/** 缓存对象 */
 	private static final Map<Object, Object> cache = new HashMap<Object, Object>();
 
-	/** 会员成长规则key */
-	private static final String RULE_KEY = "rule";
+	/** 服务器ip */
+	public static final String IP = "ip";
+
+	/** 服务器端口 */
+	public static final String PORT = "port";
+
+	/** 服务器上下文 */
+	public static final String CONTEXT_PATH = "contextPath";
 
 	/**
 	 * 获取缓存对象中的值
@@ -65,10 +71,50 @@ public final class GlobalCache {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static List<Rule> getRule() {
-		return getCache(RULE_KEY) == null ? new ArrayList<Rule>()
-				: (List<Rule>) getCache(RULE_KEY);
+	public static Rule getRule(Level level) {
+		if (!cache.containsKey(level.getValue()))
+			return null;
+
+		return (Rule) cache.get(level.getValue());
+	}
+
+	/**
+	 * 从缓存中取得会员成长算法规则
+	 * 
+	 * @return
+	 */
+	public static Rule getRule(Integer level) {
+		if (!cache.containsKey(level))
+			return null;
+
+		return (Rule) cache.get(level);
+	}
+
+	/**
+	 * 获取服务器ip地址
+	 * 
+	 * @return
+	 */
+	public static String getServerIP() {
+		return String.valueOf(getCache(IP));
+	}
+
+	/**
+	 * 获取服务器端口号
+	 * 
+	 * @return
+	 */
+	public static String getServerPort() {
+		return String.valueOf(getCache(PORT));
+	}
+
+	/**
+	 * 服务器上下文路径
+	 * 
+	 * @return
+	 */
+	public static String getContextPath() {
+		return String.valueOf(getCache(CONTEXT_PATH));
 	}
 
 	/**

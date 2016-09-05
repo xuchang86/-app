@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.upload.model.FileType;
 import com.xiaoyao.upload.model.UploadFile;
 import com.xiaoyao.upload.service.UploadFileService;
+import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 活动Controller
@@ -74,9 +76,14 @@ public class ActivityController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
+		// 文件id
+		String fileId = request(request, "fileId");
 		// 保存发布信息
 		Activity activity = BeanUtils.mapConvertToBean(Activity.class, request);
 		activity.setPersonId(getCurrentPerson(request).getId());
+		if (StringUtils.isNotEmpty(fileId)) {
+			activity.setUrls(new String[] { fileId });
+		}
 		if (activityService.insertActivity(activity)) {
 			JSONUtils.SUCCESS(response, activity);
 		} else {
@@ -165,7 +172,8 @@ public class ActivityController extends BizBaseController {
 	@RequestMapping("addChildPerson")
 	public void addChildPerson(HttpServletRequest request,
 			HttpServletResponse response) {
-
+		request(request, "parentId");
+		request(request, "");
 	}
 
 	/**
@@ -188,20 +196,62 @@ public class ActivityController extends BizBaseController {
 		String realPath = request.getSession().getServletContext()
 				.getRealPath("upload");
 		String fileName = multipartFile.getOriginalFilename();
-		// TODO 校验文件必须是jpg等图片格式文件
+		System.out.println("originalFilename文件名:" + fileName);
+		// 校验文件必须是jpg等图片格式文件
+		String contentType = multipartFile.getContentType();
+		if (contentType.indexOf("image") < 0) {
+			JSONUtils.ERROR(response, "上传的文件存在非法格式,不允许上传");
+			return;
+		}
+		if (!UploadFileUtil.checkIsImage(multipartFile.getInputStream())) {
+			JSONUtils.ERROR(response, "上传的文件非图片格式,不允许上传");
+			return;
+		}
+		Integer index = uploadFileService.queryMaxIndex();
+		fileName = UploadFileUtil.createFileName(fileName, index);
 
-		File file = new File(realPath, fileName);
-		if (!file.exists())
-			file.mkdirs();
-
+		// 新增uploadFile表数据
 		UploadFile uploadFile = new UploadFile();
 		uploadFile.setType(FileType.ACTIVITY.getValue());
 		uploadFile.setName(fileName);
 		uploadFile.setUserId(user.getId());
 		uploadFileService.insertFile(uploadFile);
+
+		// 文件上传至服务器
+		File file = new File(realPath, fileName);
+		if (!file.exists())
+			file.mkdirs();
 		multipartFile.transferTo(file);
-		System.out.println("fileName文件名:" + fileName);
+
 		// 返回上传图片id
 		JSONUtils.SUCCESS(response, uploadFile.getId());
+	}
+
+	/**
+	 * 获取上传的图片的URL地址
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getFileURL")
+	public void getFileURL(HttpServletRequest request,
+			HttpServletResponse response) {
+		String name = request(request, "name");
+		String id = request(request, "id");
+		if (StringUtils.isBlank(id) && StringUtils.isBlank(name)) {
+			JSONUtils.PARAM_ERROR(response, "文件名称或者id至少一个不能为空.");
+			return;
+		}
+
+		UploadFile model = new UploadFile();
+		model.setId(Integer.parseInt(id));
+		if (StringUtils.isBlank(name))
+			name = uploadFileService.loadModel(model).getName();
+
+		String URL = UploadFileUtil.convertToFileHttpURL(
+				request.getServerName(),
+				String.valueOf(request.getServerPort()),
+				request.getContextPath(), name);
+		JSONUtils.SUCCESS(response, URL);
 	}
 }

@@ -85,6 +85,23 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
+	 * 获取当前个人信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getCurrentPerson")
+	public void getCurrentPerson(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		JSONUtils.SUCCESS(response, getCurrentPerson(request));
+	}
+
+	/**
 	 * 用户注册(先注册 再付款 最后完善个人信息)
 	 * 
 	 * @param request
@@ -141,6 +158,7 @@ public class UserLoginController extends BizBaseController {
 	public void payment(HttpServletRequest request, HttpServletResponse response) {
 		String inviteCode = request(request, "inviteCode");// 邀请码
 		String isPay = request(request, "isPay");// 是否已付款
+		String parentId = request(request, "parentPersonId");// 师傅的personId
 		// 校验参数是否为空
 		Map<String, String> validateResult = new HashMap<String, String>();
 		validateResult.put("inviteCode", "邀请码不能为空.");
@@ -161,7 +179,7 @@ public class UserLoginController extends BizBaseController {
 		User user = getCurrentUser(request);
 		user.setIspay(ispay);
 		Person person = userLoginService.saveUser(user,
-				String.valueOf(inviteCode));
+				String.valueOf(inviteCode), parentId);
 		setCurrentPerson(request, person);
 		setCurrentUser(request, user);
 		JSONUtils.SUCCESS(response, user);

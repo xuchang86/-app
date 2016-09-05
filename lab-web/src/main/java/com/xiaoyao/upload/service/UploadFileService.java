@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoyao.base.service.BaseService;
-import com.xiaoyao.upload.dao.UploadFileMapper;
+import com.xiaoyao.upload.dao.UploadFileMapperExt;
 import com.xiaoyao.upload.model.UploadFile;
 import com.xiaoyao.upload.model.UploadFileExample;
 
@@ -26,9 +26,9 @@ import com.xiaoyao.upload.model.UploadFileExample;
 @Service
 public class UploadFileService extends BaseService {
 
-	/** 注入 UploadFileMapper */
+	/** 注入 uploadFileMapperExt */
 	@Autowired
-	private UploadFileMapper uploadFileMapper;
+	private UploadFileMapperExt uploadFileMapperExt;
 
 	/**
 	 * 新增文件
@@ -37,7 +37,7 @@ public class UploadFileService extends BaseService {
 	 * @return
 	 */
 	public boolean insertFile(UploadFile file) {
-		return wrapperReturnVal(uploadFileMapper.insertSelective(file));
+		return wrapperReturnVal(uploadFileMapperExt.insertSelective(file));
 	}
 
 	/**
@@ -49,7 +49,55 @@ public class UploadFileService extends BaseService {
 	public boolean exists(UploadFile file) {
 		UploadFileExample exp = new UploadFileExample();
 		exp.or().andNameEqualTo(file.getName());
-		List<UploadFile> lst = uploadFileMapper.selectByExample(exp);
+		List<UploadFile> lst = uploadFileMapperExt.selectByExample(exp);
 		return lst.size() > 0 ? true : false;
+	}
+
+	/**
+	 * 查询最大下标
+	 * 
+	 * @return Integer
+	 */
+	public Integer queryMaxIndex() {
+		return uploadFileMapperExt.queryMaxIndex();
+	}
+
+	/**
+	 * 通过活动id查询UploadFile
+	 * 
+	 * @param activityId
+	 *            活动Id
+	 * @return
+	 */
+	public List<UploadFile> queryFileByActivityId(Integer activityId) {
+		UploadFileExample example = new UploadFileExample();
+		example.or().andActivityIdEqualTo(activityId);
+		return uploadFileMapperExt.selectByExample(example);
+	}
+
+	/**
+	 * 通过id或者名称查询对象
+	 * 
+	 * @param uploadFile
+	 * @return
+	 */
+	public UploadFile loadModel(UploadFile uploadFile) {
+		return uploadFileMapperExt.loadModel(uploadFile);
+	}
+
+	/**
+	 * 更新活动id
+	 * 
+	 * @param activityId
+	 * @param id
+	 * @return
+	 */
+	public boolean updateActivityId(Integer activityId, Integer id) {
+		UploadFile record = new UploadFile();
+		record.setActivityId(activityId);
+		UploadFileExample example = new UploadFileExample();
+		example.or().andIdEqualTo(id);
+		return wrapperReturnVal(uploadFileMapperExt.updateByExampleSelective(
+				record, example));
 	}
 }

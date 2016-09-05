@@ -6,14 +6,13 @@
  *****************************************************************************/
 package com.xiaoyao.login.service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Person;
@@ -21,6 +20,8 @@ import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.dao.UserMapperExt;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
+import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.pay.service.CashPoolService;
 
 /**
  * 用户登录服务
@@ -44,6 +45,10 @@ public class UserLoginService extends BaseService {
 	@Autowired
 	private PersonManageService personManageService;
 
+	/** 注入 CashPoolService */
+	@Autowired
+	private CashPoolService cashPoolService;
+
 	/**
 	 * 校验当前用户是否已注册
 	 * 
@@ -63,27 +68,44 @@ public class UserLoginService extends BaseService {
 	 *            用户信息
 	 * @param code
 	 *            邀请码
+	 * @param parentId
+	 *            师傅id
+	 * 
 	 * @return
 	 */
-	public Person saveUser(User user, String code) {
+	public Person saveUser(User user, String code, String parentId) {
 		// 保存用户
-		if (StringUtils.isEmpty(user.getId())) {
+		if (user.getId() == null) {
 			userMapperExt.insertSelective(user);
 		} else {
 			UserExample example = new UserExample();
 			example.or().andIdEqualTo(user.getId());
 			userMapperExt.updateByExampleSelective(user, example);
 		}
+
 		// 删除邀请码
 		inviteCodeService.deleteByCode(code);
-		// 新增Person信息
+
+		// 组装个人信息
 		Person person = new Person();
-		person.setBill(BigDecimal.ZERO);
+		person.setBill(LoginUtil.getRegistXyAmount());// 逍遥币
 		person.setCreateDate(new Date());
 		person.setName(user.getName());
 		person.setLevel(Level.JIAN_XI_DIZI.getValue());// 见习弟子
 		person.setUserId(user.getId());
+		if (StringUtils.isNotBlank(parentId)) {
+			person.setParentId(Integer.parseInt(parentId));
+		}
+
+		// 1.新增个人信息
 		personManageService.insertPerson(person);
+
+		// 2.增加资金池资金
+		cashPoolService.addCashPool(person.getBill());
+
+		// 3.更新师傅等级,逍遥币,减少资金池资金
+		personManageService.updateParentAndCashPool(person);
+
 		return person;
 	}
 
@@ -145,6 +167,12 @@ public class UserLoginService extends BaseService {
 		return wrapperReturnVal(userMapperExt.updateisPay(user));
 	}
 
+	/**
+	 * 根据用户主键查询User信息
+	 * 
+	 * @param pk
+	 * @return
+	 */
 	public User queryUserByPrimaryKey(Integer pk) {
 		return userMapperExt.selectByPrimaryKey(pk);
 	}

@@ -29,24 +29,26 @@
   		scope = $scope;
   	};
 
-  	//发布信息
-  	$scope.publish = function() {
-  		$.ajax({
-  			url: '<%=request.getContextPath()%>/activity/publish.do',
-  			dataType: 'json',
-  			type: 'POST',
-  			data: {
-  				type: 'sale_service',
-  				address: '深圳市罗湖大酒店',
-  				content: '出售陪吃陪喝各种服务',
-  				date: '2016-08-21',
-  				cost: 1000
-  			},
-  			success: function(data) {
-  				console.log(data);
-  			}
-  		});
-  	};
+    //发布信息
+    $scope.publish = function() {
+      $.ajax({
+        url: '<%=request.getContextPath()%>/activity/publish.do',
+        dataType: 'json',
+        type: 'POST',
+        data: {
+          type: 'sale_service',
+          address: '深圳市罗湖大酒店',
+          content: '出售陪吃陪喝各种服务',
+          date: '2016-08-21',
+          cost: 1000,
+          userId: '3',
+          fileId: '7'
+        },
+        success: function(data) {
+          console.log(data);
+        }
+      });
+    };
 
     //申请加入
     $scope.applyToJoin = function(){

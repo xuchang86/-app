@@ -25,6 +25,9 @@ public class Activity {
 	/** 活动参与人 */
 	private List<ActivityPerson> activityPerson = new ArrayList<ActivityPerson>();
 
+	/** 发布的图片 */
+	private String[] urls;
+
 	public Integer getId() {
 		return id;
 	}
@@ -94,5 +97,20 @@ public class Activity {
 	 */
 	public void setActivityPerson(List<ActivityPerson> activityPerson) {
 		this.activityPerson = activityPerson;
+	}
+
+	/**
+	 * @return the urls
+	 */
+	public String[] getUrls() {
+		return urls;
+	}
+
+	/**
+	 * @param urls
+	 *            the urls to set
+	 */
+	public void setUrls(String[] urls) {
+		this.urls = urls;
 	}
 }

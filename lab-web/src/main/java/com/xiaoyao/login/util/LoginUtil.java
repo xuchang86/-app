@@ -8,6 +8,7 @@ package com.xiaoyao.login.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,4 +157,23 @@ public final class LoginUtil {
 		return getPropertyValue("aliapay_url");
 	}
 
+	/**
+	 * 获取人民币兑换逍遥币的汇率(人民币:逍遥币=1:100)
+	 * 
+	 * @return
+	 */
+	public static BigDecimal getRate() {
+		String rate = getPropertyValue("rate", "100");
+		return new BigDecimal(rate);
+	}
+
+	/**
+	 * 获取首次注册的逍遥币(通过人民币兑换)
+	 * 
+	 * @return
+	 */
+	public static BigDecimal getRegistXyAmount() {
+		BigDecimal rmb = new BigDecimal(getRegistAmount());
+		return rmb.multiply(getRate());
+	}
 }

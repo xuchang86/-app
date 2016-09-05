@@ -16,6 +16,12 @@
     <form action="<%=request.getContextPath()%>/activity/uploadPicture.do" method="post" enctype="multipart/form-data">  
       <input type="file" name="file" /> <input type="submit" value="Submit" />
     </form>  
+    <table>
+      <tr>
+        <td><input type="button" value="获取URL" ng-click="getFileURL()"/></td>
+      </tr>
+    </table>
+      
 </body>
 <script>
   var scope;
@@ -24,6 +30,21 @@
   	$scope.ready = function() {
   		scope = $scope;
   	};
+
+    $scope.getFileURL= function(){
+      $.ajax({
+        url: '<%=request.getContextPath()%>/activity/getFileURL.do',
+        dataType: 'json',
+        type: 'POST',
+        data: {
+          name: '',
+          id:'8'
+        },
+        success: function(data) {
+          console.log(data);
+        }
+      });
+    };
   	
   });
 </script>

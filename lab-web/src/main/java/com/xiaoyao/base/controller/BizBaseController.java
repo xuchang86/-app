@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.xiaoyao.base.cache.GlobalCache;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.login.exception.LoginException;
 import com.xiaoyao.login.model.User;
@@ -90,6 +91,18 @@ public class BizBaseController extends BaseController {
 				setCurrentPerson(request, lst.get(0));
 			}
 		}
+		this.initServerConfigCache(request);
+	}
+
+	/**
+	 * 初始化服务器配置信息
+	 * 
+	 * @param request
+	 */
+	private void initServerConfigCache(HttpServletRequest request) {
+		GlobalCache.put(GlobalCache.IP, request.getServerName());
+		GlobalCache.put(GlobalCache.PORT, request.getServerPort());
+		GlobalCache.put(GlobalCache.CONTEXT_PATH, request.getContextPath());
 	}
 
 	/**

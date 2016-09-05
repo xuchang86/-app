@@ -6,8 +6,11 @@
  *****************************************************************************/
 package com.xiaoyao.activity.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,9 @@ import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
+import com.xiaoyao.upload.model.UploadFile;
+import com.xiaoyao.upload.service.UploadFileService;
+import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 活动服务类
@@ -50,6 +56,10 @@ public class ActivityService extends BaseService {
 	@Autowired
 	private UserLoginService userLoginService;
 
+	/** 注入UploadFileService */
+	@Autowired
+	private UploadFileService uploadFileService;
+
 	/**
 	 * 新增活动
 	 * 
@@ -57,8 +67,13 @@ public class ActivityService extends BaseService {
 	 * @return
 	 */
 	public boolean insertActivity(Activity activity) {
-
-		return wrapperReturnVal(activityMapper.insertSelective(activity));
+		int count = activityMapper.insertSelective(activity);
+		if (!ArrayUtils.isEmpty(activity.getUrls())) {
+			String fileId = activity.getUrls()[0];
+			uploadFileService.updateActivityId(activity.getId(),
+					Integer.valueOf(fileId));
+		}
+		return wrapperReturnVal(count);
 	}
 
 	/**
@@ -144,7 +159,24 @@ public class ActivityService extends BaseService {
 				p.setUser(user);
 			}
 			activity.setActivityPerson(persons);
+			activity.setUrls(wrapperURL(activity));
 		}
 		return lst;
+	}
+
+	/**
+	 * 包装URL为正确的图片路径
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	private String[] wrapperURL(Activity activity) {
+		List<UploadFile> files = uploadFileService
+				.queryFileByActivityId(activity.getId());
+		List<String> url = new ArrayList<String>();
+		for (UploadFile file : files) {
+			url.add(UploadFileUtil.convertToFileHttpURL(file.getName()));
+		}
+		return url.toArray(new String[] {});
 	}
 }
