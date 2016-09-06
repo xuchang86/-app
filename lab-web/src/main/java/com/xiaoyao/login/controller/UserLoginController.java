@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.easemob.server.example.api.ChatRoomAPI;
+import com.easemob.server.example.api.impl.EasemobChatRoom;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
@@ -299,6 +301,7 @@ public class UserLoginController extends BizBaseController {
 	@RequestMapping("getInviteCode")
 	public void getInviteCode(HttpServletRequest request,
 			HttpServletResponse response) {
+		ChatRoomAPI chatRoomAPI = new EasemobChatRoom();
 		List<InviteCode> lst = inviteCodeService.queryInviteCodeList();
 		if (CollectionUtils.isEmpty(lst)) {
 			inviteCodeService.batchInsert();

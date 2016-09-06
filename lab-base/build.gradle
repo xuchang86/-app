@@ -37,6 +37,8 @@ dependencies {
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.3.1'
     compile group: 'dom4j', name: 'dom4j', version:'1.6.1'
     testCompile group: 'junit', name: 'junit', version:'4.11'
+    compile files('alibaba/taobao-sdk-java-auto_1454558048321-20160709-source.jar')
+    compile files('alibaba/taobao-sdk-java-auto_1454558048321-20160709.jar')
 }
 
 tasks.withType(JavaCompile) {

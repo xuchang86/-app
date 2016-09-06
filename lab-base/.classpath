@@ -31,8 +31,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/lab/taobao-sdk-java-auto_1454558048321-20160709.jar"/>
-	<classpathentry kind="lib" path="D:/lab/taobao-sdk-java-auto_1454558048321-20160709-source.jar"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

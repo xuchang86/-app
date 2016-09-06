@@ -4,6 +4,7 @@ apply plugin: 'war'
 description = ''
 dependencies {
   compile project(':lab-base')
+  compile project(':emchat-server')
 }
 
 

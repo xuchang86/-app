@@ -31,12 +31,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/lab/taobao-sdk-java-auto_1454558048321-20160709.jar"/>
-	<classpathentry kind="lib" path="D:/lab/taobao-sdk-java-auto_1454558048321-20160709-source.jar"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/lab/lab/lab-base/alibaba/taobao-sdk-java-auto_1454558048321-20160709.jar"/>
+	<classpathentry kind="lib" path="D:/lab/lab/lab-base/alibaba/taobao-sdk-java-auto_1454558048321-20160709-source.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -2,7 +2,9 @@ rootProject.name = 'lab'
 include ':lab-base'
 include ':lab-alibaba'
 include ':lab-web'
+include ':emchat-server'
 
 project(':lab-base').projectDir = "$rootDir/lab-base" as File
 project(':lab-alibaba').projectDir = "$rootDir/lab-alibaba" as File
 project(':lab-web').projectDir = "$rootDir/lab-web" as File
+project(':emchat-server').projectDir = "$rootDir/emchat-server" as File
