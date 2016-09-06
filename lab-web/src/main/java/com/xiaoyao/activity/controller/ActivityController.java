@@ -82,7 +82,7 @@ public class ActivityController extends BizBaseController {
 		Activity activity = BeanUtils.mapConvertToBean(Activity.class, request);
 		activity.setPersonId(getCurrentPerson(request).getId());
 		if (StringUtils.isNotEmpty(fileId)) {
-			activity.setUrls(new String[] { fileId });
+			activity.setUrls(fileId.split(","));
 		}
 		if (activityService.insertActivity(activity)) {
 			JSONUtils.SUCCESS(response, activity);

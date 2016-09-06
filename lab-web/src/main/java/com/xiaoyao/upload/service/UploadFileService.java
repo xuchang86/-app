@@ -6,6 +6,7 @@
  *****************************************************************************/
 package com.xiaoyao.upload.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,14 +90,18 @@ public class UploadFileService extends BaseService {
 	 * 更新活动id
 	 * 
 	 * @param activityId
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
-	public boolean updateActivityId(Integer activityId, Integer id) {
+	public boolean updateActivityId(Integer activityId, String[] ids) {
 		UploadFile record = new UploadFile();
 		record.setActivityId(activityId);
+		List<Integer> values = new ArrayList<Integer>();
+		for (String id : ids) {
+			values.add(Integer.parseInt(id));
+		}
 		UploadFileExample example = new UploadFileExample();
-		example.or().andIdEqualTo(id);
+		example.or().andIdIn(values);
 		return wrapperReturnVal(uploadFileMapperExt.updateByExampleSelective(
 				record, example));
 	}

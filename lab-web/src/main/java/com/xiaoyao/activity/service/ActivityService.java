@@ -68,9 +68,8 @@ public class ActivityService extends BaseService {
 	public boolean insertActivity(Activity activity) {
 		int count = activityMapper.insertSelective(activity);
 		if (!ArrayUtils.isEmpty(activity.getUrls())) {
-			String fileId = activity.getUrls()[0];
 			uploadFileService.updateActivityId(activity.getId(),
-					Integer.valueOf(fileId));
+					activity.getUrls());
 		}
 		return wrapperReturnVal(count);
 	}
