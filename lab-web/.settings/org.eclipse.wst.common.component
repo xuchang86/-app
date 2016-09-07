@@ -7,6 +7,9 @@
         <dependent-module archiveName="lab-base-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lab-base/lab-base">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="emchat-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/emchat/emchat">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="lab-web"/>
         <property name="java-output-path" value="/lab-web/target/classes"/>
     </wb-module>

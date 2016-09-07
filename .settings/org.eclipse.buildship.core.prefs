@@ -1,6 +1,6 @@
 connection.arguments=
 connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
-connection.java.home=null
+connection.java.home=D\:\\jdk1.7.0_67
 connection.jvm.arguments=
 connection.project.dir=
 derived.resources=.gradle,build
