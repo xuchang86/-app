@@ -12,6 +12,8 @@ public class CashPool {
 
     private Date createdate;
 
+    private BigDecimal platform;
+
     public Integer getId() {
         return id;
     }
@@ -42,5 +44,13 @@ public class CashPool {
 
     public void setCreatedate(Date createdate) {
         this.createdate = createdate;
+    }
+
+    public BigDecimal getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(BigDecimal platform) {
+        this.platform = platform;
     }
 }

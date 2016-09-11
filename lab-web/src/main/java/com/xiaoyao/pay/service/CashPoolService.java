@@ -56,25 +56,31 @@ public class CashPoolService extends BaseService {
 	}
 
 	/**
-	 * 增加资金池资金
+	 * 增加资金池金额和平台收入金额
 	 * 
 	 * @param cash
+	 *            资金池金额
+	 * @param platform
+	 *            平台收入金额
 	 * @return
 	 */
-	public boolean addCashPool(BigDecimal cash) {
+	public boolean addCashPool(BigDecimal cash, BigDecimal platform) {
 
-		return wrapperReturnVal(updateCashPool(cash, true));
+		return wrapperReturnVal(updateCashPool(cash, platform, true));
 	}
 
 	/**
-	 * 减少资金池资金
+	 * 减少资金池资金 和平台收入金额
 	 * 
 	 * @param cash
+	 *            资金池金额
+	 * @param platform
+	 *            平台收入金额
 	 * @return
 	 */
-	public boolean reduceCashPool(BigDecimal cash) {
+	public boolean reduceCashPool(BigDecimal cash, BigDecimal platform) {
 
-		return wrapperReturnVal(updateCashPool(cash, false));
+		return wrapperReturnVal(updateCashPool(cash, platform, false));
 	}
 
 	/**
@@ -82,19 +88,25 @@ public class CashPoolService extends BaseService {
 	 * 
 	 * @param cash
 	 *            资金
+	 * @param platform
+	 *            平台收入
 	 * @param isAdd
 	 *            是否增加
 	 * @return
 	 */
-	private int updateCashPool(BigDecimal cash, boolean isAdd) {
+	private int updateCashPool(BigDecimal cash, BigDecimal platform,
+			boolean isAdd) {
 		CashPool cashPool = queryCashPool(null);
-		BigDecimal currentCash = cashPool.getMoney();
+		BigDecimal currentCash = cashPool.getMoney();// 资金池收入
+		BigDecimal currentPlatform = cashPool.getPlatform();// 平台收入
 		CashPool record = new CashPool();
 		record.setId(CASH_POOL_PRAMRYKEY);
 		if (isAdd) {
 			record.setMoney(currentCash.add(cash));
+			record.setPlatform(currentPlatform.add(platform));
 		} else {
 			record.setMoney(currentCash.subtract(cash));
+			record.setPlatform(currentPlatform.subtract(platform));
 		}
 		return cashPoolMapper.updateByPrimaryKeySelective(record);
 	}

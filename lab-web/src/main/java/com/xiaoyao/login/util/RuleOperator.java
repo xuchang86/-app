@@ -31,7 +31,7 @@ public final class RuleOperator {
 			Level.DA_ZHANG_LAO).getLevelCount();
 
 	/**
-	 * 升级算法:通过弟子数量获取将要获得的级别 <br>
+	 * 升级算法:通过弟子数量获取该级别的奖励 <br>
 	 * 
 	 * (如果返回null则不满足升级条件)
 	 * 
@@ -39,19 +39,11 @@ public final class RuleOperator {
 	 *            弟子数量
 	 */
 	public static Rule upgrade(Integer childCount) {
-		if (childCount < 1) {// 见习弟子
-			return GlobalCache.getRule(Level.JIAN_XI_DIZI);
-		}
-
-		if (childCount >= TOP_LEVEL_COUNT) {// 副掌门
-			return GlobalCache.getRule(Level.FU_ZHANG_MENG);
-		}
-
 		Level[] levels = Level.values();
 		for (Level level : levels) {
 			Rule rule = GlobalCache.getRule(level);
-			if (rule.getLevelCount() == childCount) {
-				return GlobalCache.getRule(rule.getLevel() + 1);
+			if (rule.getTotalChild() == childCount) {
+				return GlobalCache.getRule(level);
 			}
 		}
 		return null;

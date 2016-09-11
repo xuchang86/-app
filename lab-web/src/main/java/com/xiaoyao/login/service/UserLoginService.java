@@ -6,6 +6,7 @@
  *****************************************************************************/
 package com.xiaoyao.login.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -101,11 +102,13 @@ public class UserLoginService extends BaseService {
 	public Person saveUser(User user, String inviteCode) {
 		// 组装个人信息
 		Person person = new Person();
-		person.setBill(LoginUtil.getRegistXyAmount());// 逍遥币
+		person.setBill(LoginUtil.getRegistCashPoolAmt());// 逍遥币
 		person.setCreateDate(new Date());
 		person.setName(user.getName());
 		person.setLevel(Level.JIAN_XI_DIZI.getValue());// 见习弟子
 		person.setUserId(user.getId());
+		// 注册时的平台固定收入金额
+		BigDecimal platformAmt = LoginUtil.getRegistPlatformAmt();
 
 		// 设置师父信息并加入师父的聊天室
 		this.saveParentInfo(user, person, inviteCode);
@@ -114,9 +117,9 @@ public class UserLoginService extends BaseService {
 		personManageService.savePerson(person);
 
 		// 2.增加资金池资金
-		cashPoolService.addCashPool(person.getBill());
+		cashPoolService.addCashPool(person.getBill(), platformAmt);
 
-		// 3.更新师傅等级,逍遥币,减少资金池资金
+		// 3.更新师傅等级,逍遥币,减少平台收入等信息
 		personManageService.updateParentAndCashPool(person);
 
 		return person;

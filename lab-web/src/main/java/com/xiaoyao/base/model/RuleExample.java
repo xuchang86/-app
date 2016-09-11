@@ -765,6 +765,66 @@ public class RuleExample {
             return (Criteria) this;
         }
 
+        public Criteria andTotalChildIsNull() {
+            addCriterion("total_child is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildIsNotNull() {
+            addCriterion("total_child is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildEqualTo(Integer value) {
+            addCriterion("total_child =", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildNotEqualTo(Integer value) {
+            addCriterion("total_child <>", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildGreaterThan(Integer value) {
+            addCriterion("total_child >", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildGreaterThanOrEqualTo(Integer value) {
+            addCriterion("total_child >=", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildLessThan(Integer value) {
+            addCriterion("total_child <", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildLessThanOrEqualTo(Integer value) {
+            addCriterion("total_child <=", value, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildIn(List<Integer> values) {
+            addCriterion("total_child in", values, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildNotIn(List<Integer> values) {
+            addCriterion("total_child not in", values, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildBetween(Integer value1, Integer value2) {
+            addCriterion("total_child between", value1, value2, "totalChild");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalChildNotBetween(Integer value1, Integer value2) {
+            addCriterion("total_child not between", value1, value2, "totalChild");
+            return (Criteria) this;
+        }
+
         public Criteria andRemarkIsNull() {
             addCriterion("remark is null");
             return (Criteria) this;

@@ -140,12 +140,30 @@ public final class LoginUtil {
 	}
 
 	/**
-	 * 获取首次注册金额
+	 * 获取首次注册金额698
 	 * 
 	 * @return
 	 */
 	public static String getRegistAmount() {
-		return getPropertyValue("regist_amount", "100");
+		return getPropertyValue("regist_amount", "698");
+	}
+
+	/**
+	 * 获取注册时资金池收入400
+	 * 
+	 * @return
+	 */
+	public static String getCashPoolIncome() {
+		return getPropertyValue("cash_pool_income", "400");
+	}
+
+	/**
+	 * 获取注册时平台收入金额298
+	 * 
+	 * @return
+	 */
+	public static String getPlatformIncome() {
+		return getPropertyValue("platform_income", "298");
 	}
 
 	/**
@@ -158,22 +176,43 @@ public final class LoginUtil {
 	}
 
 	/**
-	 * 获取人民币兑换逍遥币的汇率(人民币:逍遥币=1:100)
+	 * 获取人民币兑换逍遥币的汇率(人民币:逍遥币=1:1)
 	 * 
 	 * @return
 	 */
 	public static BigDecimal getRate() {
-		String rate = getPropertyValue("rate", "100");
+		String rate = getPropertyValue("rate", "1");
 		return new BigDecimal(rate);
 	}
 
 	/**
-	 * 获取首次注册的逍遥币(通过人民币兑换)
+	 * 获取注册时总金额转换为逍遥币的金额
 	 * 
 	 * @return
 	 */
-	public static BigDecimal getRegistXyAmount() {
+	public static BigDecimal getTotalRegistAmount() {
 		BigDecimal rmb = new BigDecimal(getRegistAmount());
 		return rmb.multiply(getRate());
 	}
+
+	/**
+	 * 获取注册时资金池转换为逍遥币的金额
+	 * 
+	 * @return
+	 */
+	public static BigDecimal getRegistCashPoolAmt() {
+		BigDecimal rmb = new BigDecimal(getCashPoolIncome());
+		return rmb.multiply(getRate());
+	}
+
+	/**
+	 * 获取注册时平台收入转换为逍遥币的金额
+	 * 
+	 * @return
+	 */
+	public static BigDecimal getRegistPlatformAmt() {
+		BigDecimal rmb = new BigDecimal(getPlatformIncome());
+		return rmb.multiply(getRate());
+	}
+
 }

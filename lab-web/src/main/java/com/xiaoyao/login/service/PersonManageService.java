@@ -9,6 +9,7 @@ package com.xiaoyao.login.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -72,13 +73,31 @@ public class PersonManageService extends BaseService {
 			Rule rule = RuleOperator.upgrade(childCount);
 			if (rule != null) {
 				Person parent = queryPersonByPrimaryKey(parentId);
-				parent.setLevel(rule.getLevel());// 等级
+				parent.setLevel(rule.getLevel() + 1);// 等级
 				BigDecimal bill = parent.getBill().add(
-						rule.getUpgradeAwards().add(rule.getMemberIncome()));// 增加个人逍遥币
+						rule.getUpgradeAwards().add(rule.getPacket()));// 升级奖励+徒弟红包
+
+				// 查询当前弟子是否有徒弟,如果有徒弟扣取他们的逍遥币
+				List<Person> childs = queryChildsByParent(person.getId());
+				if (CollectionUtils.isNotEmpty(childs)) {
+					for (Person child : childs) {
+						// 扣减徒孙的逍遥币
+						child.setBill(child.getBill().subtract(
+								rule.getChildPacket()));
+						this.updatePersonByPrimaryKey(child);
+						// 增加徒孙红包
+						bill = bill.add(rule.getChildPacket());
+					}
+				}
+
+				// 更新师傅信息
 				parent.setBill(bill);
 				this.updatePersonByPrimaryKey(parent);
-				// TODO 资金池资金减少
-
+				// 减少徒弟的逍遥币
+				person.setBill(person.getBill().subtract(rule.getPacket()));
+				this.updatePersonByPrimaryKey(person);
+				// TODO 升级奖励 :从平台收入中扣除?
+				cashPoolService.reduceCashPool(BigDecimal.ZERO, rule.getUpgradeAwards());
 			}
 		}
 	}
@@ -97,6 +116,19 @@ public class PersonManageService extends BaseService {
 	}
 
 	/**
+	 * 查询弟子的数据集
+	 * 
+	 * @param parentId
+	 *            师傅id
+	 * @return
+	 */
+	public List<Person> queryChildsByParent(Integer parentId) {
+		PersonExample example = new PersonExample();
+		example.or().andParentIdEqualTo(parentId);
+		return personMapper.selectByExample(example);
+	}
+
+	/**
 	 * 通过User获取Person信息
 	 * 
 	 * @param user
@@ -106,6 +138,13 @@ public class PersonManageService extends BaseService {
 		return this.queryPersonByUserId(user.getId());
 	}
 
+	/**
+	 * 通过userId查询person信息
+	 * 
+	 * @param userId
+	 *            用户id
+	 * @return
+	 */
 	public List<Person> queryPersonByUserId(Integer userId) {
 		PersonExample example = new PersonExample();
 		example.or().andUserIdEqualTo(userId);
