@@ -1,19 +1,19 @@
-drop table if exists T_CASH_POOL;
+ï»¿drop table if exists T_CASH_POOL;
 
 /*==============================================================*/
 /* Table: T_CASH_POOL                                           */
 /*==============================================================*/
 create table T_CASH_POOL
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   money                decimal(10,2) comment '×Ê½ğ',
-   user_id              int comment '´´½¨ÈË',
-   createDate           date comment '´´½¨Ê±¼ä',
-   platform             decimal(10,2) comment 'Æ½Ì¨ÊÕÈë',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   money                decimal(10,2) comment 'èµ„é‡‘',
+   user_id              int comment 'åˆ›å»ºäºº',
+   createDate           date comment 'åˆ›å»ºæ—¶é—´',
+   platform             decimal(10,2) comment 'å¹³å°æ”¶å…¥',
    primary key (id)
 );
 
-alter table T_CASH_POOL comment '×Ê½ğ³Ø';
+alter table T_CASH_POOL comment 'èµ„é‡‘æ± ';
 
 INSERT INTO `T_CASH_POOL` (`id`, `money`, `user_id`, `createDate`, `platform`) VALUES (1, 0.00, 1, '2016-9-11', 0.00);
 

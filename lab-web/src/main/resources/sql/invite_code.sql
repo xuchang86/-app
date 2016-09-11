@@ -1,14 +1,15 @@
-drop table if exists T_INVITE_CODE;
+ï»¿drop table if exists T_INVITE_CODE;
 
 /*==============================================================*/
 /* Table: T_INVITE_CODE                                         */
 /*==============================================================*/
 create table T_INVITE_CODE
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   number               varchar(50) comment 'ÑûÇëÂë',
-   user_id              int comment '´´½¨Õß',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   number               varchar(50) comment 'é‚€è¯·ç ',
+   user_id              int comment 'åˆ›å»ºè€…',
+   chatroom_id          varchar(50) comment 'èŠå¤©å®¤id',
    primary key (id)
 );
 
-alter table T_INVITE_CODE comment 'ÑûÇëÂë';
+alter table T_INVITE_CODE comment 'é‚€è¯·ç ';

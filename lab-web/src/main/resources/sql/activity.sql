@@ -1,18 +1,18 @@
-drop table if exists T_PUBLISH_ACTIVITY;
+ï»¿drop table if exists T_PUBLISH_ACTIVITY;
 
 /*==============================================================*/
 /* Table: T_PUBLISH_ACTIVITY                                    */
 /*==============================================================*/
 create table T_PUBLISH_ACTIVITY
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   type                 varchar(20) comment '»î¶¯Àà±ğ',
-   address              varchar(50) comment '»î¶¯µØÖ·',
-   content              varchar(500) comment '»î¶¯ÄÚÈİ',
-   date                 timestamp comment '»î¶¯Ê±¼ä',
-   person_id            int comment '»î¶¯·¢ÆğÈË',
-   cost                 decimal(10,2) comment '·ÑÓÃ',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   type                 varchar(20) comment 'æ´»åŠ¨ç±»åˆ«',
+   address              varchar(50) comment 'æ´»åŠ¨åœ°å€',
+   content              varchar(500) comment 'æ´»åŠ¨å†…å®¹',
+   date                 timestamp comment 'æ´»åŠ¨æ—¶é—´',
+   person_id            int comment 'æ´»åŠ¨å‘èµ·äºº',
+   cost                 decimal(10,2) comment 'è´¹ç”¨',
    primary key (id)
 );
 
-alter table T_PUBLISH_ACTIVITY comment '·¢²¼µÄ»î¶¯';
+alter table T_PUBLISH_ACTIVITY comment 'å‘å¸ƒçš„æ´»åŠ¨';

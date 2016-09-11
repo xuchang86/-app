@@ -1,23 +1,23 @@
-drop table if exists T_LOGIN_USER;
+ï»¿drop table if exists T_LOGIN_USER;
 
 /*==============================================================*/
 /* Table: T_LOGIN_USER                                          */
 /*==============================================================*/
 create table T_LOGIN_USER
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   phone                varchar(20) comment 'ÊÖ»úºÅ',
-   password             varchar(50) comment 'ÃÜÂë',
-   name                 varchar(20) comment 'ĞÕÃû',
-   birthday             date comment 'ÉúÈÕ',
-   address              varchar(50) comment 'µØÖ·',
-   providerId           varchar(20) comment 'ÄÜÌá¹©µÄ×ÊÔ´',
-   requiredId           varchar(20) comment 'ĞèÒªµÄ×ÊÔ´',
-   city                 varchar(20) comment '³ÇÊĞ',
-   sex                  int comment 'ĞÔ±ğ',
-   userName             varchar(15) comment 'ÓÃ»§Ãû',
-   isPay                int comment 'ÊÇ·ñÖ§¸¶',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   phone                varchar(20) comment 'æ‰‹æœºå·',
+   password             varchar(50) comment 'å¯†ç ',
+   name                 varchar(20) comment 'å§“å',
+   birthday             date comment 'ç”Ÿæ—¥',
+   address              varchar(50) comment 'åœ°å€',
+   providerId           varchar(20) comment 'èƒ½æä¾›çš„èµ„æº',
+   requiredId           varchar(20) comment 'éœ€è¦çš„èµ„æº',
+   city                 varchar(20) comment 'åŸå¸‚',
+   sex                  int comment 'æ€§åˆ«',
+   userName             varchar(15) comment 'ç”¨æˆ·å',
+   isPay                int comment 'æ˜¯å¦æ”¯ä»˜',
    primary key (id)
 );
 
-alter table T_LOGIN_USER comment 'µÇÂ½ÓÃ»§';
+alter table T_LOGIN_USER comment 'ç™»é™†ç”¨æˆ·';

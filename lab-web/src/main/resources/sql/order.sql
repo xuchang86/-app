@@ -1,16 +1,16 @@
-drop table if exists T_PAY_ORDER;
+ï»¿drop table if exists T_PAY_ORDER;
 
 /*==============================================================*/
 /* Table: T_PAY_ORDER                                           */
 /*==============================================================*/
 create table T_PAY_ORDER
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   order_code           varchar(50) comment '¶©µ¥ºÅ',
-   pay_date             timestamp comment '¸¶¿îÊ±¼ä',
-   user_id              int comment '¸¶¿îÈË',
-   pay_amount           decimal(10,2) comment '¸¶¿î½ğ¶î',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   order_code           varchar(50) comment 'è®¢å•å·',
+   pay_date             timestamp comment 'ä»˜æ¬¾æ—¶é—´',
+   user_id              int comment 'ä»˜æ¬¾äºº',
+   pay_amount           decimal(10,2) comment 'ä»˜æ¬¾é‡‘é¢',
    primary key (id)
 );
 
-alter table T_PAY_ORDER comment '¸¶¿î¶©µ¥ĞÅÏ¢';
+alter table T_PAY_ORDER comment 'ä»˜æ¬¾è®¢å•ä¿¡æ¯';

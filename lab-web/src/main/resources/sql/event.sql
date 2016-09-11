@@ -1,16 +1,16 @@
-drop table if exists T_MP_EVENT;
+ï»¿drop table if exists T_MP_EVENT;
 
 /*==============================================================*/
 /* Table: T_MP_EVENT                                            */
 /*==============================================================*/
 create table T_MP_EVENT
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   content              varchar(800) comment '¹«¸æÄÚÈİ',
-   person_id            int comment '¹«¸æ·¢ÆğÈË',
-   start_date           timestamp comment '¹«¸æ¿ªÊ¼Ê±¼ä',
-   end_date             timestamp comment '¹«¸æ½ØÖ¹Ê±¼ä',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   content              varchar(800) comment 'å…¬å‘Šå†…å®¹',
+   person_id            int comment 'å…¬å‘Šå‘èµ·äºº',
+   start_date           timestamp comment 'å…¬å‘Šå¼€å§‹æ—¶é—´',
+   end_date             timestamp comment 'å…¬å‘Šæˆªæ­¢æ—¶é—´',
    primary key (id)
 );
 
-alter table T_MP_EVENT comment 'ÃÅÅÉÊÂ¼ş';
+alter table T_MP_EVENT comment 'é—¨æ´¾äº‹ä»¶';

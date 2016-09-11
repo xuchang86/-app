@@ -1,24 +1,24 @@
-drop table if exists T_MEMBERS_RULE;
+ï»¿drop table if exists T_MEMBERS_RULE;
 
 /*==============================================================*/
 /* Table: T_MEMBERS_RULE                                        */
 /*==============================================================*/
 create table T_MEMBERS_RULE
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   level                int(5) comment 'µÈ¼¶',
-   level_count          int(5) comment 'Éı¼¶ÈËÊı',
-   money_pool           decimal(10,2) comment '×Ê½ğ³Ø',
-   packet               decimal(10,2) comment 'Í½µÜºì°ü',
-   packet_count         int(5) comment 'Í½µÜºì°ü×ÜÊı',
-   child_packet         decimal(10,2) comment 'Í½Ëï¸øÊ¦¸µµÄºì°ü',
-   child_packet_count   int(5) comment 'Í½Ëï¸øÊ¦¸µµÄºì°ü×ÜÊı',
-   upgrade_awards       decimal(10,2) comment 'Éı¼¶½±Àø',
-   member_income        decimal(10,2) comment '»áÔ±ÊÕÈë',
-   platform_income      decimal(10,2) comment 'Æ½Ì¨ÊÕÈë',
-   remark               varchar(100) comment '±¸×¢',
-   total_child          int(5) comment 'µÜ×Ó×ÜÊı',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   level                int(5) comment 'ç­‰çº§',
+   level_count          int(5) comment 'å‡çº§äººæ•°',
+   money_pool           decimal(10,2) comment 'èµ„é‡‘æ± ',
+   packet               decimal(10,2) comment 'å¾’å¼Ÿçº¢åŒ…',
+   packet_count         int(5) comment 'å¾’å¼Ÿçº¢åŒ…æ€»æ•°',
+   child_packet         decimal(10,2) comment 'å¾’å­™ç»™å¸ˆå‚…çš„çº¢åŒ…',
+   child_packet_count   int(5) comment 'å¾’å­™ç»™å¸ˆå‚…çš„çº¢åŒ…æ€»æ•°',
+   upgrade_awards       decimal(10,2) comment 'å‡çº§å¥–åŠ±',
+   member_income        decimal(10,2) comment 'ä¼šå‘˜æ”¶å…¥',
+   platform_income      decimal(10,2) comment 'å¹³å°æ”¶å…¥',
+   remark               varchar(100) comment 'å¤‡æ³¨',
+   total_child          int(5) comment 'å¼Ÿå­æ€»æ•°',
    primary key (id)
 );
 
-alter table T_MEMBERS_RULE comment '»áÔ±³É³¤¹æÔò';
+alter table T_MEMBERS_RULE comment 'ä¼šå‘˜æˆé•¿è§„åˆ™';

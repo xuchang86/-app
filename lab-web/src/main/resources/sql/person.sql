@@ -1,18 +1,18 @@
-drop table if exists T_BASE_PERSON;
+ï»¿drop table if exists T_BASE_PERSON;
 
 /*==============================================================*/
 /* Table: T_BASE_PERSON                                         */
 /*==============================================================*/
 create table T_BASE_PERSON
 (
-   id                   int not null auto_increment comment 'Ö÷¼ü',
-   user_id              int comment 'ÓÃ»§id',
-   level                int comment 'µÈ¼¶',
-   bill                 decimal(10,2) comment 'åĞÒ£±Ò',
-   parent_id            int comment 'Ê¦¸µid',
-   create_date          timestamp comment '´´½¨Ê±¼ä',
-   name                 varchar(20) comment 'êÇ³Æ',
+   id                   int not null auto_increment comment 'ä¸»é”®',
+   user_id              int comment 'ç”¨æˆ·id',
+   level                int comment 'ç­‰çº§',
+   bill                 decimal(10,2) comment 'é€é¥å¸',
+   parent_id            int comment 'å¸ˆå‚…id',
+   create_date          timestamp comment 'åˆ›å»ºæ—¶é—´',
+   name                 varchar(20) comment 'æ˜µç§°',
    primary key (id)
 );
 
-alter table T_BASE_PERSON comment '¸öÈËĞÅÏ¢±í';
+alter table T_BASE_PERSON comment 'ä¸ªäººä¿¡æ¯è¡¨';
