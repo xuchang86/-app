@@ -1,20 +1,5 @@
 package com.easemob.server.example.comm.utils;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContexts;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-
-import javax.net.ssl.*;
-import javax.ws.rs.client.ClientBuilder;
-import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -24,124 +9,153 @@ import java.security.cert.X509Certificate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.ws.rs.client.ClientBuilder;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.glassfish.jersey.client.JerseyClient;
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 public class RestAPIUtils {
-    /**
-     * Obtain a JerseyClient whit SSL
-     *
-     * @return Jersey Client
-     */
-    public static JerseyClient getJerseyClient(boolean isSSL) {
-        ClientBuilder clientBuilder = JerseyClientBuilder.newBuilder().register(MultiPartFeature.class);
 
-        // Create a secure JerseyClient
-        if (isSSL) {
-            try {
-                HostnameVerifier verifier = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                };
+	/**
+	 * Obtain a JerseyClient whit SSL
+	 *
+	 * @return Jersey Client
+	 */
+	public static JerseyClient getJerseyClient(boolean isSSL) {
+		ClientBuilder clientBuilder = JerseyClientBuilder.newBuilder()
+				.register(MultiPartFeature.class);
 
-                TrustManager[] tm = new TrustManager[]{new X509TrustManager() {
+		// Create a secure JerseyClient
+		if (isSSL) {
+			try {
+				HostnameVerifier verifier = new HostnameVerifier() {
+					public boolean verify(String hostname, SSLSession session) {
+						return true;
+					}
+				};
 
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
+				TrustManager[] tm = new TrustManager[] { new X509TrustManager() {
 
-                    public void checkServerTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                    }
+					public X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
 
-                    public void checkClientTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                    }
-                }};
+					public void checkServerTrusted(X509Certificate[] chain,
+							String authType) throws CertificateException {
+					}
 
-                SSLContext sslContext = SSLContext.getInstance("SSL");
+					public void checkClientTrusted(X509Certificate[] chain,
+							String authType) throws CertificateException {
+					}
+				} };
 
-                sslContext.init(null, tm, new SecureRandom());
+				SSLContext sslContext = SSLContext.getInstance("SSL");
 
-                clientBuilder.sslContext(sslContext).hostnameVerifier(verifier);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
-        }
+				sslContext.init(null, tm, new SecureRandom());
 
-        return (JerseyClient) clientBuilder.build().register(JacksonJsonProvider.class);
-    }
+				clientBuilder.sslContext(sslContext).hostnameVerifier(verifier);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (KeyManagementException e) {
+				e.printStackTrace();
+			}
+		}
 
-    /**
-     * Create a httpClient instance
-     *
-     * @param isSSL if the request is protected by ssl
-     * @return HttpClient instance
-     */
-    public static HttpClient getHttpClient(boolean isSSL) {
-        CloseableHttpClient client = null;
+		return (JerseyClient) clientBuilder.build().register(
+				JacksonJsonProvider.class);
+	}
 
-        if(isSSL) {
-            try {
-                X509HostnameVerifier verifier = new X509HostnameVerifier() {
-                    public void verify(String host, SSLSocket ssl) throws IOException {
-                    }
+	/**
+	 * Create a httpClient instance
+	 *
+	 * @param isSSL
+	 *            if the request is protected by ssl
+	 * @return HttpClient instance
+	 */
+	public static HttpClient getHttpClient(boolean isSSL) {
+		CloseableHttpClient client = null;
 
-                    public void verify(String host, X509Certificate cert) throws SSLException {
-                    }
+		if (isSSL) {
+			try {
+				X509HostnameVerifier verifier = new X509HostnameVerifier() {
+					public void verify(String host, SSLSocket ssl)
+							throws IOException {
+					}
 
-                    public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                    }
+					public void verify(String host, X509Certificate cert)
+							throws SSLException {
+					}
 
-                    public boolean verify(String s, SSLSession sslSession) {
-                        return true;
-                    }
-                };
+					public void verify(String host, String[] cns,
+							String[] subjectAlts) throws SSLException {
+					}
 
-                TrustManager[] tm = new TrustManager[]{new X509TrustManager() {
+					public boolean verify(String s, SSLSession sslSession) {
+						return true;
+					}
+				};
 
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
+				TrustManager[] tm = new TrustManager[] { new X509TrustManager() {
 
-                    public void checkServerTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                    }
+					public X509Certificate[] getAcceptedIssuers() {
+						return null;
+					}
 
-                    public void checkClientTrusted(X509Certificate[] chain, String authType)
-                            throws CertificateException {
-                    }
-                }};
+					public void checkServerTrusted(X509Certificate[] chain,
+							String authType) throws CertificateException {
+					}
 
-                SSLContext sslContext = SSLContext.getInstance("SSL");
+					public void checkClientTrusted(X509Certificate[] chain,
+							String authType) throws CertificateException {
+					}
+				} };
 
-                sslContext.init(null, tm, new SecureRandom());
+				SSLContext sslContext = SSLContext.getInstance("SSL");
 
-                client = HttpClients.custom().setSslcontext(sslContext).setHostnameVerifier(verifier).build();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (KeyManagementException e) {
-                e.printStackTrace();
-            }
+				sslContext.init(null, tm, new SecureRandom());
 
-        } else {
-            client = HttpClients.createDefault();
-        }
+				client = HttpClients.custom().setSslcontext(sslContext)
+						.setHostnameVerifier(verifier).build();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (KeyManagementException e) {
+				e.printStackTrace();
+			}
 
-        return client;
-    }
+		} else {
+			client = HttpClients.createDefault();
+		}
 
-    /**
-     * Check illegal String
-     *
-     * @param regex reg expression
-     * @param str string to be validated
-     * @return if matched
-     */
-    public static boolean match(String regex, String str) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(str);
+		return client;
+	}
 
-        return matcher.lookingAt();
-    }
+	/**
+	 * Check illegal String
+	 *
+	 * @param regex
+	 *            reg expression
+	 * @param str
+	 *            string to be validated
+	 * @return if matched
+	 */
+	public static boolean match(String regex, String str) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+
+		return matcher.lookingAt();
+	}
 }

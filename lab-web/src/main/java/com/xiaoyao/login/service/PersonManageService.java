@@ -46,9 +46,14 @@ public class PersonManageService extends BaseService {
 	 * @param person
 	 * @return
 	 */
-	public boolean insertPerson(Person person) {
+	public boolean savePerson(Person person) {
+		if (person.getId() == null) {
+			personMapper.insertSelective(person);
+		} else {
+			personMapper.updateByPrimaryKeySelective(person);
+		}
 
-		return wrapperReturnVal(personMapper.insertSelective(person));
+		return true;
 	}
 
 	/**
@@ -97,9 +102,13 @@ public class PersonManageService extends BaseService {
 	 * @param user
 	 * @return
 	 */
-	public List<Person> getPersonByUser(User user) {
+	public List<Person> queryPersonByUser(User user) {
+		return this.queryPersonByUserId(user.getId());
+	}
+
+	public List<Person> queryPersonByUserId(Integer userId) {
 		PersonExample example = new PersonExample();
-		example.or().andUserIdEqualTo(user.getId());
+		example.or().andUserIdEqualTo(userId);
 		return personMapper.selectByExample(example);
 	}
 

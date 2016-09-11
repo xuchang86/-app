@@ -5,7 +5,9 @@ public class InviteCode {
 
     private String number;
 
-    private Integer isused;
+    private Integer userId;
+
+    private String chatroomId;
 
     public Integer getId() {
         return id;
@@ -23,11 +25,19 @@ public class InviteCode {
         this.number = number == null ? null : number.trim();
     }
 
-    public Integer getIsused() {
-        return isused;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setIsused(Integer isused) {
-        this.isused = isused;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getChatroomId() {
+        return chatroomId;
+    }
+
+    public void setChatroomId(String chatroomId) {
+        this.chatroomId = chatroomId == null ? null : chatroomId.trim();
     }
 }

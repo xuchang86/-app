@@ -9,15 +9,19 @@ package com.xiaoyao.login.service;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.easemob.server.example.comm.utils.EmchatOperator;
+import com.easemob.server.example.comm.wrapper.ResponseWrapper;
 import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.dao.UserMapperExt;
+import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
 import com.xiaoyao.login.util.LoginUtil;
@@ -49,6 +53,10 @@ public class UserLoginService extends BaseService {
 	@Autowired
 	private CashPoolService cashPoolService;
 
+	/** 日志记录 */
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(UserLoginService.class);
+
 	/**
 	 * 校验当前用户是否已注册
 	 * 
@@ -62,19 +70,13 @@ public class UserLoginService extends BaseService {
 	}
 
 	/**
-	 * 保存User信息并删除验证码
+	 * 保存用户信息
 	 * 
 	 * @param user
 	 *            用户信息
-	 * @param code
-	 *            邀请码
-	 * @param parentId
-	 *            师傅id
-	 * 
 	 * @return
 	 */
-	public Person saveUser(User user, String code, String parentId) {
-		// 保存用户
+	public User saveUser(User user) {
 		if (user.getId() == null) {
 			userMapperExt.insertSelective(user);
 		} else {
@@ -82,10 +84,21 @@ public class UserLoginService extends BaseService {
 			example.or().andIdEqualTo(user.getId());
 			userMapperExt.updateByExampleSelective(user, example);
 		}
+		return user;
+	}
 
-		// 删除邀请码
-		inviteCodeService.deleteByCode(code);
-
+	/**
+	 * 保存person信息，增加资金池等
+	 * 
+	 * @param user
+	 *            用户信息
+	 * @param inviteCode
+	 *            邀请码
+	 * @param parentId
+	 *            师傅id
+	 * @return
+	 */
+	public Person saveUser(User user, String inviteCode) {
 		// 组装个人信息
 		Person person = new Person();
 		person.setBill(LoginUtil.getRegistXyAmount());// 逍遥币
@@ -93,12 +106,12 @@ public class UserLoginService extends BaseService {
 		person.setName(user.getName());
 		person.setLevel(Level.JIAN_XI_DIZI.getValue());// 见习弟子
 		person.setUserId(user.getId());
-		if (StringUtils.isNotBlank(parentId)) {
-			person.setParentId(Integer.parseInt(parentId));
-		}
+
+		// 设置师父信息并加入师父的聊天室
+		this.saveParentInfo(user, person, inviteCode);
 
 		// 1.新增个人信息
-		personManageService.insertPerson(person);
+		personManageService.savePerson(person);
 
 		// 2.增加资金池资金
 		cashPoolService.addCashPool(person.getBill());
@@ -107,6 +120,31 @@ public class UserLoginService extends BaseService {
 		personManageService.updateParentAndCashPool(person);
 
 		return person;
+	}
+
+	/**
+	 * 设置师父id并加入师父的聊天室
+	 * 
+	 * @param person
+	 * @param inviteCode
+	 */
+	private void saveParentInfo(User user, Person person, String inviteCode) {
+		List<InviteCode> lst = inviteCodeService
+				.queryInviteCodeByNumber(inviteCode);
+		if (!CollectionUtils.isEmpty(lst)) {
+			InviteCode inviteInfo = lst.get(0);
+			Integer parentUserId = inviteInfo.getUserId();// 师父userId
+			List<Person> persons = personManageService
+					.queryPersonByUserId(parentUserId);
+			if (persons.size() > 0) {
+				// 加入聊天室
+				ResponseWrapper response = EmchatOperator
+						.addBatchUsersToChatRoom(inviteInfo.getChatroomId(),
+								user.getPhone());
+				LOGGER.info("setParentInfo:" + response.getResponseBody());
+				person.setParentId(persons.get(0).getId());
+			}
+		}
 	}
 
 	/**
@@ -168,6 +206,17 @@ public class UserLoginService extends BaseService {
 	}
 
 	/**
+	 * 根据主键更新用户信息
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public boolean updateByByPrimaryKey(User user) {
+
+		return wrapperReturnVal(userMapperExt.updateByPrimaryKeySelective(user));
+	}
+
+	/**
 	 * 根据用户主键查询User信息
 	 * 
 	 * @param pk
@@ -175,6 +224,16 @@ public class UserLoginService extends BaseService {
 	 */
 	public User queryUserByPrimaryKey(Integer pk) {
 		return userMapperExt.selectByPrimaryKey(pk);
+	}
+
+	/**
+	 * 根据用户主键查询User信息
+	 * 
+	 * @param pk
+	 * @return
+	 */
+	public User queryUserByPrimaryKey(String pk) {
+		return queryUserByPrimaryKey(Integer.parseInt(pk));
 	}
 
 }

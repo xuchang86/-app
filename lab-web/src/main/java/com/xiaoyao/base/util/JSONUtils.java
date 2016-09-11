@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.group.core.commons.SysCode;
 import com.group.utils.ResponseUtils;
 import com.group.utils.fastjsonUtils.JsonUtils;
@@ -131,6 +132,17 @@ public final class JSONUtils {
 	public static void PARAM_ERROR(HttpServletResponse response, Object content) {
 		sendMsgToClient(null, response, SysCode.PARAM_IS_ERROR, content, null,
 				null);
+	}
+
+	/**
+	 * string字符串转换为json对象
+	 * 
+	 * @param text
+	 *            字符串
+	 * @return JSONObject
+	 */
+	public static JSONObject convertToJSONObj(String text) {
+		return JSONObject.parseObject(text);
 	}
 
 }

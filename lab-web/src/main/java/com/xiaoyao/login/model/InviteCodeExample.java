@@ -234,63 +234,133 @@ public class InviteCodeExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsusedIsNull() {
-            addCriterion("isUsed is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedIsNotNull() {
-            addCriterion("isUsed is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedEqualTo(Integer value) {
-            addCriterion("isUsed =", value, "isused");
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedNotEqualTo(Integer value) {
-            addCriterion("isUsed <>", value, "isused");
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedGreaterThan(Integer value) {
-            addCriterion("isUsed >", value, "isused");
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedGreaterThanOrEqualTo(Integer value) {
-            addCriterion("isUsed >=", value, "isused");
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedLessThan(Integer value) {
-            addCriterion("isUsed <", value, "isused");
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedLessThanOrEqualTo(Integer value) {
-            addCriterion("isUsed <=", value, "isused");
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedIn(List<Integer> values) {
-            addCriterion("isUsed in", values, "isused");
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedNotIn(List<Integer> values) {
-            addCriterion("isUsed not in", values, "isused");
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedBetween(Integer value1, Integer value2) {
-            addCriterion("isUsed between", value1, value2, "isused");
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andIsusedNotBetween(Integer value1, Integer value2) {
-            addCriterion("isUsed not between", value1, value2, "isused");
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdIsNull() {
+            addCriterion("chatroom_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdIsNotNull() {
+            addCriterion("chatroom_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdEqualTo(String value) {
+            addCriterion("chatroom_id =", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdNotEqualTo(String value) {
+            addCriterion("chatroom_id <>", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdGreaterThan(String value) {
+            addCriterion("chatroom_id >", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdGreaterThanOrEqualTo(String value) {
+            addCriterion("chatroom_id >=", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdLessThan(String value) {
+            addCriterion("chatroom_id <", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdLessThanOrEqualTo(String value) {
+            addCriterion("chatroom_id <=", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdLike(String value) {
+            addCriterion("chatroom_id like", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdNotLike(String value) {
+            addCriterion("chatroom_id not like", value, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdIn(List<String> values) {
+            addCriterion("chatroom_id in", values, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdNotIn(List<String> values) {
+            addCriterion("chatroom_id not in", values, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdBetween(String value1, String value2) {
+            addCriterion("chatroom_id between", value1, value2, "chatroomId");
+            return (Criteria) this;
+        }
+
+        public Criteria andChatroomIdNotBetween(String value1, String value2) {
+            addCriterion("chatroom_id not between", value1, value2, "chatroomId");
             return (Criteria) this;
         }
     }

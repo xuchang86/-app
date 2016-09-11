@@ -38,10 +38,8 @@ public class InviteCodeService extends BaseService {
 	 * @param code
 	 * @return
 	 */
-	public boolean insert(String code) {
-		InviteCode _inviteCode = new InviteCode();
-		_inviteCode.setNumber(code);
-		return inviteCodeMapper.insert(_inviteCode) == 1 ? true : false;
+	public boolean insert(InviteCode inviteCode) {
+		return inviteCodeMapper.insert(inviteCode) == 1 ? true : false;
 	}
 
 	/**
@@ -51,7 +49,9 @@ public class InviteCodeService extends BaseService {
 		int success = 0;
 		int count = LoginUtil.getInviteCodeCount();
 		for (int i = 0; i < count; i++) {
-			if (insert(String.valueOf(LoginUtil.getSixCode()))) {
+			InviteCode code = new InviteCode();
+			code.setNumber(String.valueOf(LoginUtil.getSixCode()));
+			if (insert(code)) {
 				success++;
 			}
 		}
@@ -66,6 +66,31 @@ public class InviteCodeService extends BaseService {
 	public List<InviteCode> queryInviteCodeList() {
 		InviteCodeExample vo = new InviteCodeExample();
 		vo.or().andIdIsNotNull();
+		return inviteCodeMapper.selectByExample(vo);
+	}
+
+	/**
+	 * 查询邀请码
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<InviteCode> queryInviteCode(String userId) {
+		InviteCodeExample vo = new InviteCodeExample();
+		vo.or().andUserIdEqualTo(Integer.parseInt(userId));
+		return inviteCodeMapper.selectByExample(vo);
+	}
+
+	/**
+	 * 通用邀请码查询邀请码信息
+	 * 
+	 * @param code
+	 *            邀请码
+	 * @return
+	 */
+	public List<InviteCode> queryInviteCodeByNumber(String code) {
+		InviteCodeExample vo = new InviteCodeExample();
+		vo.or().andNumberEqualTo(code);
 		return inviteCodeMapper.selectByExample(vo);
 	}
 

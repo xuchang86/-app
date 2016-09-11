@@ -11,6 +11,7 @@ import com.easemob.server.example.api.*;
 import com.easemob.server.example.comm.wrapper.BodyWrapper;
 import com.easemob.server.example.comm.ClientContext;
 import com.easemob.server.example.comm.EasemobRestAPIFactory;
+import com.easemob.server.example.comm.body.ChatRoomBody;
 import com.easemob.server.example.comm.body.IMUserBody;
 import com.easemob.server.example.comm.body.IMUsersBody;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
@@ -40,6 +41,7 @@ public class Main {
         }
         fos.close();
 
+        chatroom.createChatRoom(new ChatRoomBody("room_001", "聊天室_001", Long.parseLong("300"), "1", new String[]{"1","2"}));
         /*
 		// Create a IM user
 		BodyWrapper userBody = new IMUserBody("User101", "123456", "HelloWorld");

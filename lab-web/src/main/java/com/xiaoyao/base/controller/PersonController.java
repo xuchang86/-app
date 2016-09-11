@@ -29,13 +29,13 @@ public class PersonController extends BizBaseController {
 	private PersonManageService personManageService;
 
 	/**
-	 * 收徒
+	 * 获取所有弟子信息
 	 * 
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("addChild")
-	public void addChildPerson(HttpServletRequest request,
+	@RequestMapping("getAllChilds")
+	public void getAllChilds(HttpServletRequest request,
 			HttpServletResponse response) {
 
 	}

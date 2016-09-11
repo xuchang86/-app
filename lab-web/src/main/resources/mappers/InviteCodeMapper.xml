@@ -4,7 +4,8 @@
   <resultMap id="BaseResultMap" type="com.xiaoyao.login.model.InviteCode" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="number" property="number" jdbcType="VARCHAR" />
-    <result column="isUsed" property="isused" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="chatroom_id" property="chatroomId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, number, isUsed
+    id, number, user_id, chatroom_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.login.model.InviteCodeExample" >
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xiaoyao.login.model.InviteCode" >
-    insert into T_INVITE_CODE (id, number, isUsed
-      )
-    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{isused,jdbcType=INTEGER}
-      )
+    insert into T_INVITE_CODE (id, number, user_id, 
+      chatroom_id)
+    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{chatroomId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.login.model.InviteCode" >
     insert into T_INVITE_CODE
@@ -112,8 +113,11 @@
       <if test="number != null" >
         number,
       </if>
-      <if test="isused != null" >
-        isUsed,
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="chatroomId != null" >
+        chatroom_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -123,8 +127,11 @@
       <if test="number != null" >
         #{number,jdbcType=VARCHAR},
       </if>
-      <if test="isused != null" >
-        #{isused,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomId != null" >
+        #{chatroomId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -143,8 +150,11 @@
       <if test="record.number != null" >
         number = #{record.number,jdbcType=VARCHAR},
       </if>
-      <if test="record.isused != null" >
-        isUsed = #{record.isused,jdbcType=INTEGER},
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.chatroomId != null" >
+        chatroom_id = #{record.chatroomId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -155,7 +165,8 @@
     update T_INVITE_CODE
     set id = #{record.id,jdbcType=INTEGER},
       number = #{record.number,jdbcType=VARCHAR},
-      isUsed = #{record.isused,jdbcType=INTEGER}
+      user_id = #{record.userId,jdbcType=INTEGER},
+      chatroom_id = #{record.chatroomId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -166,8 +177,11 @@
       <if test="number != null" >
         number = #{number,jdbcType=VARCHAR},
       </if>
-      <if test="isused != null" >
-        isUsed = #{isused,jdbcType=INTEGER},
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="chatroomId != null" >
+        chatroom_id = #{chatroomId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -175,7 +189,8 @@
   <update id="updateByPrimaryKey" parameterType="com.xiaoyao.login.model.InviteCode" >
     update T_INVITE_CODE
     set number = #{number,jdbcType=VARCHAR},
-      isUsed = #{isused,jdbcType=INTEGER}
+      user_id = #{userId,jdbcType=INTEGER},
+      chatroom_id = #{chatroomId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

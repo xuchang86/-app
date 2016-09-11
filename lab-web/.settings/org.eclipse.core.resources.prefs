@@ -4,4 +4,5 @@ encoding//src/main/resources/config/config_local.properties=UTF-8
 encoding//src/main/resources/config/config_online.properties=UTF-8
 encoding//src/main/resources/config/config_test.properties=UTF-8
 encoding//src/main/resources/config/login.properties=UTF-8
+encoding//src/main/resources/sql/activity.sql=UTF-8
 encoding//src/test/java=utf-8

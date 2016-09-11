@@ -7,7 +7,7 @@ create table T_INVITE_CODE
 (
    id                   int not null auto_increment comment '主键',
    number               varchar(50) comment '邀请码',
-   isUsed               int comment '是否使用',
+   user_id              int comment '创建者',
    primary key (id)
 );
 

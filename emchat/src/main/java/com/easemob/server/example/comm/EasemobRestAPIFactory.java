@@ -1,14 +1,12 @@
 package com.easemob.server.example.comm;
 
-import java.lang.reflect.InvocationTargetException;
-
-import com.easemob.server.example.comm.invoker.HttpClientRestAPIInvoker;
-import com.easemob.server.example.comm.invoker.JerseyRestAPIInvoker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.easemob.server.example.api.EasemobRestAPI;
 import com.easemob.server.example.api.RestAPIInvoker;
+import com.easemob.server.example.comm.invoker.HttpClientRestAPIInvoker;
+import com.easemob.server.example.comm.invoker.JerseyRestAPIInvoker;
 
 public class EasemobRestAPIFactory {
 	

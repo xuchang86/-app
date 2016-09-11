@@ -19,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.easemob.server.example.comm.utils.EmchatOperator;
+import com.easemob.server.example.comm.wrapper.ResponseWrapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
@@ -138,11 +141,16 @@ public class UserLoginController extends BizBaseController {
 			return;
 		}
 		if (String.valueOf(sessionCode).equals(code)) {
-			JSONUtils.SUCCESS(response, "第一步验证成功.");
+			// 创建环信用户
+			EmchatOperator.createIMUser(phone, password, "新建用户");
+			// 保存本地用户信息
 			User user = new User();
 			user.setPhone(phone);
 			user.setPassword(password);
+			userLoginService.saveUser(user);
+
 			request.getSession().setAttribute("user", user);
+			JSONUtils.SUCCESS(response, user.getId());
 		} else {
 			JSONUtils.PARAM_ERROR(response, "验证码不匹配请重新输入验证码.");
 		}
@@ -157,11 +165,11 @@ public class UserLoginController extends BizBaseController {
 	@RequestMapping("payment")
 	public void payment(HttpServletRequest request, HttpServletResponse response) {
 		String inviteCode = request(request, "inviteCode");// 邀请码
-		String isPay = request(request, "isPay");// 是否已付款
-		String parentId = request(request, "parentPersonId");// 师傅的personId
+		String userId = request(request, "userId");
 		// 校验参数是否为空
 		Map<String, String> validateResult = new HashMap<String, String>();
 		validateResult.put("inviteCode", "邀请码不能为空.");
+		validateResult.put("userId", "用户id不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 		// 校验邀请码是否有效
@@ -169,17 +177,17 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.ERROR(response, "当前邀请码不存在,请检查邀请码的正确性.");
 			return;
 		}
-		// 是否已付款
-		int ispay = IsPay.UN_PAY.getValue();
-		if (StringUtils.isNotEmpty(isPay)) {
-			ispay = Boolean.valueOf(isPay) ? IsPay.IS_PAY.getValue()
-					: IsPay.UN_PAY.getValue();
+
+		// 校验付款是否成功
+		User user = userLoginService.queryUserByPrimaryKey(Integer
+				.parseInt(userId));
+		if (IsPay.UN_PAY.getValue() == user.getIspay()) {
+			JSONUtils.ERROR(response, "当前用户付款失败,请重新付款.");
+			return;
 		}
-		// 付款并保存用户信息并删除验证码
-		User user = getCurrentUser(request);
-		user.setIspay(ispay);
-		Person person = userLoginService.saveUser(user,
-				String.valueOf(inviteCode), parentId);
+
+		// 付款并保存person信息反写金额等业务操作
+		Person person = userLoginService.saveUser(user, inviteCode);
 		setCurrentPerson(request, person);
 		setCurrentUser(request, user);
 		JSONUtils.SUCCESS(response, user);
@@ -265,16 +273,36 @@ public class UserLoginController extends BizBaseController {
 	public void getRegistCode(HttpServletRequest request,
 			HttpServletResponse response) {
 		String phone = request.getParameter("phone");
+		String reset = request.getParameter("reset");// 是否重置
 		if (StringUtils.isBlank(phone)) {
 			JSONUtils.PARAM_ERROR(response, "手机号不能为空.");
 			return;
 		}
+
+		if (StringUtils.isNotBlank(reset) && "true".equals(reset)) {
+			// 随机参数6位数验证码
+			this.sendVerifyCode(request, response, phone);
+			return;
+		}
+
 		// 检查是否已注册
 		if (this.isRegist(phone)) {
 			JSONUtils.ERROR(response, "当前用户已注册,不能重复注册.");
 			return;
 		}
 		// 随机参数6位数验证码
+		this.sendVerifyCode(request, response, phone);
+	}
+
+	/**
+	 * 发送验证码
+	 * 
+	 * @param request
+	 * @param response
+	 * @param phone
+	 */
+	private void sendVerifyCode(HttpServletRequest request,
+			HttpServletResponse response, String phone) {
 		int code = LoginUtil.generatePhoneCode(request, phone);
 		JSONUtils.SUCCESS(response, code);
 	}
@@ -291,7 +319,7 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
-	 * 获取邀请码
+	 * 获取邀请码(同时需要对接环信创建聊天室)
 	 * 
 	 * @param request
 	 * @param response
@@ -299,14 +327,45 @@ public class UserLoginController extends BizBaseController {
 	@RequestMapping("getInviteCode")
 	public void getInviteCode(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<InviteCode> lst = inviteCodeService.queryInviteCodeList();
-		if (CollectionUtils.isEmpty(lst)) {
-			inviteCodeService.batchInsert();
-			lst = inviteCodeService.queryInviteCodeList();
-			JSONUtils.SUCCESS(response, lst.get(0));
-		} else {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		List<InviteCode> lst = inviteCodeService.queryInviteCode(userId);
+		if (lst.size() > 0) {
+			// ResponseWrapper rsp = EmchatOperator.addSingleUserToChatRoom(
+			// "240313456979345844", "18627014275");
+			ResponseWrapper rsp = EmchatOperator.addBatchUsersToChatRoom(
+					"240290968882905524", "18627014275");
+			System.out.println(rsp.getResponseBody() + "");
+
 			JSONUtils.SUCCESS(response, lst.get(0).getNumber());
+			return;
 		}
+
+		User user = getCurrentUser(request);
+		// 创建环信个人信息
+		ResponseWrapper result = EmchatOperator.createIMUser(user.getPhone(),
+				user.getPassword(), "新建用户");
+		logger.info("createIMUser:" + result.getResponseBody());
+
+		// 创建自己的聊天室
+		ResponseWrapper responseWrapper = EmchatOperator.createChatRoom(
+				"新建聊天室", "新建聊天室", Long.parseLong("200"), user.getPhone(),
+				new String[] { user.getPhone() });
+
+		ObjectNode node = (ObjectNode) responseWrapper.getResponseBody();
+		String roomId = node.get("data").get("id").asText();
+		logger.info("roomId:" + roomId);
+
+		InviteCode code = new InviteCode();
+		code.setNumber(String.valueOf(LoginUtil.getSixCode()));// 邀请码
+		code.setChatroomId(roomId);
+		code.setUserId(Integer.parseInt(userId));
+		inviteCodeService.insert(code);
+		JSONUtils.SUCCESS(response, code.getNumber());
 	}
 
 	/**

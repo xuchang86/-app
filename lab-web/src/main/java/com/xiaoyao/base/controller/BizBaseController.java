@@ -86,7 +86,7 @@ public class BizBaseController extends BaseController {
 	public void setCurrentUserAndPerson(HttpServletRequest request, User user) {
 		this.setCurrentUser(request, user);
 		if (user.getId() != null) {
-			List<Person> lst = personManageService.getPersonByUser(user);
+			List<Person> lst = personManageService.queryPersonByUser(user);
 			if (!CollectionUtils.isEmpty(lst)) {
 				setCurrentPerson(request, lst.get(0));
 			}

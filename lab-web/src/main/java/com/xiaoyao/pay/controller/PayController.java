@@ -22,6 +22,9 @@ import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.alipay.util.AlipayNotify;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
+import com.xiaoyao.login.model.IsPay;
+import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
@@ -48,6 +51,10 @@ public class PayController extends BizBaseController {
 	/** 注入 CashPoolService */
 	@Autowired
 	private CashPoolService cashPoolService;
+
+	/** 注入 UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
 
 	/**
 	 * 支付宝支付成功反馈信息
@@ -89,14 +96,30 @@ public class PayController extends BizBaseController {
 					"trade_status").getBytes("ISO-8859-1"), "UTF-8");
 			System.out.println("交易状态：" + trade_status);
 
+			// 用户Id
+			String userId = new String(request.getParameter("userId").getBytes(
+					"ISO-8859-1"), "UTF-8");
+			System.out.println("用户id：" + userId);
+			// 邀请码
+			String inviteCode = new String(request.getParameter("inviteCode")
+					.getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("邀请码:" + inviteCode);
+
 			// 支付成功处理逻辑
 			if (trade_status.equals("TRADE_FINISHED")
 					|| trade_status.equals("TRADE_SUCCESS")) {
+				// 新增订单信息
 				Order order = new Order();
 				order.setOrderCode(out_trade_no);
 				order.setPayDate(new Date());
 				order.setPayAmount(new BigDecimal(LoginUtil.getRegistAmount()));
+				order.setUserId(Integer.valueOf(userId));
 				payService.saveOrder(order);
+				// 更新已付款
+				this.updateIsPay(userId);
+				// 付款并保存person信息反写金额等业务操作
+				User user = userLoginService.queryUserByPrimaryKey(userId);
+				userLoginService.saveUser(user, inviteCode);
 				// 支付成功
 				ResponseUtils.renderText(response, "success");
 			}
@@ -104,6 +127,18 @@ public class PayController extends BizBaseController {
 			// 验证失败
 			LOGGER.info("参数验证失败");
 		}
+	}
+
+	/**
+	 * 更新已付款
+	 * 
+	 * @param userId
+	 */
+	private void updateIsPay(String userId) {
+		User user = new User();
+		user.setIspay(IsPay.IS_PAY.getValue());
+		user.setId(Integer.valueOf(userId));
+		userLoginService.updateByByPrimaryKey(user);
 	}
 
 	/**
@@ -115,7 +150,16 @@ public class PayController extends BizBaseController {
 	@RequestMapping("getAliaPayURL")
 	public void getAliaPayURL(HttpServletRequest request,
 			HttpServletResponse response) {
+		// 校验参数是否为空
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		validateResult.put("inviteCode", "邀请码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
 		String aliapayURL = LoginUtil.getAliapayURL();
+		String userId = request(request, "userId");
+		String inviteCode = request(request, "inviteCode");
 		RequestMapping req = this.getClass()
 				.getAnnotation(RequestMapping.class);
 		String classReqValue = req.value().length > 0 ? req.value()[0] : "";
@@ -127,7 +171,7 @@ public class PayController extends BizBaseController {
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
 			ResponseUtils.renderText(response, MessageFormat.format(aliapayURL,
-					classReqValue, methodReqValue));
+					classReqValue, methodReqValue, userId, inviteCode));
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
