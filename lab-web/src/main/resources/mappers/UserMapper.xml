@@ -338,7 +338,6 @@
      <include refid="Base_Column_List" />
      FROM T_LOGIN_USER t
      WHERE (t.phone = #{phone} OR t.username = #{username})
-     AND t.password = #{password}
   </select>
   
   <!-- 更新已付款 -->

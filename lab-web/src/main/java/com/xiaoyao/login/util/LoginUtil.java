@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.util.IOUtils;
+import com.xiaoyao.base.cache.GlobalCache;
 
 /**
  * 登录工具类
@@ -176,6 +177,15 @@ public final class LoginUtil {
 	}
 
 	/**
+	 * 获取商城支付宝注册回调URL
+	 * 
+	 * @return
+	 */
+	public static String getMallAliapayURL() {
+		return getPropertyValue("mall_aliapay_url");
+	}
+
+	/**
 	 * 获取人民币兑换逍遥币的汇率(人民币:逍遥币=1:1)
 	 * 
 	 * @return
@@ -213,6 +223,24 @@ public final class LoginUtil {
 	public static BigDecimal getRegistPlatformAmt() {
 		BigDecimal rmb = new BigDecimal(getPlatformIncome());
 		return rmb.multiply(getRate());
+	}
+
+	/**
+	 * 配置文件中服务器IP
+	 * 
+	 * @return
+	 */
+	public static String getServerIP() {
+		return getPropertyValue(GlobalCache.IP);
+	}
+
+	/**
+	 * 配置文件中获取服务器端口
+	 * 
+	 * @return
+	 */
+	public static String getServerPort() {
+		return getPropertyValue(GlobalCache.PORT);
 	}
 
 }

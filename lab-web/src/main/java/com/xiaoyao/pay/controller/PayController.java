@@ -26,6 +26,8 @@ import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.mall.model.GoodsOrder;
+import com.xiaoyao.mall.service.MallService;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;
@@ -56,6 +58,10 @@ public class PayController extends BizBaseController {
 	@Autowired
 	private UserLoginService userLoginService;
 
+	/** 注入 MallService */
+	@Autowired
+	private MallService mallService;
+
 	/**
 	 * 支付宝支付成功反馈信息
 	 * 
@@ -63,28 +69,11 @@ public class PayController extends BizBaseController {
 	 * @param response
 	 * @throws UnsupportedEncodingException
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping("apilypayNotify")
 	public void apilypayNotify(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		LOGGER.info("支付宝通知一次：" + (new Date()));
-		// 获取支付宝POST过来反馈信息
-		Map<String, String> params = new HashMap<String, String>();
-		Map<String, Object> requestParams = request.getParameterMap();
-		for (Iterator<String> iter = requestParams.keySet().iterator(); iter
-				.hasNext();) {
-			String name = iter.next();
-			String[] values = (String[]) requestParams.get(name);
-			String valueStr = "";
-			for (int i = 0; i < values.length; i++) {
-				valueStr = (i == values.length - 1) ? valueStr + values[i]
-						: valueStr + values[i] + ",";
-			}
-			// 乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			// valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
-			params.put(name, valueStr);
-		}
-
+		Map<String, String> params = aliapayNotifyBefore(request, response);
 		// 验证参数
 		if (AlipayNotify.verify(params)) {
 			// 商户订单号
@@ -127,6 +116,82 @@ public class PayController extends BizBaseController {
 			// 验证失败
 			LOGGER.info("参数验证失败");
 		}
+	}
+
+	/**
+	 * 商城支付宝支付通知回调
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("mallAliapayNotify")
+	public void mallAliapayNotify(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		LOGGER.info("支付宝通知一次：" + (new Date()));
+		Map<String, String> params = aliapayNotifyBefore(request, response);
+		// 验证参数
+		if (AlipayNotify.verify(params)) {
+			// 商户订单号
+			String out_trade_no = new String(request.getParameter(
+					"out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("商户订单号：" + out_trade_no);
+			// 交易状态
+			String trade_status = new String(request.getParameter(
+					"trade_status").getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("交易状态：" + trade_status);
+
+			// 商品订单id
+			String goodsOrderId = new String(request.getParameter(
+					"goodsOrderId").getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("用户id：" + goodsOrderId);
+
+			// 支付成功处理逻辑
+			if (trade_status.equals("TRADE_FINISHED")
+					|| trade_status.equals("TRADE_SUCCESS")) {
+				// 更新商品订单付款日期和订单号
+				GoodsOrder order = new GoodsOrder();
+				order.setId(Integer.parseInt(goodsOrderId));
+				order.setNumber(out_trade_no);
+				order.setPayDate(new Date());
+				mallService.updateGoodsOrder(order);
+				// 支付成功
+				ResponseUtils.renderText(response, "success");
+			}
+		} else {
+			// 验证失败
+			LOGGER.info("参数验证失败");
+		}
+	}
+
+	/**
+	 * 支付宝付款通知之前
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	private Map<String, String> aliapayNotifyBefore(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 获取支付宝POST过来反馈信息
+		Map<String, String> params = new HashMap<String, String>();
+		Map<String, Object> requestParams = request.getParameterMap();
+		for (Iterator<String> iter = requestParams.keySet().iterator(); iter
+				.hasNext();) {
+			String name = iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			// 乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			// valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			params.put(name, valueStr);
+		}
+		return params;
 	}
 
 	/**

@@ -76,9 +76,9 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				code: '930687',
+  				code: '314451',
   				password: '121121',
-  				phone: '18627014277'
+  				phone: '18627014278'
   			},
   			success: function(data) {
   				console.log(data);
@@ -111,7 +111,7 @@
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				phone: '18627014277'
+  				phone: '18627014278'
   			},
   			success: function(data) {
   				console.log(data);

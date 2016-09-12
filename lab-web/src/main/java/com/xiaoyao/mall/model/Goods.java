@@ -1,96 +1,198 @@
 package com.xiaoyao.mall.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+/**
+ * 商城商品
+ * 
+ * @author 许畅
+ * @since JDK1.7
+ * @version 2016年9月12日 许畅 新建
+ */
 public class Goods {
-    private Integer id;
 
-    private String name;
+	private Integer id;
 
-    private String description;
+	private String name;
 
-    private String number;
+	private String description;
 
-    private Integer typeId;
+	private String number;
 
-    private BigDecimal price;
+	private Integer typeId;
 
-    private Integer userId;
+	private BigDecimal price;
 
-    private Date createDate;
+	private Integer userId;
 
-    private String url;
+	private Date createDate;
 
-    public Integer getId() {
-        return id;
-    }
+	private String url;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	/** 商品所在地 */
+	private String area;
 
-    public String getName() {
-        return name;
-    }
+	/** 商品类别 */
+	private Type type;
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	/** 是否出售 */
+	private Boolean isSale;
 
-    public String getDescription() {
-        return description;
-    }
+	/** 商品评论 */
+	private List<Comment> comments = new ArrayList<Comment>();
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	/** 商品订单 */
+	private List<GoodsOrder> orders = new ArrayList<GoodsOrder>();
 
-    public String getNumber() {
-        return number;
-    }
+	/**
+	 * @return the type 商品类型
+	 */
+	public Type getType() {
+		return type;
+	}
 
-    public void setNumber(String number) {
-        this.number = number == null ? null : number.trim();
-    }
+	/**
+	 * @param type
+	 *            the type to set 商品类型
+	 */
+	public void setType(Type type) {
+		this.type = type;
+	}
 
-    public Integer getTypeId() {
-        return typeId;
-    }
+	/**
+	 * @return the comments 商品评论
+	 */
+	public List<Comment> getComments() {
+		return comments;
+	}
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
+	/**
+	 * @param comments
+	 *            the comments to set 商品评论
+	 */
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+	/**
+	 * @return the orders 商品订单
+	 */
+	public List<GoodsOrder> getOrders() {
+		return orders;
+	}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	/**
+	 * @param orders
+	 *            the orders to set 商品订单
+	 */
+	public void setOrders(List<GoodsOrder> orders) {
+		this.orders = orders;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number == null ? null : number.trim();
+	}
+
+	public Integer getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Integer typeId) {
+		this.typeId = typeId;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	/** 商品图片 ,以逗号隔开 */
+	public String getUrl() {
+		return url;
+	}
+
+	/** 商品图片 ,以逗号隔开 */
+	public void setUrl(String url) {
+		this.url = url == null ? null : url.trim();
+	}
+
+	/**
+	 * @return the area 商品所在地
+	 */
+	public String getArea() {
+		return area;
+	}
+
+	/**
+	 * @param area
+	 *            the area to set 商品所在地
+	 */
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	/**
+	 * @return the isSale
+	 */
+	public Boolean getIsSale() {
+		return isSale;
+	}
+
+	/**
+	 * @param isSale
+	 *            the isSale to set
+	 */
+	public void setIsSale(Boolean isSale) {
+		this.isSale = isSale;
+	}
 }

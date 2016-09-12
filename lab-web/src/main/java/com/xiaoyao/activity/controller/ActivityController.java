@@ -248,10 +248,7 @@ public class ActivityController extends BizBaseController {
 		if (StringUtils.isBlank(name))
 			name = uploadFileService.loadModel(model).getName();
 
-		String URL = UploadFileUtil.convertToFileHttpURL(
-				request.getServerName(),
-				String.valueOf(request.getServerPort()),
-				request.getContextPath(), name);
+		String URL = UploadFileUtil.convertToFileHttpURL(request, name, "upload");
 		JSONUtils.SUCCESS(response, URL);
 	}
 }

@@ -173,7 +173,8 @@ public class ActivityService extends BaseService {
 				.queryFileByActivityId(activity.getId());
 		List<String> url = new ArrayList<String>();
 		for (UploadFile file : files) {
-			url.add(UploadFileUtil.convertToFileHttpURL(file.getName()));
+			url.add(UploadFileUtil.convertToFileHttpURL(file.getName(),
+					"upload"));
 		}
 		return url.toArray(new String[] {});
 	}

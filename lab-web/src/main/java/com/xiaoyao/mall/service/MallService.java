@@ -6,9 +6,19 @@
  *****************************************************************************/
 package com.xiaoyao.mall.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoyao.base.service.BaseService;
+import com.xiaoyao.mall.dao.GoodsMapper;
+import com.xiaoyao.mall.dao.GoodsOrderMapper;
+import com.xiaoyao.mall.dao.TypeMapper;
+import com.xiaoyao.mall.model.Goods;
+import com.xiaoyao.mall.model.GoodsExample;
+import com.xiaoyao.mall.model.GoodsOrder;
+import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 商城service服务类
@@ -20,4 +30,56 @@ import com.xiaoyao.base.service.BaseService;
 @Service
 public class MallService extends BaseService {
 
+	/** 注入 GoodsMapper */
+	@Autowired
+	private GoodsMapper goodsMapper;
+
+	/** 注入 TypeMapper */
+	@Autowired
+	private TypeMapper typeMapper;
+
+	/** 注入 GoodsOrder */
+	@Autowired
+	private GoodsOrderMapper goodsOrderMapper;
+
+	/**
+	 * 查询所有出售的商品
+	 * 
+	 * @return
+	 */
+	public List<Goods> queryAllGoods() {
+		GoodsExample example = new GoodsExample();
+		example.or().andIsSaleEqualTo(true);
+		List<Goods> goodses = goodsMapper.selectByExample(example);
+		for (Goods goods : goodses) {
+			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
+			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+		}
+		return goodses;
+	}
+
+	/**
+	 * 保存商品订单信息
+	 * 
+	 * @param order
+	 * @return
+	 */
+	public GoodsOrder saveGoodsOrder(GoodsOrder order) {
+		if (order.getId() == null) {
+			goodsOrderMapper.insertSelective(order);
+		} else {
+			goodsOrderMapper.updateByPrimaryKeySelective(order);
+		}
+		return order;
+	}
+
+	/**
+	 * 更新商品订单信息
+	 * 
+	 * @param order
+	 * @return
+	 */
+	public int updateGoodsOrder(GoodsOrder order) {
+		return goodsOrderMapper.updateByPrimaryKeySelective(order);
+	}
 }

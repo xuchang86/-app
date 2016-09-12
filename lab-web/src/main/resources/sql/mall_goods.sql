@@ -14,6 +14,8 @@ create table T_MALL_GOODS
    user_id              int comment '创建用户id',
    create_date          timestamp comment '创建日期',
    url                  varchar(100) comment '商品图片',
+   area                 varchar(20) comment '商品地区',
+   is_sale              boolean comment '是否出售',
    primary key (id)
 );
 

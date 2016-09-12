@@ -685,6 +685,136 @@ public class GoodsExample {
             addCriterion("url not between", value1, value2, "url");
             return (Criteria) this;
         }
+
+        public Criteria andAreaIsNull() {
+            addCriterion("area is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaIsNotNull() {
+            addCriterion("area is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaEqualTo(String value) {
+            addCriterion("area =", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotEqualTo(String value) {
+            addCriterion("area <>", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaGreaterThan(String value) {
+            addCriterion("area >", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaGreaterThanOrEqualTo(String value) {
+            addCriterion("area >=", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaLessThan(String value) {
+            addCriterion("area <", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaLessThanOrEqualTo(String value) {
+            addCriterion("area <=", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaLike(String value) {
+            addCriterion("area like", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotLike(String value) {
+            addCriterion("area not like", value, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaIn(List<String> values) {
+            addCriterion("area in", values, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotIn(List<String> values) {
+            addCriterion("area not in", values, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaBetween(String value1, String value2) {
+            addCriterion("area between", value1, value2, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andAreaNotBetween(String value1, String value2) {
+            addCriterion("area not between", value1, value2, "area");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleIsNull() {
+            addCriterion("is_sale is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleIsNotNull() {
+            addCriterion("is_sale is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleEqualTo(Boolean value) {
+            addCriterion("is_sale =", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleNotEqualTo(Boolean value) {
+            addCriterion("is_sale <>", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleGreaterThan(Boolean value) {
+            addCriterion("is_sale >", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_sale >=", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleLessThan(Boolean value) {
+            addCriterion("is_sale <", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_sale <=", value, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleIn(List<Boolean> values) {
+            addCriterion("is_sale in", values, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleNotIn(List<Boolean> values) {
+            addCriterion("is_sale not in", values, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_sale between", value1, value2, "isSale");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsSaleNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_sale not between", value1, value2, "isSale");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

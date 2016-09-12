@@ -11,6 +11,8 @@
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="is_sale" property="isSale" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, description, number, type_id, price, user_id, create_date, url
+    id, name, description, number, type_id, price, user_id, create_date, url, area, is_sale
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsExample" >
     select
@@ -106,12 +108,12 @@
   <insert id="insert" parameterType="com.xiaoyao.mall.model.Goods" >
     insert into T_MALL_GOODS (id, name, description, 
       number, type_id, price, 
-      user_id, create_date, url
-      )
+      user_id, create_date, url, 
+      area, is_sale)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{number,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
-      #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}
-      )
+      #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{isSale,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.Goods" >
     insert into T_MALL_GOODS
@@ -143,6 +145,12 @@
       <if test="url != null" >
         url,
       </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="isSale != null" >
+        is_sale,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -171,6 +179,12 @@
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="isSale != null" >
+        #{isSale,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -210,6 +224,12 @@
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
       </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSale != null" >
+        is_sale = #{record.isSale,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +245,9 @@
       price = #{record.price,jdbcType=DECIMAL},
       user_id = #{record.userId,jdbcType=INTEGER},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
-      url = #{record.url,jdbcType=VARCHAR}
+      url = #{record.url,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      is_sale = #{record.isSale,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,6 +279,12 @@
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="isSale != null" >
+        is_sale = #{isSale,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -269,7 +297,9 @@
       price = #{price,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP},
-      url = #{url,jdbcType=VARCHAR}
+      url = #{url,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      is_sale = #{isSale,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

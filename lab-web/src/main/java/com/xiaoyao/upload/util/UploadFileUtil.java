@@ -13,11 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xiaoyao.base.cache.GlobalCache;
+import com.xiaoyao.login.util.LoginUtil;
 
 /**
  * 文件上传工具类
@@ -53,17 +55,51 @@ public final class UploadFileUtil {
 	 * @return
 	 */
 	public static String convertToFileHttpURL(String ip, String port,
-			String contextPath, String fileName) {
+			String contextPath, String fileName, String type) {
 		StringBuffer url = new StringBuffer();
 		url.append("http://");
 		url.append(ip);
 		url.append(":");
 		url.append(port);
 		url.append(contextPath);
-		url.append("/upload");
+		url.append("/");
+		url.append(type);
 		url.append("/");
 		url.append(fileName);
 		return url.toString();
+	}
+
+	/**
+	 * 包装图片路径
+	 * 
+	 * @param request
+	 * @param fileName
+	 * @param type
+	 * @return
+	 */
+	public static String convertToFileHttpURL(HttpServletRequest request,
+			String fileName, String type) {
+		String ip = request.getServerName();
+		String port = String.valueOf(request.getServerPort());
+		String contextPath = request.getContextPath();
+		return convertToFileHttpURL(ip, port, contextPath, fileName, type);
+	}
+
+	/**
+	 * 包装商城的商品图片URL
+	 * 
+	 * @param fileName
+	 *            文件名
+	 * @return
+	 */
+	public static String wrapperMallURL(String fileName) {
+		String ip = GlobalCache.getServerIP() == "null" ? LoginUtil
+				.getServerIP() : GlobalCache.getServerIP();
+		String port = GlobalCache.getServerPort() == "null" ? LoginUtil
+				.getServerPort() : GlobalCache.getServerPort();
+
+		return convertToFileHttpURL(ip, port, GlobalCache.getContextPath(),
+				fileName, "mall");
 	}
 
 	/**
@@ -72,10 +108,10 @@ public final class UploadFileUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public static String convertToFileHttpURL(String fileName) {
+	public static String convertToFileHttpURL(String fileName, String type) {
 		return convertToFileHttpURL(GlobalCache.getServerIP(),
 				GlobalCache.getServerPort(), GlobalCache.getContextPath(),
-				fileName);
+				fileName, type);
 	}
 
 	/**

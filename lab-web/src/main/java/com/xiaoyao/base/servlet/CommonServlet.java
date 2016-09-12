@@ -42,6 +42,8 @@ public class CommonServlet extends HttpServlet {
 		// 将会员成长规则算法放入全局缓存
 		RuleService service = SpringContextBeanUtil.getBean(RuleService.class);
 		GlobalCache.putRule(service.queryRule());
+		GlobalCache.put(GlobalCache.CONTEXT_PATH, config.getServletContext().getContextPath());
+		System.out.println(getClass().getName() + ":init end...");
 	}
 
 	/**

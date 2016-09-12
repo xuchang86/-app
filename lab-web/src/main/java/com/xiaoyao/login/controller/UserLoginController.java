@@ -74,8 +74,15 @@ public class UserLoginController extends BizBaseController {
 		if (CollectionUtils.isEmpty(users)) {
 			JSONUtils.ERROR(response, "当前用户没有注册,请先注册.");
 		} else {
-			// 未付款不能登录
 			User user = users.get(0);
+			// 校验密码是否正确
+			if (!password.equals(user.getPassword())) {
+				JSONUtils.ERROR(response, "当前输入的密码不正确,请重新输入.");
+				System.out.println("requestpwd:" + password + ";realpwd:"
+						+ user.getPassword());
+				return;
+			}
+			// 未付款不能登录
 			if (IsPay.UN_PAY.getValue().equals(user.getIspay())) {
 				JSONUtils.ERROR(response, "当前用户注册时未付款,不能登录.");
 			} else {
@@ -142,14 +149,18 @@ public class UserLoginController extends BizBaseController {
 		}
 		if (String.valueOf(sessionCode).equals(code)) {
 			// 创建环信用户
-			EmchatOperator.createIMUser(phone, password, "新建用户");
+			ResponseWrapper rsp = EmchatOperator.createIMUser(phone, password,
+					"新建用户");
+			System.out.println("createIMUser:" + rsp.getResponseBody());
 			// 保存本地用户信息
 			User user = new User();
 			user.setPhone(phone);
 			user.setPassword(password);
 			userLoginService.saveUser(user);
-
 			request.getSession().setAttribute("user", user);
+			// 创建邀请码并创建聊天室
+			this.createInviteCode(request);
+
 			JSONUtils.SUCCESS(response, user.getId());
 		} else {
 			JSONUtils.PARAM_ERROR(response, "验证码不匹配请重新输入验证码.");
@@ -185,6 +196,7 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.ERROR(response, "当前用户付款失败,请重新付款.");
 			return;
 		}
+		// TODO付款成功则直接返回user信息
 
 		// 付款并保存person信息反写金额等业务操作
 		Person person = userLoginService.saveUser(user, inviteCode);
@@ -335,22 +347,24 @@ public class UserLoginController extends BizBaseController {
 		String userId = request(request, "userId");
 		List<InviteCode> lst = inviteCodeService.queryInviteCode(userId);
 		if (lst.size() > 0) {
-			// ResponseWrapper rsp = EmchatOperator.addSingleUserToChatRoom(
-			// "240313456979345844", "18627014275");
-			ResponseWrapper rsp = EmchatOperator.addBatchUsersToChatRoom(
-					"240290968882905524", "18627014275");
-			System.out.println(rsp.getResponseBody() + "");
-
 			JSONUtils.SUCCESS(response, lst.get(0).getNumber());
 			return;
 		}
 
-		User user = getCurrentUser(request);
-		// 创建环信个人信息
-		ResponseWrapper result = EmchatOperator.createIMUser(user.getPhone(),
-				user.getPassword(), "新建用户");
-		logger.info("createIMUser:" + result.getResponseBody());
+		// 创建聊天室并生成邀请码
+		String inviteCode = this.createInviteCode(request);
 
+		JSONUtils.SUCCESS(response, inviteCode);
+	}
+
+	/**
+	 * 创建邀请码和生成聊天室
+	 * 
+	 * @param request
+	 * @return 邀请码
+	 */
+	private String createInviteCode(HttpServletRequest request) {
+		User user = getCurrentUser(request);
 		// 创建自己的聊天室
 		ResponseWrapper responseWrapper = EmchatOperator.createChatRoom(
 				"新建聊天室", "新建聊天室", Long.parseLong("200"), user.getPhone(),
@@ -363,9 +377,9 @@ public class UserLoginController extends BizBaseController {
 		InviteCode code = new InviteCode();
 		code.setNumber(String.valueOf(LoginUtil.getSixCode()));// 邀请码
 		code.setChatroomId(roomId);
-		code.setUserId(Integer.parseInt(userId));
+		code.setUserId(user.getId());
 		inviteCodeService.insert(code);
-		JSONUtils.SUCCESS(response, code.getNumber());
+		return code.getNumber();
 	}
 
 	/**
