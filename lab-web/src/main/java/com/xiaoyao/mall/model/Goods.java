@@ -14,22 +14,31 @@ import java.util.List;
  */
 public class Goods {
 
+	/** 商品主键 */
 	private Integer id;
 
+	/** 商品名称 */
 	private String name;
 
+	/** 商品描述 */
 	private String description;
 
+	/** 商品编码 */
 	private String number;
 
+	/** 商品类别id */
 	private Integer typeId;
 
+	/** 商品价格 */
 	private BigDecimal price;
 
+	/** 用户id */
 	private Integer userId;
 
+	/** 创建时间 */
 	private Date createDate;
 
+	/** 商品图片url(如果多个图片以逗号隔开)*/
 	private String url;
 
 	/** 商品所在地 */

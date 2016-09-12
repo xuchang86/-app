@@ -32,6 +32,7 @@ import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
 import com.xiaoyao.login.service.InviteCodeService;
+import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 
@@ -53,6 +54,10 @@ public class UserLoginController extends BizBaseController {
 	/** 注入 inviteCodeService */
 	@Autowired
 	private InviteCodeService inviteCodeService;
+
+	/** 注入 PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
 
 	/**
 	 * 用户登录
@@ -109,6 +114,42 @@ public class UserLoginController extends BizBaseController {
 			return;
 
 		JSONUtils.SUCCESS(response, getCurrentPerson(request));
+	}
+
+	/**
+	 * 获取当前用户信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getCurrentUser")
+	public void getCurrentUser(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		JSONUtils.SUCCESS(response, getCurrentUser(request));
+	}
+
+	/**
+	 * 获取我的弟子
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getChildrens")
+	public void getChildrens(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("personId", "人物的id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Integer parentId = Integer.parseInt(request(request, "personId"));
+		JSONUtils.SUCCESS(response,
+				personManageService.queryChildsByParent(parentId));
 	}
 
 	/**
