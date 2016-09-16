@@ -177,11 +177,9 @@ public class UserLoginController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		// 校验是否已注册
-		if (isRegist(phone)) {
-			JSONUtils.ERROR(response, "当前用户已注册,不能重复注册.");
+		// 校验是否已注册并且是已付款
+		if (!this.validateRegist(request, response))
 			return;
-		}
 
 		Object sessionCode = request.getSession().getAttribute("code");
 		if (sessionCode == null) {
@@ -206,6 +204,30 @@ public class UserLoginController extends BizBaseController {
 		} else {
 			JSONUtils.PARAM_ERROR(response, "验证码不匹配请重新输入验证码.");
 		}
+	}
+
+	/**
+	 * 注册校验是否已注册,已付款
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	private boolean validateRegist(HttpServletRequest request,
+			HttpServletResponse response) {
+		String phone = request(request, "phone");
+		List<User> users = queryUserByPhone(phone);
+		if (!CollectionUtils.isEmpty(users)) {
+			if (users.get(0).getIspay() == IsPay.IS_PAY.getValue()) {
+				JSONUtils.ERROR(response, "当前用户已注册并且已付款,不能重复注册.");
+				return false;
+			} else {
+				// 已存在的用户为付款注册直接返回userId
+				JSONUtils.SUCCESS(response, users.get(0).getId());
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -338,9 +360,9 @@ public class UserLoginController extends BizBaseController {
 			return;
 		}
 
-		// 检查是否已注册
-		if (this.isRegist(phone)) {
-			JSONUtils.ERROR(response, "当前用户已注册,不能重复注册.");
+		// 检查是否已注册并且已付款
+		if (this.verifyRegist(phone)) {
+			JSONUtils.ERROR(response, "当前用户已注册且已付款,不能重复重复获取验证码.");
 			return;
 		}
 		// 随机参数6位数验证码
@@ -361,11 +383,35 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
+	 * 通过手机查询当前用户
+	 * 
+	 * @return
+	 */
+	private List<User> queryUserByPhone(String phone) {
+		User user = new User();
+		user.setPhone(phone);
+		user.setIspay(null);
+		return userLoginService.queryUserByCondition(user);
+	}
+
+	/**
 	 * 判断当前用户是否已注册
 	 * 
 	 * @return
 	 */
 	private boolean isRegist(String phone) {
+		User user = new User();
+		user.setPhone(phone);
+		return userLoginService.isRegist(user);
+	}
+
+	/**
+	 * 校验当前用户是否已注册并且已付款
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	private boolean verifyRegist(String phone) {
 		User user = new User();
 		user.setPhone(phone);
 		return userLoginService.verifyRegist(user);

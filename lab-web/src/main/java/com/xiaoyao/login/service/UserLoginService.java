@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import com.easemob.server.example.comm.utils.EmchatOperator;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
@@ -23,6 +23,7 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.dao.UserMapperExt;
 import com.xiaoyao.login.model.InviteCode;
+import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
 import com.xiaoyao.login.util.LoginUtil;
@@ -36,7 +37,7 @@ import com.xiaoyao.pay.service.CashPoolService;
  * @version 2016年8月18日 许畅 新建
  */
 @Service
-public class UserLoginService extends BaseService {
+public class UserLoginService extends BaseService<User> {
 
 	/** 注入UserMapper */
 	@Autowired
@@ -59,7 +60,7 @@ public class UserLoginService extends BaseService {
 			.getLogger(UserLoginService.class);
 
 	/**
-	 * 校验当前用户是否已注册
+	 * 校验是已注册和已付款
 	 * 
 	 * @param user
 	 *            注册用户
@@ -67,7 +68,35 @@ public class UserLoginService extends BaseService {
 	 */
 	public boolean verifyRegist(User user) {
 		List<User> lst = userMapperExt.verifyRegist(user);
-		return CollectionUtils.isEmpty(lst) ? false : true;
+		if (CollectionUtils.isNotEmpty(lst)
+				&& lst.get(0).getIspay() == IsPay.IS_PAY.getValue()) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 校验当前用户是否已注册
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public boolean isRegist(User user) {
+		List<User> lst = userMapperExt.verifyRegist(user);
+
+		return CollectionUtils.isNotEmpty(lst) ? true : false;
+	}
+
+	/**
+	 * 根据条件查询VO对象
+	 * 
+	 * @param condition
+	 *            查询条件
+	 * @return
+	 */
+	public List<User> queryUserByCondition(User condition) {
+		List<User> users = queryVOByCondition(condition, userMapperExt);
+		return users;
 	}
 
 	/**

@@ -2,7 +2,11 @@ package com.xiaoyao.login.model;
 
 import java.util.Date;
 
-public class User {
+import com.xiaoyao.base.annotation.Id;
+import com.xiaoyao.base.model.BaseVO;
+
+public class User extends BaseVO {
+	@Id
 	private Integer id;
 
 	private String phone;

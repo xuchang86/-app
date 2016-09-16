@@ -1,11 +1,14 @@
 package com.xiaoyao.login.dao;
 
+import com.xiaoyao.base.dao.BaseMapper;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-public interface UserMapper {
+public interface UserMapper extends BaseMapper{
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);
