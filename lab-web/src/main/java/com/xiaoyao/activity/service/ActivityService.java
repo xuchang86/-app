@@ -13,7 +13,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xiaoyao.activity.dao.ActivityMapper;
+import com.xiaoyao.activity.dao.ActivityMapperExt;
 import com.xiaoyao.activity.dao.ActivityPersonMapper;
 import com.xiaoyao.activity.model.Activity;
 import com.xiaoyao.activity.model.ActivityExample;
@@ -41,7 +41,7 @@ public class ActivityService extends BaseService<Activity> {
 
 	/** 注入ActivityMapper */
 	@Autowired
-	private ActivityMapper activityMapper;
+	private ActivityMapperExt activityMapperExt;
 
 	/** 注入ActivityPersonMapper */
 	@Autowired
@@ -66,7 +66,7 @@ public class ActivityService extends BaseService<Activity> {
 	 * @return
 	 */
 	public boolean insertActivity(Activity activity) {
-		int count = activityMapper.insertSelective(activity);
+		int count = activityMapperExt.insertSelective(activity);
 		if (!ArrayUtils.isEmpty(activity.getUrls())) {
 			uploadFileService.updateActivityId(activity.getId(),
 					activity.getUrls());
@@ -104,8 +104,9 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllActivity() {
+	public List<Activity> queryAllActivity(String pageSize, String pageNo) {
 		ActivityExample example = new ActivityExample();
+		setPaging(pageSize, pageNo, example);
 		// 门派活动
 		example.or().andTypeEqualTo(ActivityType.SCHOOL_ACTIVITY.getValue());
 		return this.queryData(example);
@@ -116,8 +117,9 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllTask() {
+	public List<Activity> queryAllTask(String pageSize, String pageNo) {
 		ActivityExample example = new ActivityExample();
+		setPaging(pageSize, pageNo, example);
 		// 悬赏任务
 		example.or().andTypeEqualTo(ActivityType.REWARD_TASK.getValue());
 		return this.queryData(example);
@@ -128,8 +130,9 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllService() {
+	public List<Activity> queryAllService(String pageSize, String pageNo) {
 		ActivityExample example = new ActivityExample();
+		setPaging(pageSize, pageNo, example);
 		// 出售服务
 		example.or().andTypeEqualTo(ActivityType.SALE_SERVICE.getValue());
 		return this.queryData(example);
@@ -142,7 +145,7 @@ public class ActivityService extends BaseService<Activity> {
 	 * @return
 	 */
 	private List<Activity> queryData(ActivityExample example) {
-		List<Activity> lst = activityMapper.selectByExample(example);
+		List<Activity> lst = activityMapperExt.selectByExampleByPage(example);
 		for (Activity activity : lst) {
 			ActivityPersonExample pExample = new ActivityPersonExample();
 			pExample.or().andActivityIdEqualTo(activity.getId());

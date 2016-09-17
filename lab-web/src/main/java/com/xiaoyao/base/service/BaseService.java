@@ -274,4 +274,23 @@ public abstract class BaseService<T extends BaseVO> {
 		return count == 1 ? true : false;
 	}
 
+	/**
+	 * 设置分页所需的参数
+	 * 
+	 * @param pageSize
+	 *            页数
+	 * @param pageNo
+	 *            页码
+	 * @param example
+	 */
+	public void setPaging(String pageSize, String pageNo, BaseVO example) {
+		if (StringUtils.isNotBlank(pageSize)) {
+			example.setPageSize(Integer.parseInt(pageSize));
+		}
+
+		if (StringUtils.isNotBlank(pageNo)) {
+			example.setPageNo(Integer.parseInt(pageNo));
+		}
+	}
+
 }

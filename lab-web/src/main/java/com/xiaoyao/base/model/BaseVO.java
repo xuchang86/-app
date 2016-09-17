@@ -6,6 +6,8 @@
  *****************************************************************************/
 package com.xiaoyao.base.model;
 
+import com.xiaoyao.base.mybatis.Page;
+
 /**
  * 基础VO模型
  * 
@@ -24,6 +26,9 @@ public abstract class BaseVO {
 	/** 页码数 */
 	private Integer pageNo;
 
+	/** 分页对象 */
+	private Page page = new Page();
+
 	/**
 	 * @return the pageSize 每页显示个数
 	 */
@@ -37,6 +42,7 @@ public abstract class BaseVO {
 	 */
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+		page.setPageSize(pageSize);
 	}
 
 	/**
@@ -52,6 +58,7 @@ public abstract class BaseVO {
 	 */
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
+		page.setCurrentPage(pageNo);
 	}
 
 	/**
@@ -67,6 +74,21 @@ public abstract class BaseVO {
 	 */
 	public void set_id(Integer _id) {
 		this._id = _id;
+	}
+
+	/**
+	 * @return the page 分页对象
+	 */
+	public Page getPage() {
+		return page;
+	}
+
+	/**
+	 * @param page
+	 *            the page to set 分页对象
+	 */
+	public void setPage(Page page) {
+		this.page = page;
 	}
 
 }

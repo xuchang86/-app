@@ -131,7 +131,10 @@ public class ActivityController extends BizBaseController {
 	@RequestMapping("queryAllActivity")
 	public void queryAllActivity(HttpServletRequest request,
 			HttpServletResponse response) {
-		JSONUtils.toJSONString(response, activityService.queryAllActivity());
+		String pageSize = request(request, "pageSize");
+		String pageNo = request(request, "pageNo");
+		JSONUtils.toJSONString(response,
+				activityService.queryAllActivity(pageSize, pageNo));
 	}
 
 	/**
@@ -143,7 +146,9 @@ public class ActivityController extends BizBaseController {
 	@RequestMapping("queryAllTask")
 	public void queryAllTask(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Activity> result = activityService.queryAllTask();
+		String pageSize = request(request, "pageSize");
+		String pageNo = request(request, "pageNo");
+		List<Activity> result = activityService.queryAllTask(pageSize, pageNo);
 		JSONUtils.toJSONString(response, result);
 	}
 
@@ -156,8 +161,11 @@ public class ActivityController extends BizBaseController {
 	@RequestMapping("queryAllService")
 	public void queryAllService(HttpServletRequest request,
 			HttpServletResponse response) {
+		String pageSize = request(request, "pageSize");
+		String pageNo = request(request, "pageNo");
 		long start = System.currentTimeMillis();
-		List<Activity> result = activityService.queryAllService();
+		List<Activity> result = activityService.queryAllService(pageSize,
+				pageNo);
 		JSONUtils.toJSONString(response, result);
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end - start) / 1000 + "秒");
@@ -248,7 +256,8 @@ public class ActivityController extends BizBaseController {
 		if (StringUtils.isBlank(name))
 			name = uploadFileService.loadModel(model).getName();
 
-		String URL = UploadFileUtil.convertToFileHttpURL(request, name, "upload");
+		String URL = UploadFileUtil.convertToFileHttpURL(request, name,
+				"upload");
 		JSONUtils.SUCCESS(response, URL);
 	}
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.activity.dao.ActivityMapper" >
+<mapper namespace="com.xiaoyao.activity.dao.ActivityMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.activity.model.Activity" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
@@ -240,4 +240,24 @@
       cost = #{cost,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 分页查询活动 -->
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_PUBLISH_ACTIVITY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <!--  
+    <if test="start !=0 or limit!=0">limit #{start},#{limit}</if>
+    -->
+  </select>
+  
 </mapper>
