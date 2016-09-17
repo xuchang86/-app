@@ -24,7 +24,7 @@ import com.xiaoyao.event.model.EventExample;
  * @version 2016年8月28日 许畅 新建
  */
 @Service
-public class EventService extends BaseService {
+public class EventService extends BaseService<Event> {
 
 	/** 注入EventMapper */
 	@Autowired

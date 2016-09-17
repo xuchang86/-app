@@ -31,7 +31,7 @@ import com.xiaoyao.pay.service.CashPoolService;
  * @version 2016年8月27日 许畅 新建
  */
 @Service
-public class PersonManageService extends BaseService {
+public class PersonManageService extends BaseService<Person> {
 
 	/** 注入PersonMapper */
 	@Autowired
@@ -97,7 +97,8 @@ public class PersonManageService extends BaseService {
 				person.setBill(person.getBill().subtract(rule.getPacket()));
 				this.updatePersonByPrimaryKey(person);
 				// TODO 升级奖励 :从平台收入中扣除?
-				cashPoolService.reduceCashPool(BigDecimal.ZERO, rule.getUpgradeAwards());
+				cashPoolService.reduceCashPool(BigDecimal.ZERO,
+						rule.getUpgradeAwards());
 			}
 		}
 	}

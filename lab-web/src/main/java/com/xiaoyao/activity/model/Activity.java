@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Activity {
+import com.xiaoyao.base.model.BaseVO;
+
+public class Activity extends BaseVO{
 
 	private Integer id;
 

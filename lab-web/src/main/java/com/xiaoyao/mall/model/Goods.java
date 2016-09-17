@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.xiaoyao.base.model.BaseVO;
+
 /**
  * 商城商品
  * 
@@ -12,7 +14,7 @@ import java.util.List;
  * @since JDK1.7
  * @version 2016年9月12日 许畅 新建
  */
-public class Goods {
+public class Goods extends BaseVO{
 
 	/** 商品主键 */
 	private Integer id;

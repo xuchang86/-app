@@ -3,7 +3,9 @@ package com.xiaoyao.pay.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order {
+import com.xiaoyao.base.model.BaseVO;
+
+public class Order extends BaseVO{
     private Integer id;
 
     private String orderCode;

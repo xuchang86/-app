@@ -3,7 +3,9 @@ package com.xiaoyao.pay.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CashPool {
+import com.xiaoyao.base.model.BaseVO;
+
+public class CashPool extends BaseVO{
     private Integer id;
 
     private BigDecimal money;

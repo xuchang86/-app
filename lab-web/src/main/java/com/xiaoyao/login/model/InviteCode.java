@@ -1,6 +1,8 @@
 package com.xiaoyao.login.model;
 
-public class InviteCode {
+import com.xiaoyao.base.model.BaseVO;
+
+public class InviteCode extends BaseVO{
     private Integer id;
 
     private String number;

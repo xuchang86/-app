@@ -21,7 +21,7 @@ import com.xiaoyao.pay.model.Order;
  * @version 2016年8月27日 许畅 新建
  */
 @Service
-public class PayService extends BaseService {
+public class PayService extends BaseService<Order> {
 
 	/** 注入OrderMapper */
 	@Autowired

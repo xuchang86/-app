@@ -26,7 +26,7 @@ import com.xiaoyao.login.util.LoginUtil;
  * @version 2016年8月20日 许畅 新建
  */
 @Service
-public class InviteCodeService extends BaseService {
+public class InviteCodeService extends BaseService<InviteCode> {
 
 	/** 注入InviteCodeMapper */
 	@Autowired

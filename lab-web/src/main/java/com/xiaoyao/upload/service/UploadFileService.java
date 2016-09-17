@@ -25,7 +25,7 @@ import com.xiaoyao.upload.model.UploadFileExample;
  * @version 2016年9月1日 许畅 新建
  */
 @Service
-public class UploadFileService extends BaseService {
+public class UploadFileService extends BaseService<UploadFile> {
 
 	/** 注入 uploadFileMapperExt */
 	@Autowired

@@ -37,7 +37,7 @@ import com.xiaoyao.upload.util.UploadFileUtil;
  * @version 2016年8月27日 许畅 新建
  */
 @Service
-public class ActivityService extends BaseService {
+public class ActivityService extends BaseService<Activity> {
 
 	/** 注入ActivityMapper */
 	@Autowired

@@ -2,7 +2,9 @@ package com.xiaoyao.upload.model;
 
 import java.util.Date;
 
-public class UploadFile {
+import com.xiaoyao.base.model.BaseVO;
+
+public class UploadFile extends BaseVO{
 	private Integer id;
 
 	private String name;

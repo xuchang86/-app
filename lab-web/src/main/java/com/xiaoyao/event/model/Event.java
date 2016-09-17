@@ -2,7 +2,9 @@ package com.xiaoyao.event.model;
 
 import java.util.Date;
 
-public class Event {
+import com.xiaoyao.base.model.BaseVO;
+
+public class Event extends BaseVO{
     private Integer id;
 
     private String content;

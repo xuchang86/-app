@@ -24,7 +24,7 @@ import com.xiaoyao.pay.model.CashPool;
  * @version 2016年9月3日 许畅 新建
  */
 @Service
-public class CashPoolService extends BaseService {
+public class CashPoolService extends BaseService<CashPool> {
 
 	/** 注入CashPoolMapper */
 	@Autowired

@@ -28,7 +28,7 @@ import com.xiaoyao.upload.util.UploadFileUtil;
  * @version 2016年9月12日 许畅 新建
  */
 @Service
-public class MallService extends BaseService {
+public class MallService extends BaseService<Goods> {
 
 	/** 注入 GoodsMapper */
 	@Autowired
