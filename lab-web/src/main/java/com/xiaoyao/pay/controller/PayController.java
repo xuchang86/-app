@@ -19,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.group.utils.ResponseUtils;
-import com.xiaoyao.base.alipay.util.AlipayNotify;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.model.IsPay;
@@ -28,6 +27,7 @@ import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
+import com.xiaoyao.pay.alipay.util.AlipayNotify;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;

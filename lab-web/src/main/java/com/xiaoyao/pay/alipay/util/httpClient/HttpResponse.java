@@ -1,11 +1,11 @@
-package com.xiaoyao.base.alipay.util.httpClient;
+package com.xiaoyao.pay.alipay.util.httpClient;
 
 
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.httpclient.Header;
 
-import com.xiaoyao.base.alipay.config.AlipayConfig;
+import com.xiaoyao.pay.alipay.config.AlipayConfig;
 
 /* *
  *类名：HttpResponse
