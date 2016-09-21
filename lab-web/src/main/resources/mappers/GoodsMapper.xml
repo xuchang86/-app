@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.mall.dao.GoodsMapper" >
+<mapper namespace="com.xiaoyao.mall.dao.GoodsMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.mall.model.Goods" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -13,6 +13,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="is_sale" property="isSale" jdbcType="BIT" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, description, number, type_id, price, user_id, create_date, url, area, is_sale
+    id, name, description, number, type_id, price, user_id, create_date, url, area, is_sale, 
+    seller_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsExample" >
     select
@@ -105,17 +107,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.xiaoyao.mall.model.Goods" >
+  <insert id="insert" parameterType="com.xiaoyao.mall.model.Goods" useGeneratedKeys="true" keyProperty="id">
     insert into T_MALL_GOODS (id, name, description, 
       number, type_id, price, 
       user_id, create_date, url, 
-      area, is_sale)
+      area, is_sale, seller_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{number,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
       #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{isSale,jdbcType=BIT})
+      #{area,jdbcType=VARCHAR}, #{isSale,jdbcType=BIT}, #{sellerId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.Goods" >
+  <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.Goods" useGeneratedKeys="true" keyProperty="id">
     insert into T_MALL_GOODS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -151,6 +153,9 @@
       <if test="isSale != null" >
         is_sale,
       </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -185,6 +190,9 @@
       </if>
       <if test="isSale != null" >
         #{isSale,jdbcType=BIT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -230,6 +238,9 @@
       <if test="record.isSale != null" >
         is_sale = #{record.isSale,jdbcType=BIT},
       </if>
+      <if test="record.sellerId != null" >
+        seller_id = #{record.sellerId,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -247,7 +258,8 @@
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
       url = #{record.url,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
-      is_sale = #{record.isSale,jdbcType=BIT}
+      is_sale = #{record.isSale,jdbcType=BIT},
+      seller_id = #{record.sellerId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -285,6 +297,9 @@
       <if test="isSale != null" >
         is_sale = #{isSale,jdbcType=BIT},
       </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -299,7 +314,25 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       url = #{url,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
-      is_sale = #{isSale,jdbcType=BIT}
+      is_sale = #{isSale,jdbcType=BIT},
+      seller_id = #{sellerId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 分页查询 -->
+ <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsExample" >
+   select
+   <if test="distinct" >
+     distinct
+   </if>
+   <include refid="Base_Column_List" />
+   from T_MALL_GOODS
+   <if test="_parameter != null" >
+     <include refid="Example_Where_Clause" />
+   </if>
+   <if test="orderByClause != null" >
+     order by ${orderByClause}
+   </if>
+  </select>
+  
 </mapper>

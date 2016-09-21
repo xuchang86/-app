@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.group.core.commons.SysCode;
 import com.group.utils.ResponseUtils;
 import com.group.utils.fastjsonUtils.JsonUtils;
+import com.xiaoyao.base.model.BaseVO;
 
 /**
  * JSON工具类
@@ -78,8 +79,24 @@ public final class JSONUtils {
 	 * @param result
 	 */
 	public static void toJSONString(HttpServletResponse response, Object result) {
+		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
+		excludes.put(BaseVO.class,
+				new String[] { "pageSize", "pageNo", "page" });
+		toJSONString(response, result, null, excludes);
+	}
+
+	/**
+	 * 对象转为JSON字符串传递到前端
+	 * 
+	 * @param response
+	 * @param result
+	 */
+	public static void toJSONString(HttpServletResponse response,
+			Object result, Map<Class<?>, String[]> includes,
+			Map<Class<?>, String[]> excludes) {
+
 		ResponseUtils.renderJson(response,
-				JsonUtils.toJsonString(result, null, null, false));
+				JsonUtils.toJsonString(result, includes, excludes, false));
 	}
 
 	/**
@@ -110,7 +127,12 @@ public final class JSONUtils {
 	 *            消息内容
 	 */
 	public static void SUCCESS(HttpServletResponse response, Object content) {
-		sendMsgToClient(null, response, SysCode.SUCCESS, content, null, null);
+		// 去除父类的分页属性
+		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
+		excludes.put(BaseVO.class,
+				new String[] { "pageSize", "pageNo", "page" });
+		sendMsgToClient(null, response, SysCode.SUCCESS, content, null,
+				excludes);
 	}
 
 	/**

@@ -11,6 +11,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="contacts" property="contacts" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, number, create_date, pay_date, user_id, goods_id, address, contacts, phone
+    id, number, create_date, pay_date, user_id, goods_id, address, contacts, phone, state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsOrderExample" >
     select
@@ -106,12 +107,12 @@
   <insert id="insert" parameterType="com.xiaoyao.mall.model.GoodsOrder" useGeneratedKeys="true" keyProperty="id">
     insert into T_GOODS_ORDER (id, number, create_date, 
       pay_date, user_id, goods_id, 
-      address, contacts, phone
-      )
+      address, contacts, phone, 
+      state)
     values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{payDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
-      #{address,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
-      )
+      #{address,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.GoodsOrder" useGeneratedKeys="true" keyProperty="id">
     insert into T_GOODS_ORDER
@@ -143,6 +144,9 @@
       <if test="phone != null" >
         phone,
       </if>
+      <if test="state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -171,6 +175,9 @@
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -210,6 +217,9 @@
       <if test="record.phone != null" >
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -225,7 +235,8 @@
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       address = #{record.address,jdbcType=VARCHAR},
       contacts = #{record.contacts,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR}
+      phone = #{record.phone,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,6 +268,9 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -269,7 +283,8 @@
       goods_id = #{goodsId,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},
       contacts = #{contacts,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

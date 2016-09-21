@@ -21,6 +21,8 @@ public class GoodsOrder {
 
     private String phone;
 
+    private String state;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class GoodsOrder {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoyao.base.service.BaseService;
-import com.xiaoyao.mall.dao.GoodsMapper;
+import com.xiaoyao.mall.dao.GoodsMapperExt;
 import com.xiaoyao.mall.dao.GoodsOrderMapper;
 import com.xiaoyao.mall.dao.TypeMapper;
 import com.xiaoyao.mall.model.Goods;
@@ -32,7 +32,7 @@ public class MallService extends BaseService<Goods> {
 
 	/** 注入 GoodsMapper */
 	@Autowired
-	private GoodsMapper goodsMapper;
+	private GoodsMapperExt goodsMapper;
 
 	/** 注入 TypeMapper */
 	@Autowired
@@ -47,10 +47,12 @@ public class MallService extends BaseService<Goods> {
 	 * 
 	 * @return
 	 */
-	public List<Goods> queryAllGoods() {
+	public List<Goods> queryAllGoods(String pageSize, String pageNo) {
 		GoodsExample example = new GoodsExample();
+		// 设置分页
+		setPaging(pageSize, pageNo, example);
 		example.or().andIsSaleEqualTo(true);
-		List<Goods> goodses = goodsMapper.selectByExample(example);
+		List<Goods> goodses = goodsMapper.selectByExampleByPage(example);
 		for (Goods goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));

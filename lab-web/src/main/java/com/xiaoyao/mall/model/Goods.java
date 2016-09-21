@@ -14,7 +14,7 @@ import com.xiaoyao.base.model.BaseVO;
  * @since JDK1.7
  * @version 2016年9月12日 许畅 新建
  */
-public class Goods extends BaseVO{
+public class Goods extends BaseVO {
 
 	/** 商品主键 */
 	private Integer id;
@@ -40,7 +40,7 @@ public class Goods extends BaseVO{
 	/** 创建时间 */
 	private Date createDate;
 
-	/** 商品图片url(如果多个图片以逗号隔开)*/
+	/** 商品图片url(如果多个图片以逗号隔开) */
 	private String url;
 
 	/** 商品所在地 */
@@ -51,6 +51,9 @@ public class Goods extends BaseVO{
 
 	/** 是否出售 */
 	private Boolean isSale;
+
+	/** 卖家id */
+	private Integer sellerId;
 
 	/** 商品评论 */
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -205,5 +208,20 @@ public class Goods extends BaseVO{
 	 */
 	public void setIsSale(Boolean isSale) {
 		this.isSale = isSale;
+	}
+
+	/**
+	 * @return the sellerId
+	 */
+	public Integer getSellerId() {
+		return sellerId;
+	}
+
+	/**
+	 * @param sellerId
+	 *            the sellerId to set
+	 */
+	public void setSellerId(Integer sellerId) {
+		this.sellerId = sellerId;
 	}
 }

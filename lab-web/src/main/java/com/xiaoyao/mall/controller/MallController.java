@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
 import com.xiaoyao.pay.controller.PayController;
@@ -51,7 +53,10 @@ public class MallController extends BizBaseController {
 	@RequestMapping("queryAllGoods")
 	public void queryAllGoods(HttpServletRequest request,
 			HttpServletResponse response) {
-		JSONUtils.SUCCESS(response, mallService.queryAllGoods());
+		String pageSize = request(request, "pageSize");
+		String pageNo = request(request, "pageNo");
+		List<Goods> lst = mallService.queryAllGoods(pageSize, pageNo);
+		JSONUtils.SUCCESS(response, lst);
 	}
 
 	/**

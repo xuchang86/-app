@@ -17,9 +17,6 @@ import com.xiaoyao.base.mybatis.Page;
  */
 public abstract class BaseVO {
 
-	/** 主键id */
-	private Integer _id;
-
 	/** 每页显示个数 */
 	private Integer pageSize;
 
@@ -59,21 +56,6 @@ public abstract class BaseVO {
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 		page.setCurrentPage(pageNo);
-	}
-
-	/**
-	 * @return the _id
-	 */
-	public Integer get_id() {
-		return _id;
-	}
-
-	/**
-	 * @param _id
-	 *            the _id to set
-	 */
-	public void set_id(Integer _id) {
-		this._id = _id;
 	}
 
 	/**
