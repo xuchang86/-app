@@ -7,6 +7,7 @@
 package com.xiaoyao.mall.controller;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,16 +17,21 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.xiaoyao.base.controller.BizBaseController;
+import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
+import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.mall.model.Comment;
 import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsOrder;
+import com.xiaoyao.mall.model.State;
 import com.xiaoyao.mall.service.MallService;
 import com.xiaoyao.pay.controller.PayController;
 
@@ -43,6 +49,10 @@ public class MallController extends BizBaseController {
 	/** 注入MallService */
 	@Autowired
 	private MallService mallService;
+
+	/** 注入PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
 
 	/**
 	 * 查询所有商品(支持分页查询)
@@ -74,12 +84,32 @@ public class MallController extends BizBaseController {
 		validateResult.put("userId", "用户id不能为空");
 		validateResult.put("contacts", "联系人不能为空.");
 		validateResult.put("phone", "联系电话不能为空.");
+		validateResult.put("amount", "付款金额不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
+		// 扣减逍遥币
+		String userId = request(request, "userId");
+		// 付款金额
+		String amount = request(request, "amount");
+		List<Person> persons = personManageService.queryPersonByUserId(Integer
+				.parseInt(userId));
+		if (CollectionUtils.isNotEmpty(persons)) {
+			Person person = persons.get(0);
+			if ((new BigDecimal(amount)).compareTo(person.getBill()) > 0) {
+				JSONUtils.ERROR(response, "当前的逍遥币不足以支付当前商品.");
+				return;
+			}
+			// 扣除逍遥币
+			person.setBill(person.getBill().subtract(new BigDecimal(amount)));
+			personManageService.updatePersonByPrimaryKey(person);
+		}
+
+		// 生成订单
 		GoodsOrder goodsOrder = BeanUtils.mapConvert2ToBean(GoodsOrder.class,
 				request);
 		goodsOrder.setCreateDate(new Date());
+		goodsOrder.setState(State.PAYING.getValue());// 订单已付款
 		mallService.saveGoodsOrder(goodsOrder);
 		if (goodsOrder.getId() == null) {
 			JSONUtils.ERROR(response, "保存商品订单失败.");
@@ -87,6 +117,111 @@ public class MallController extends BizBaseController {
 		}
 
 		JSONUtils.SUCCESS(response, goodsOrder.getId());
+	}
+
+	/**
+	 * 待收货的订单信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("todoGetGoods")
+	public void todoGetGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, mallService.queryTodoGetGoods(userId));
+	}
+
+	/**
+	 * 待发货
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("todoSendGoods")
+	public void todoSendGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, mallService.queryTodoSendGoods(userId));
+	}
+
+	/**
+	 * 待评价
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("todoComments")
+	public void todoComments(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, mallService.queryTodoComments(userId));
+	}
+
+	/**
+	 * 评价
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("comments")
+	public void comments(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("content", "评论内容不能为空.");
+		validateResult.put("orderId", "订单id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String content = request(request, "content");
+		if (content.length() > 500) {
+			JSONUtils.PARAM_ERROR(response, "评论内容不能大于500字.");
+			return;
+		}
+
+		Comment comment = BeanUtils.mapConvert2ToBean(Comment.class, request);
+		mallService.addComments(comment);
+		JSONUtils.SUCCESS(response, "评论成功.");
+	}
+
+	/**
+	 * 退货
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("returnSale")
+	public void returnSale(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("orderId", "订单id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String orderId = request(request, "orderId");
+
+		GoodsOrder order = new GoodsOrder();
+		order.setState(State.RETURN.getValue());
+		order.setId(Integer.parseInt(orderId));
+		mallService.updateGoodsOrderByPK(order);
+		JSONUtils.SUCCESS(response, "申请退货成功.");
 	}
 
 	/**

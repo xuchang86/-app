@@ -10,10 +10,11 @@ create table T_GOODS_ORDER
    create_date          timestamp comment '创建时间',
    pay_date             timestamp comment '付款时间',
    user_id              int comment '创建用户id',
-   goods_id             int(20) comment '商品id(多个以逗号隔开)',
+   goods_id             varchar(20) comment '商品id(多个以逗号隔开)',
    address              varchar(50) comment '收货地址',
    contacts             varchar(10) comment '联系人',
    phone                varchar(20) comment '联系电话',
+   state                varchar(20) comment '订单状态',
    primary key (id)
 );
 

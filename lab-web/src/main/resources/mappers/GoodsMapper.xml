@@ -319,7 +319,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <!-- 分页查询 -->
+ <!-- 分页查询 -->
  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsExample" >
    select
    <if test="distinct" >
@@ -333,6 +333,5 @@
    <if test="orderByClause != null" >
      order by ${orderByClause}
    </if>
-  </select>
-  
+ </select>
 </mapper>

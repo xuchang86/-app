@@ -16,6 +16,7 @@ create table T_MALL_GOODS
    url                  varchar(100) comment '商品图片',
    area                 varchar(20) comment '商品地区',
    is_sale              boolean comment '是否出售',
+   seller_id            int comment '卖家id',
    primary key (id)
 );
 

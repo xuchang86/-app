@@ -7,7 +7,7 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="contacts" property="contacts" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -110,7 +110,7 @@
       address, contacts, phone, 
       state)
     values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{payDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{payDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{state,jdbcType=VARCHAR})
   </insert>
@@ -165,7 +165,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="goodsId != null" >
-        #{goodsId,jdbcType=INTEGER},
+        #{goodsId,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
@@ -206,7 +206,7 @@
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.goodsId != null" >
-        goods_id = #{record.goodsId,jdbcType=INTEGER},
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
       </if>
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
       pay_date = #{record.payDate,jdbcType=TIMESTAMP},
       user_id = #{record.userId,jdbcType=INTEGER},
-      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
       contacts = #{record.contacts,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
@@ -257,7 +257,7 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="goodsId != null" >
-        goods_id = #{goodsId,jdbcType=INTEGER},
+        goods_id = #{goodsId,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
@@ -280,7 +280,7 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       pay_date = #{payDate,jdbcType=TIMESTAMP},
       user_id = #{userId,jdbcType=INTEGER},
-      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       contacts = #{contacts,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

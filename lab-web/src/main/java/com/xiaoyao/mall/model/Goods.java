@@ -55,6 +55,9 @@ public class Goods extends BaseVO {
 	/** 卖家id */
 	private Integer sellerId;
 
+	/** 卖家 */
+	private Seller seller;
+
 	/** 商品评论 */
 	private List<Comment> comments = new ArrayList<Comment>();
 
@@ -223,5 +226,20 @@ public class Goods extends BaseVO {
 	 */
 	public void setSellerId(Integer sellerId) {
 		this.sellerId = sellerId;
+	}
+
+	/**
+	 * @return the seller 卖家信息
+	 */
+	public Seller getSeller() {
+		return seller;
+	}
+
+	/**
+	 * @param seller
+	 *            the seller to set 卖家信息
+	 */
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 }

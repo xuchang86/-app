@@ -13,6 +13,8 @@ public class Comment {
 
     private Integer goodsId;
 
+    private Integer orderId;
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class Comment {
 
     public void setGoodsId(Integer goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }
