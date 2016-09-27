@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.base.dao.PersonMapper" >
+<mapper namespace="com.xiaoyao.base.dao.PersonMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.base.model.Person" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
@@ -240,4 +240,30 @@
       name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 金币排行榜 -->
+  <select id="queryTopBillByPage" parameterType="com.xiaoyao.login.model.PersonQuery" resultMap="BaseResultMap">
+   SELECT 
+   <include refid="Base_Column_List" />
+   FROM
+   T_BASE_PERSON 
+   <if test="sortField != null and sortType != null and '' !=sortField and '' !=sortType ">
+   ORDER BY ${sortField} ${sortType}
+   </if>
+  </select>
+  
+  <!-- 收徒排行榜 -->
+  <select id="queryTopChildByPage" parameterType="com.xiaoyao.login.model.PersonQuery" resultType="com.xiaoyao.login.model.PersonQuery">
+    SELECT 
+	t1.name,
+	t1.level,
+	t2.childs 
+	FROM T_BASE_PERSON t1 INNER JOIN 
+	(SELECT count(id) childs,parent_id pid FROM T_BASE_PERSON WHERE parent_id is not null GROUP BY parent_id) t2
+	ON t2.pid = t1.id
+	<if test="sortField != null and sortType != null ">
+    ORDER BY t2.${sortField} ${sortType}
+    </if>
+  </select>
+  
 </mapper>

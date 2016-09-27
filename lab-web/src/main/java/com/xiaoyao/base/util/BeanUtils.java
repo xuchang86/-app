@@ -10,6 +10,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -139,7 +140,7 @@ public final class BeanUtils {
 					Object value = map.get(key);
 					Method setter = property.getWriteMethod();
 					// 对应的值类型
-					Class<?> type = cls.getDeclaredField(key).getType();
+					Class<?> type = getDeclaredField(cls, key).getType();
 					if (value instanceof String[]) {
 						String str = ((String[]) value)[0];
 						setter.invoke(obj, stringConverToObj(type, str));
@@ -167,6 +168,33 @@ public final class BeanUtils {
 			LOGGER.error(e.getMessage(), e);
 		}
 		return obj;
+	}
+
+	/**
+	 * 查询当前class以及其父类对应的field
+	 * 
+	 * @param cls
+	 * @param fieldName
+	 * @return
+	 * @throws NoSuchFieldException
+	 */
+	private static Field getDeclaredField(Class<?> cls, String fieldName)
+			throws NoSuchFieldException {
+		Field[] fields = cls.getDeclaredFields();
+		Field f = null;
+		for (Field field : fields) {
+			if (fieldName.equals(field.getName())) {
+				f = field;
+				break;
+			}
+		}
+		if (f == null && cls.getSuperclass() != Object.class) {
+			return getDeclaredField(cls.getSuperclass(), fieldName);
+		}
+		if (f == null) {
+			throw new NoSuchFieldException(fieldName);
+		}
+		return f;
 	}
 
 	@SuppressWarnings("unchecked")

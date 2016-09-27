@@ -14,11 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.xiaoyao.base.dao.PersonMapper;
+import com.xiaoyao.base.dao.PersonMapperExt;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.model.PersonExample;
 import com.xiaoyao.base.model.Rule;
 import com.xiaoyao.base.service.BaseService;
+import com.xiaoyao.login.model.PersonQuery;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.util.RuleOperator;
 import com.xiaoyao.pay.service.CashPoolService;
@@ -35,7 +36,7 @@ public class PersonManageService extends BaseService<Person> {
 
 	/** 注入PersonMapper */
 	@Autowired
-	private PersonMapper personMapper;
+	private PersonMapperExt personMapper;
 
 	/** 注入CashPoolService */
 	@Autowired
@@ -171,6 +172,32 @@ public class PersonManageService extends BaseService<Person> {
 	 */
 	public Person queryPersonByPrimaryKey(Integer pk) {
 		return personMapper.selectByPrimaryKey(pk);
+	}
+
+	/**
+	 * 逍遥币排行榜查询
+	 * 
+	 * @param pageSize
+	 *            页数
+	 * @param pageNo
+	 *            页码
+	 * @return
+	 */
+	public List<Person> queryTopBill(PersonQuery query) {
+		return personMapper.queryTopBillByPage(query);
+	}
+
+	/**
+	 * 弟子数排行榜查询
+	 * 
+	 * @param pageSize
+	 *            页数
+	 * @param pageNo
+	 *            页码
+	 * @return
+	 */
+	public List<PersonQuery> queryTopChild(PersonQuery query) {
+		return personMapper.queryTopChildByPage(query);
 	}
 
 }

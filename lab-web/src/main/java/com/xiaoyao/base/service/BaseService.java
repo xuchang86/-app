@@ -281,15 +281,15 @@ public abstract class BaseService<T extends BaseVO> {
 	 *            页数
 	 * @param pageNo
 	 *            页码
-	 * @param example
+	 * @param baseVO
 	 */
-	public void setPaging(String pageSize, String pageNo, BaseVO example) {
+	public void setPaging(String pageSize, String pageNo, BaseVO baseVO) {
 		if (StringUtils.isNotBlank(pageSize)) {
-			example.setPageSize(Integer.parseInt(pageSize));
+			baseVO.setPageSize(Integer.parseInt(pageSize));
 		}
 
 		if (StringUtils.isNotBlank(pageNo)) {
-			example.setPageNo(Integer.parseInt(pageNo));
+			baseVO.setPageNo(Integer.parseInt(pageNo));
 		}
 	}
 

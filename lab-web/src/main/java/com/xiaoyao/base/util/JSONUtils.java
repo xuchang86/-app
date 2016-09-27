@@ -53,7 +53,7 @@ public final class JSONUtils {
 	 * @param excludes
 	 *            排除的字段
 	 */
-	protected static void sendMsgToClient(HttpServletRequest request,
+	private static void sendMsgToClient(HttpServletRequest request,
 			HttpServletResponse response, SysCode sysCode, Object content,
 			Map<Class<?>, String[]> includes, Map<Class<?>, String[]> excludes) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -121,8 +121,6 @@ public final class JSONUtils {
 	 * 
 	 * @param response
 	 *            HttpServletResponse
-	 * @param sysCode
-	 *            系统状态
 	 * @param content
 	 *            消息内容
 	 */
@@ -132,6 +130,26 @@ public final class JSONUtils {
 		excludes.put(BaseVO.class,
 				new String[] { "pageSize", "pageNo", "page" });
 		sendMsgToClient(null, response, SysCode.SUCCESS, content, null,
+				excludes);
+	}
+
+	/**
+	 * JSON序列化
+	 * 
+	 * @param response
+	 *            HttpServletResponse
+	 * @param content
+	 *            消息内容
+	 * @param includes
+	 *            包括
+	 * @param excludes
+	 *            排除
+	 */
+	public static void SUCCESS(HttpServletResponse response, Object content,
+			Map<Class<?>, String[]> includes, Map<Class<?>, String[]> excludes) {
+		excludes.put(BaseVO.class,
+				new String[] { "pageSize", "pageNo", "page" });
+		sendMsgToClient(null, response, SysCode.SUCCESS, content, includes,
 				excludes);
 	}
 
