@@ -23,7 +23,7 @@ import com.xiaoyao.login.model.PersonQuery;
 import com.xiaoyao.login.service.PersonManageService;
 
 /**
- * 收徒系统Controller
+ * Person人物Controller
  * 
  * @author 许畅
  * @since JDK1.7
