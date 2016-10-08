@@ -194,6 +194,7 @@ public class MallService extends BaseService<Goods> {
 			for (String goodsId : goodsIds) {
 				Goods goods = goodsMapper.selectByPrimaryKey(Integer
 						.parseInt(goodsId));
+				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 				goodses.add(goods);
 			}
 			order.setGoods(goodses);
@@ -216,6 +217,7 @@ public class MallService extends BaseService<Goods> {
 			for (String goodsId : goodsIds) {
 				Goods goods = goodsMapper.selectByPrimaryKey(Integer
 						.parseInt(goodsId));
+				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 				goodses.add(goods);
 			}
 			order.setGoods(goodses);
