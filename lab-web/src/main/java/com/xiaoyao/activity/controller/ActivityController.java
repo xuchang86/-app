@@ -73,6 +73,7 @@ public class ActivityController extends BizBaseController {
 		validateResult.put("date", "活动时间不能为空.");
 		validateResult.put("cost", "发布费用不能为空.");
 		validateResult.put("userId", "当前登录用户id不能为空.");
+		validateResult.put("city", "城市不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 

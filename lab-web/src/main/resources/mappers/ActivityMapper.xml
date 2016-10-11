@@ -9,6 +9,7 @@
     <result column="date" property="date" jdbcType="TIMESTAMP" />
     <result column="person_id" property="personId" jdbcType="INTEGER" />
     <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, type, address, content, date, person_id, cost
+    id, type, address, content, date, person_id, cost, city
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityExample" >
     select
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into T_PUBLISH_ACTIVITY (id, type, address, 
       content, date, person_id, 
-      cost)
+      cost, city)
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER}, 
-      #{cost,jdbcType=DECIMAL})
+      #{cost,jdbcType=DECIMAL}, #{city,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into T_PUBLISH_ACTIVITY
@@ -133,6 +134,9 @@
       <if test="cost != null" >
         cost,
       </if>
+      <if test="city != null" >
+        city,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -155,6 +159,9 @@
       </if>
       <if test="cost != null" >
         #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.cost != null" >
         cost = #{record.cost,jdbcType=DECIMAL},
       </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       content = #{record.content,jdbcType=VARCHAR},
       date = #{record.date,jdbcType=TIMESTAMP},
       person_id = #{record.personId,jdbcType=INTEGER},
-      cost = #{record.cost,jdbcType=DECIMAL}
+      cost = #{record.cost,jdbcType=DECIMAL},
+      city = #{record.city,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="cost != null" >
         cost = #{cost,jdbcType=DECIMAL},
       </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -237,11 +251,12 @@
       content = #{content,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
       person_id = #{personId,jdbcType=INTEGER},
-      cost = #{cost,jdbcType=DECIMAL}
+      cost = #{cost,jdbcType=DECIMAL},
+      city = #{city,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <!-- 分页查询活动 -->
+  <!-- 分页查询 -->
   <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityExample" >
     select
     <if test="distinct" >

@@ -12,6 +12,7 @@ create table T_PUBLISH_ACTIVITY
    date                 timestamp comment '活动时间',
    person_id            int comment '活动发起人',
    cost                 decimal(10,2) comment '费用',
+   city                 varchar(50) comment '城市',
    primary key (id)
 );
 

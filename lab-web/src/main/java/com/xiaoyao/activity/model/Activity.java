@@ -23,6 +23,8 @@ public class Activity extends BaseVO{
 	private Integer personId;
 
 	private BigDecimal cost;
+	
+	private String city;
 
 	/** 活动参与人 */
 	private List<ActivityPerson> activityPerson = new ArrayList<ActivityPerson>();
@@ -114,5 +116,19 @@ public class Activity extends BaseVO{
 	 */
 	public void setUrls(String[] urls) {
 		this.urls = urls;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
 	}
 }
