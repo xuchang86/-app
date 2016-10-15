@@ -6,10 +6,12 @@
  *****************************************************************************/
 package com.easemob.server.example.comm.utils;
 
+import com.easemob.server.example.api.ChatGroupAPI;
 import com.easemob.server.example.api.ChatRoomAPI;
 import com.easemob.server.example.api.IMUserAPI;
 import com.easemob.server.example.comm.ClientContext;
 import com.easemob.server.example.comm.EasemobRestAPIFactory;
+import com.easemob.server.example.comm.body.ChatGroupBody;
 import com.easemob.server.example.comm.body.ChatRoomBody;
 import com.easemob.server.example.comm.body.IMUserBody;
 import com.easemob.server.example.comm.body.UserNamesBody;
@@ -37,6 +39,9 @@ public final class EmchatOperator {
 	/** IMUserAPI接口实例 */
 	private static IMUserAPI IM_USER_API = null;
 
+	/** 群组API */
+	private static ChatGroupAPI CHATGROUP_API = null;
+
 	/** EasemobRestAPIFactory */
 	private static final EasemobRestAPIFactory FACTORY = ClientContext
 			.getInstance().init(ClientContext.INIT_FROM_PROPERTIES)
@@ -53,6 +58,19 @@ public final class EmchatOperator {
 					.newInstance(EasemobRestAPIFactory.CHATROOM_CLASS);
 		}
 		return CHATROOM_API;
+	}
+
+	/**
+	 * 获取群组API实例
+	 * 
+	 * @return
+	 */
+	public static synchronized ChatGroupAPI getChatGroupInstance() {
+		if (CHATGROUP_API == null) {
+			CHATGROUP_API = (ChatGroupAPI) FACTORY
+					.newInstance(EasemobRestAPIFactory.CHATGROUP_CLASS);
+		}
+		return CHATGROUP_API;
 	}
 
 	/**
@@ -104,6 +122,27 @@ public final class EmchatOperator {
 				members);
 
 		return (ResponseWrapper) chatroom.createChatRoom(roomBody);
+	}
+
+	/**
+	 * 创建300人聊天群
+	 * 
+	 * @param owner
+	 *            创建者
+	 * @param members
+	 *            群成员
+	 * @return
+	 */
+	public static ResponseWrapper createChatGroup(String owner, String[] members) {
+		ChatGroupAPI chatGroupAPI = getChatGroupInstance();
+		String groupName = "新建聊天群";
+		String desc = "新建聊天群";
+		Boolean approval = Boolean.TRUE;
+		Boolean isPublic = Boolean.TRUE;
+		Long maxUsers = Long.parseLong("300");
+		ChatGroupBody groupBody = new ChatGroupBody(groupName, desc, isPublic,
+				maxUsers, approval, owner, members);
+		return (ResponseWrapper) chatGroupAPI.createChatGroup(groupBody);
 	}
 
 	/**
@@ -159,5 +198,21 @@ public final class EmchatOperator {
 		UserNamesBody userNames = new UserNamesBody(new String[] { userName });
 		return (ResponseWrapper) getChatRoomInstance().addBatchUsersToChatRoom(
 				roomId, userNames);
+	}
+
+	/**
+	 * 批量增加群成员
+	 * 
+	 * @param groupId
+	 *            群Id
+	 * @param userName
+	 *            用户名称
+	 * @return
+	 */
+	public static ResponseWrapper addBatchUsersToChatGroup(String groupId,
+			String userName) {
+		UserNamesBody userNames = new UserNamesBody(new String[] { userName });
+		return (ResponseWrapper) getChatGroupInstance()
+				.addBatchUsersToChatGroup(groupId, userNames);
 	}
 }
