@@ -171,7 +171,7 @@ public class UserLoginService extends BaseService<User> {
 			if (persons.size() > 0) {
 				// 加入聊天室
 				ResponseWrapper response = EmchatOperator
-						.addBatchUsersToChatRoom(inviteInfo.getChatroomId(),
+						.addBatchUsersToChatGroup(inviteInfo.getChatroomId(),
 								user.getPhone());
 				LOGGER.info("setParentInfo:" + response.getResponseBody());
 				person.setParentId(persons.get(0).getId());
@@ -192,8 +192,27 @@ public class UserLoginService extends BaseService<User> {
 		// 更新User表信息
 		int result = userMapperExt.updateByExampleSelective(user, example);
 		// 更新人员信息名称
-		userMapperExt.updatePerson(user);
+		this.updatePerson(user);
 		return wrapperReturnVal(result);
+	}
+
+	/**
+	 * 更新Person人员信息
+	 * 
+	 * @param user
+	 */
+	public boolean updatePerson(User user) {
+		return wrapperReturnVal(userMapperExt.updatePerson(user));
+	}
+
+	/**
+	 * 编辑个人信息
+	 * 
+	 * @param user
+	 */
+	public void editUser(User user) {
+		this.updateByByPrimaryKey(user);
+		this.updatePerson(user);
 	}
 
 	/**

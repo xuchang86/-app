@@ -139,7 +139,7 @@ public final class EmchatOperator {
 		String desc = "新建聊天群";
 		Boolean approval = Boolean.TRUE;
 		Boolean isPublic = Boolean.TRUE;
-		Long maxUsers = Long.parseLong("300");
+		Long maxUsers = Long.parseLong("200");
 		ChatGroupBody groupBody = new ChatGroupBody(groupName, desc, isPublic,
 				maxUsers, approval, owner, members);
 		return (ResponseWrapper) chatGroupAPI.createChatGroup(groupBody);

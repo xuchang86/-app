@@ -134,6 +134,33 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
+	 * 编辑个人信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("editCurrentUser")
+	public void editCurrentUser(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("id", "用户id不能为空.");
+		validateResult.put("name", "昵称不能为空.");
+		validateResult.put("birthday", "出生年月日不能为空.");
+		validateResult.put("address", "住址不能为空.");
+		validateResult.put("providerid", "我提供的资源不能为空");
+		validateResult.put("requiredid", "我需要的资源不能为空.");
+		validateResult.put("city", "城市不能为空.");
+		validateResult.put("sex", "性别不能为空.");// 0 男性,1女性
+
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		User user = BeanUtils.mapConvertToBean(User.class, request);
+		userLoginService.editUser(user);
+		JSONUtils.SUCCESS(response, "更新个人信息成功.");
+	}
+
+	/**
 	 * 获取我的弟子
 	 * 
 	 * @param request
@@ -453,12 +480,11 @@ public class UserLoginController extends BizBaseController {
 	private String createInviteCode(HttpServletRequest request) {
 		User user = getCurrentUser(request);
 		// 创建自己的聊天室
-		ResponseWrapper responseWrapper = EmchatOperator.createChatRoom(
-				"新建聊天室", "新建聊天室", Long.parseLong("200"), user.getPhone(),
-				new String[] { user.getPhone() });
+		ResponseWrapper responseWrapper = EmchatOperator.createChatGroup(
+				user.getPhone(), new String[] { user.getPhone() });
 
 		ObjectNode node = (ObjectNode) responseWrapper.getResponseBody();
-		String roomId = node.get("data").get("id").asText();
+		String roomId = node.get("data").get("groupid").asText();
 		logger.info("roomId:" + roomId);
 
 		InviteCode code = new InviteCode();

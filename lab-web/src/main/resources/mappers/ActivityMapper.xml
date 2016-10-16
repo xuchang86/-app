@@ -275,4 +275,41 @@
     -->
   </select>
   
+  <!-- 我发布的信息 -->
+  <select id="ipublish" resultType="com.xiaoyao.activity.model.ActivityQuery" parameterType="com.xiaoyao.base.model.Person" >
+    SELECT 
+    t.id,
+	CASE t.type 
+	WHEN 'sale_service' THEN '出售服务' 
+	WHEN 'reward_task' THEN '悬赏服务' 
+	WHEN 'school_activity' THEN '门派活动' 
+	ELSE '其他' END type,
+	t.address,t.content,t.date,t.cost,t.city ,
+    u.name urls
+    FROM 
+	T_PUBLISH_ACTIVITY t LEFT JOIN T_UPLOAD_FILE u on u.activity_id = t.id
+	WHERE t.person_id =
+	(select id from T_BASE_PERSON where user_id = #{userId})
+  </select>
+  
+  <!-- 我参与的活动-->
+  <select id="ijoin" resultType="com.xiaoyao.activity.model.ActivityQuery" parameterType="com.xiaoyao.base.model.Person" >
+	SELECT 
+	t.id,
+	CASE t.type 
+	WHEN 'sale_service' THEN '出售服务' 
+	WHEN 'reward_task' THEN '悬赏服务' 
+	WHEN 'school_activity' THEN '门派活动' 
+	ELSE '其他' END type,
+	t.address,t.content,t.date,t.cost,t.city ,
+    u.name urls
+	FROM 
+	T_PUBLISH_ACTIVITY t LEFT JOIN T_UPLOAD_FILE u on u.activity_id = t.id
+	WHERE t.id in (
+	SELECT activity_id FROM T_ACTIVITY_PERSON 
+	where person_id = 
+	(select id from T_BASE_PERSON where user_id = #{userId})
+	)
+  </select>
+  
 </mapper>

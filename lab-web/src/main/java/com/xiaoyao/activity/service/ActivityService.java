@@ -6,10 +6,20 @@
  *****************************************************************************/
 package com.xiaoyao.activity.service;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +29,7 @@ import com.xiaoyao.activity.model.Activity;
 import com.xiaoyao.activity.model.ActivityExample;
 import com.xiaoyao.activity.model.ActivityPerson;
 import com.xiaoyao.activity.model.ActivityPersonExample;
+import com.xiaoyao.activity.model.ActivityQuery;
 import com.xiaoyao.activity.model.ActivityType;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
@@ -58,6 +69,9 @@ public class ActivityService extends BaseService<Activity> {
 	/** 注入UploadFileService */
 	@Autowired
 	private UploadFileService uploadFileService;
+
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ActivityService.class);
 
 	/**
 	 * 新增活动
@@ -163,6 +177,104 @@ public class ActivityService extends BaseService<Activity> {
 			activity.setUrls(wrapperURL(activity));
 		}
 		return lst;
+	}
+
+	/**
+	 * 我发布的活动
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public Set<Activity> ipublish(Integer userId) {
+		Person person = new Person();
+		person.setUserId(userId);
+		List<ActivityQuery> lst = activityMapperExt.ipublish(person);
+
+		return this.convertData(lst);
+	}
+
+	/**
+	 * 我参与的活动
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public Set<Activity> ijoin(Integer userId) {
+		Person person = new Person();
+		person.setUserId(userId);
+		List<ActivityQuery> lst = activityMapperExt.ijoin(person);
+
+		return this.convertData(lst);
+	}
+
+	/**
+	 * 发布图片urls平铺为urls数组数据转换<br>
+	 * 出于性能考虑,否则可以简单处理直接后台数据库查询两遍,此处只查了一遍数据库.
+	 * 
+	 * @param lst
+	 * @return
+	 */
+	private Set<Activity> convertData(List<ActivityQuery> lst) {
+		Set<Activity> activitys = new HashSet<Activity>();
+		Map<Integer, List<String>> map = new HashMap<Integer, List<String>>();
+		for (ActivityQuery ac : lst) {
+			try {
+				Activity obj = Activity.class.newInstance();
+				Field[] fields = ac.getClass().getDeclaredFields();
+				for (Field field : fields) {
+					field.setAccessible(true);
+					if (field.getName().equals("urls")) {
+						if (map.containsKey(ac.getId())) {
+							List<String> urls = map.get(ac.getId());
+							if (field.get(ac) != null) {
+								urls.add(this.wrapperURL(field.get(ac)));
+							}
+							map.put(ac.getId(), urls);
+						} else {
+							List<String> urls = new ArrayList<String>();
+							if (field.get(ac) != null) {
+								urls.add(this.wrapperURL(field.get(ac)));
+							}
+							map.put(ac.getId(), urls);
+						}
+						continue;
+					}
+					String value = StringUtils.capitalize(field.getName());
+					Method method = obj.getClass().getMethod("set" + value,
+							field.getType());
+					method.invoke(obj, field.get(ac));
+				}
+				activitys.add(obj);
+			} catch (InstantiationException e) {
+				LOGGER.error(e.getMessage(), e);
+			} catch (IllegalAccessException e) {
+				LOGGER.error(e.getMessage(), e);
+			} catch (NoSuchMethodException e) {
+				LOGGER.error(e.getMessage(), e);
+			} catch (SecurityException e) {
+				LOGGER.error(e.getMessage(), e);
+			} catch (IllegalArgumentException e) {
+				LOGGER.error(e.getMessage(), e);
+			} catch (InvocationTargetException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+		}
+
+		for (Activity ac : activitys) {
+			ac.setUrls(map.get(ac.getId()).toArray(new String[] {}));
+		}
+		return activitys;
+	}
+
+	/**
+	 * 包装URL为绝对路径
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	private String wrapperURL(Object value) {
+		return UploadFileUtil.convertToFileHttpURL(String.valueOf(value),
+				"upload");
 	}
 
 	/**

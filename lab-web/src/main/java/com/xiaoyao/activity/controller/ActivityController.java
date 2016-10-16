@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,6 +91,51 @@ public class ActivityController extends BizBaseController {
 		} else {
 			JSONUtils.ERROR(response, "发布信息失败.");
 		}
+	}
+
+	/**
+	 * 我发布的信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("ipublish")
+	public void ipublish(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户Id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Integer userId = Integer.parseInt(request(request, "userId"));
+		Set<Activity> list = activityService.ipublish(userId);
+
+		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
+		excludes.put(Activity.class, new String[] { "personId",
+				"activityPerson" });
+		JSONUtils.SUCCESS(response, list, null, excludes);
+	}
+
+	/**
+	 * 我参与的活动
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("ijoin")
+	public void ijoin(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户Id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Integer userId = Integer.parseInt(request(request, "userId"));
+		Set<Activity> list = activityService.ijoin(userId);
+
+		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
+		excludes.put(Activity.class, new String[] { "personId",
+				"activityPerson" });
+		JSONUtils.SUCCESS(response, list, null, excludes);
 	}
 
 	/**
