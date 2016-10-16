@@ -139,8 +139,8 @@ public class UserLoginController extends BizBaseController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("editCurrentUser")
-	public void editCurrentUser(HttpServletRequest request,
+	@RequestMapping("editUser")
+	public void editUser(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, String> validateResult = new HashMap<String, String>();
 		validateResult.put("id", "用户id不能为空.");
