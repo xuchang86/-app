@@ -1,5 +1,7 @@
 package com.xiaoyao.pay.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
@@ -97,18 +100,8 @@ public class PayController extends BizBaseController {
 			// 支付成功处理逻辑
 			if (trade_status.equals("TRADE_FINISHED")
 					|| trade_status.equals("TRADE_SUCCESS")) {
-				// 新增订单信息
-				Order order = new Order();
-				order.setOrderCode(out_trade_no);
-				order.setPayDate(new Date());
-				order.setPayAmount(new BigDecimal(LoginUtil.getRegistAmount()));
-				order.setUserId(Integer.valueOf(userId));
-				payService.saveOrder(order);
-				// 更新已付款
-				this.updateIsPay(userId);
-				// 付款并保存person信息反写金额等业务操作
-				User user = userLoginService.queryUserByPrimaryKey(userId);
-				userLoginService.saveUser(user, inviteCode);
+				// 业务回调
+				this.notifyCallback(out_trade_no, userId, inviteCode);
 				// 支付成功
 				ResponseUtils.renderText(response, "success");
 			}
@@ -116,6 +109,79 @@ public class PayController extends BizBaseController {
 			// 验证失败
 			LOGGER.info("参数验证失败");
 		}
+	}
+
+	/**
+	 * 微信支付反馈结果
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws
+	 * @throws Exception
+	 */
+	@RequestMapping("wechatNotify")
+	public void wechatNotify(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		System.out.println("微信通知一次：" + new Date());
+		InputStream in = request.getInputStream();
+		byte b[] = new byte[1024];
+		int len = 0;
+		int temp = 0;
+		while ((temp = in.read()) != -1) {
+			b[len] = (byte) temp;
+			len++;
+		}
+		in.close();
+		String xmlParam = new String(b, 0, len);
+
+		String return_code = CommonUtils.readStringXmlOut(xmlParam,
+				"return_code");
+		System.out.println("交易状态：" + return_code);
+		if ("SUCCESS".equals(return_code)) {
+			// 说明微信支付成功
+			String out_trade_no = CommonUtils.readStringXmlOut(xmlParam,
+					"out_trade_no");
+			System.out.println("商户订单号：" + out_trade_no);
+			// 用户Id
+			String userId = new String(request.getParameter("userId").getBytes(
+					"ISO-8859-1"), "UTF-8");
+			System.out.println("用户id：" + userId);
+			// 邀请码
+			String inviteCode = new String(request.getParameter("inviteCode")
+					.getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("邀请码:" + inviteCode);
+			// 业务回调
+			this.notifyCallback(out_trade_no, userId, inviteCode);
+			// 支付成功处理逻辑
+			ResponseUtils.renderText(response, "success");
+		}
+	}
+
+	/**
+	 * 支付宝和微信支付回调
+	 * 
+	 * @param out_trade_no
+	 *            订单号
+	 * @param userId
+	 *            用户id
+	 * @param inviteCode
+	 *            邀请码
+	 */
+	private void notifyCallback(String out_trade_no, String userId,
+			String inviteCode) {
+		// 新增订单信息
+		Order order = new Order();
+		order.setOrderCode(out_trade_no);
+		order.setPayDate(new Date());
+		order.setPayAmount(new BigDecimal(LoginUtil.getRegistAmount()));
+		order.setUserId(Integer.valueOf(userId));
+		payService.saveOrder(order);
+		// 更新已付款
+		this.updateIsPay(userId);
+		// 付款并保存person信息反写金额等业务操作
+		User user = userLoginService.queryUserByPrimaryKey(userId);
+		userLoginService.saveUser(user, inviteCode);
 	}
 
 	/**
@@ -239,6 +305,44 @@ public class PayController extends BizBaseController {
 					classReqValue, methodReqValue, userId, inviteCode));
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
+		} catch (SecurityException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * 获取微信支付接口参数URL
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getWechatPayURL")
+	public void getWechatPayURL(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 校验参数是否为空
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		validateResult.put("inviteCode", "邀请码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String wechatURL = LoginUtil.getWechatURL();
+		String userId = request(request, "userId");
+		String inviteCode = request(request, "inviteCode");
+		RequestMapping req = this.getClass()
+				.getAnnotation(RequestMapping.class);
+		String classReqValue = req.value().length > 0 ? req.value()[0] : "";
+		try {
+			Method method = this.getClass().getMethod("wechatNotify",
+					HttpServletRequest.class, HttpServletResponse.class);
+			RequestMapping reqMethod = method
+					.getAnnotation(RequestMapping.class);
+			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
+					.value()[0] : "";
+			ResponseUtils.renderText(response, MessageFormat.format(wechatURL,
+					classReqValue, methodReqValue, userId, inviteCode));
+		} catch (NoSuchMethodException e) {
+			LOGGER.error("找不到wechatPayURL方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
 			LOGGER.error(e.getMessage(), e);
 		}

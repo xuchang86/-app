@@ -168,12 +168,21 @@ public final class LoginUtil {
 	}
 
 	/**
-	 * 获取首次注册支付宝URL
+	 * 获取支付宝回调URL
 	 * 
 	 * @return
 	 */
 	public static String getAliapayURL() {
 		return getPropertyValue("aliapay_url");
+	}
+
+	/**
+	 * 获取微信支付URL
+	 * 
+	 * @return
+	 */
+	public static String getWechatURL() {
+		return getPropertyValue("wechat_url");
 	}
 
 	/**

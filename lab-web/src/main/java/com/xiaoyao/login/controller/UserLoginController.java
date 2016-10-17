@@ -6,6 +6,8 @@
  *****************************************************************************/
 package com.xiaoyao.login.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.easemob.server.example.comm.utils.EmchatOperator;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
@@ -35,6 +39,7 @@ import com.xiaoyao.login.service.InviteCodeService;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 逍遥派用户登录Controller
@@ -161,6 +166,56 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
+	 * 上传个人头像
+	 * 
+	 * @param multipartFile
+	 * @param request
+	 * @param response
+	 * @throws IllegalStateException
+	 * @throws IOException
+	 */
+	@RequestMapping("uploadHead")
+	public void uploadHead(
+			@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IllegalStateException, IOException {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		User user = getCurrentUser(request);
+		// 获取upload上传文件真实路径
+		String realPath = request.getSession().getServletContext()
+				.getRealPath("head");
+		String fileName = multipartFile.getOriginalFilename();
+		System.out.println("originalFilename文件名:" + fileName);
+		// 校验文件必须是jpg等图片格式文件
+		String contentType = multipartFile.getContentType();
+		if (contentType.indexOf("image") < 0) {
+			JSONUtils.ERROR(response, "上传的文件存在非法格式,不允许上传");
+			return;
+		}
+		if (!UploadFileUtil.checkIsImage(multipartFile.getInputStream())) {
+			JSONUtils.ERROR(response, "上传的文件非图片格式,不允许上传");
+			return;
+		}
+		Integer index = userLoginService.queryMaxIndex();
+		fileName = UploadFileUtil.createFileName(fileName, index);
+		user.setUrl(fileName);
+		userLoginService.updateByByPrimaryKey(user);
+
+		// 文件上传至服务器
+		File file = new File(realPath, fileName);
+		if (!file.exists())
+			file.mkdirs();
+		multipartFile.transferTo(file);
+
+		// 返回上传图片id
+		JSONUtils.SUCCESS(response, "上传文件[" + fileName + "]成功.");
+	}
+
+	/**
 	 * 获取我的弟子
 	 * 
 	 * @param request
@@ -283,15 +338,16 @@ public class UserLoginController extends BizBaseController {
 		User user = userLoginService.queryUserByPrimaryKey(Integer
 				.parseInt(userId));
 		if (IsPay.UN_PAY.getValue() == user.getIspay()) {
-			JSONUtils.ERROR(response, "当前用户付款失败,请重新付款.");
+			// 更新已付款
+			userLoginService.updateIsPay(user);
+			// 付款并保存person信息反写金额等业务操作
+			Person person = userLoginService.saveUser(user, inviteCode);
+			setCurrentPerson(request, person);
+			setCurrentUser(request, user);
+			JSONUtils.SUCCESS(response, user);
 			return;
 		}
-		// TODO付款成功则直接返回user信息
-
-		// 付款并保存person信息反写金额等业务操作
-		Person person = userLoginService.saveUser(user, inviteCode);
-		setCurrentPerson(request, person);
-		setCurrentUser(request, user);
+		// 付款成功则直接返回user信息
 		JSONUtils.SUCCESS(response, user);
 	}
 

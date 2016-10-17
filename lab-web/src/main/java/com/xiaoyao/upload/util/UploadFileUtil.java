@@ -103,6 +103,23 @@ public final class UploadFileUtil {
 	}
 
 	/**
+	 * 包装个人头像url
+	 * 
+	 * @param fileName
+	 *            文件名
+	 * @return
+	 */
+	public static String wrapperUserURL(String fileName) {
+		String ip = GlobalCache.getServerIP() == "null" ? LoginUtil
+				.getServerIP() : GlobalCache.getServerIP();
+		String port = GlobalCache.getServerPort() == "null" ? LoginUtil
+				.getServerPort() : GlobalCache.getServerPort();
+
+		return convertToFileHttpURL(ip, port, GlobalCache.getContextPath(),
+				fileName, "head");
+	}
+
+	/**
 	 * 转换为图片URL
 	 * 
 	 * @param fileName

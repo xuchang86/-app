@@ -17,6 +17,7 @@ create table T_LOGIN_USER
    sex                  int comment '性别',
    userName             varchar(15) comment '用户名',
    isPay                int comment '是否支付',
+   url                  varchar(20) comment '个人头像',
    primary key (id)
 );
 

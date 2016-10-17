@@ -33,6 +33,9 @@ public class User extends BaseVO {
 	/** 是否已付款 {@link com.xiaoyao.login.model.IsPay} */
 	private Integer ispay = IsPay.UN_PAY.getValue();
 
+	/** 个人头像 */
+	private String url;
+
 	public Integer getId() {
 		return id;
 	}
@@ -127,5 +130,20 @@ public class User extends BaseVO {
 
 	public void setIspay(Integer ispay) {
 		this.ispay = ispay;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

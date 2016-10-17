@@ -287,4 +287,14 @@ public class UserLoginService extends BaseService<User> {
 		return queryUserByPrimaryKey(Integer.parseInt(pk));
 	}
 
+	/**
+	 * 查询最大下标
+	 * 
+	 * @return
+	 */
+	public int queryMaxIndex() {
+
+		return userMapperExt.queryMaxIndex();
+	}
+
 }

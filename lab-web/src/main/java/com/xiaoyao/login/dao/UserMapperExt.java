@@ -51,4 +51,11 @@ public interface UserMapperExt extends UserMapper {
 	 */
 	int updatePerson(User user);
 
+	/**
+	 * 查询最大下标
+	 * 
+	 * @return
+	 */
+	int queryMaxIndex();
+
 }

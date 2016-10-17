@@ -14,6 +14,7 @@
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="userName" property="username" jdbcType="VARCHAR" />
     <result column="isPay" property="ispay" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, phone, password, name, birthday, address, providerId, requiredId, city, sex, 
-    userName, isPay
+    userName, isPay, url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.login.model.UserExample" >
     select
@@ -112,13 +113,13 @@
     insert into T_LOGIN_USER (id, phone, password, 
       name, birthday, address, 
       providerId, requiredId, city, 
-      sex, userName, isPay
-      )
+      sex, userName, isPay, 
+      url)
     values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{address,jdbcType=VARCHAR}, 
       #{providerid,jdbcType=VARCHAR}, #{requiredid,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{ispay,jdbcType=INTEGER}
-      )
+      #{sex,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{ispay,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
    parameterType="com.xiaoyao.login.model.User" >
@@ -160,6 +161,9 @@
       <if test="ispay != null" >
         isPay,
       </if>
+      <if test="url != null" >
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -197,6 +201,9 @@
       </if>
       <if test="ispay != null" >
         #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -245,6 +252,9 @@
       <if test="record.ispay != null" >
         isPay = #{record.ispay,jdbcType=INTEGER},
       </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -263,7 +273,8 @@
       city = #{record.city,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=INTEGER},
       userName = #{record.username,jdbcType=VARCHAR},
-      isPay = #{record.ispay,jdbcType=INTEGER}
+      isPay = #{record.ispay,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -304,6 +315,9 @@
       <if test="ispay != null" >
         isPay = #{ispay,jdbcType=INTEGER},
       </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -319,7 +333,8 @@
       city = #{city,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
       userName = #{username,jdbcType=VARCHAR},
-      isPay = #{ispay,jdbcType=INTEGER}
+      isPay = #{ispay,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -361,5 +376,10 @@
      SET t.name = #{name}
      WHERE t.user_id = #{id}
   </update>
+  
+  <!-- 查询T_UPLOAD_FILE中最大值 -->
+  <select id="queryMaxIndex" resultType="java.lang.Integer">
+     SELECT max(t.id) MAXINDEX FROM T_LOGIN_USER t
+  </select>
   
 </mapper>
