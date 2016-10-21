@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.model.UserExample;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.pay.service.CashPoolService;
+import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 用户登录服务
@@ -242,7 +244,22 @@ public class UserLoginService extends BaseService<User> {
 		user.setUsername(username);
 		user.setPhone(username);
 		user.setPassword(password);
-		return userMapperExt.login(user);
+		return this.wrapperUser(userMapperExt.login(user));
+	}
+
+	/**
+	 * 包装登陆User信息中的URL
+	 * 
+	 * @param users
+	 * @return
+	 */
+	private List<User> wrapperUser(List<User> users) {
+		for (User user : users) {
+			if (StringUtils.isNotEmpty(user.getUrl())) {
+				user.setUrl(UploadFileUtil.wrapperUserURL(user.getUrl()));
+			}
+		}
+		return users;
 	}
 
 	/**

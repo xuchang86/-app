@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.glassfish.jersey.client.JerseyClient;
@@ -26,6 +27,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -239,5 +241,21 @@ public class JerseyRestAPIInvoker implements RestAPIInvoker {
             }
         }
     }
+
+	/** 
+	 *
+	 * @param method
+	 * @param url
+	 * @param header
+	 * @return
+	 *		
+	 * @see com.easemob.server.example.api.RestAPIInvoker#sendRequest(java.lang.String, java.lang.String, com.easemob.server.example.comm.wrapper.HeaderWrapper)
+	 */
+	@Override
+	public ResponseWrapper sendRequest(String method, String url,
+			HeaderWrapper header) {
+		// TODO 自动生成方法存根注释，方法实现时请删除此注释
+		return null;
+	}
 
 }

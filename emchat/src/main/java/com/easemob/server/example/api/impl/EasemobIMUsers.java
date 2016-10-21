@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.easemob.server.example.api.EasemobRestAPI;
 import com.easemob.server.example.api.IMUserAPI;
 import com.easemob.server.example.comm.wrapper.BodyWrapper;
+import com.easemob.server.example.comm.body.IMUserBody;
 import com.easemob.server.example.comm.constant.HTTPMethod;
 import com.easemob.server.example.comm.helper.HeaderHelper;
 import com.easemob.server.example.comm.wrapper.HeaderWrapper;
@@ -96,8 +97,7 @@ public class EasemobIMUsers extends EasemobRestAPI implements IMUserAPI {
 	public Object getFriends(String userName) {
         String url = getContext().getSeriveURL() + getResourceRootURI() + "/" + userName + "/contacts/users";
         HeaderWrapper header = HeaderHelper.getDefaultHeaderWithToken();
-
-        return getInvoker().sendRequest(HTTPMethod.METHOD_GET, url, header, null, null);
+        return getInvoker().sendRequest(HTTPMethod.METHOD_GET, url, header);
 	}
 
 	public Object getBlackList(String userName) {

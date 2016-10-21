@@ -100,6 +100,17 @@ public final class EmchatOperator {
 	}
 
 	/**
+	 * 获取用户的朋友信息
+	 * 
+	 * @param userName
+	 *            用戶名或用戶ID
+	 * @return
+	 */
+	public static ResponseWrapper getFriends(String userName) {
+		return (ResponseWrapper) getIMUserInstance().getFriends(userName);
+	}
+
+	/**
 	 * 创建聊天室
 	 * 
 	 * @param name
@@ -214,5 +225,18 @@ public final class EmchatOperator {
 		UserNamesBody userNames = new UserNamesBody(new String[] { userName });
 		return (ResponseWrapper) getChatGroupInstance()
 				.addBatchUsersToChatGroup(groupId, userNames);
+	}
+
+	/**
+	 * 获取群里的成员信息
+	 * 
+	 * @param groupId
+	 *            群Id
+	 * @return ResponseWrapper
+	 */
+	public static ResponseWrapper getChatGroupUsers(String groupId) {
+
+		return (ResponseWrapper) getChatGroupInstance().getChatGroupUsers(
+				groupId);
 	}
 }

@@ -297,4 +297,100 @@ public class HttpClientRestAPIInvoker implements RestAPIInvoker {
         return responseWrapper;
     }
 
+	/** 
+	 *
+	 * @param method
+	 * @param url
+	 * @param header
+	 * @return
+	 *		
+	 * @see com.easemob.server.example.api.RestAPIInvoker#sendRequest(java.lang.String, java.lang.String, com.easemob.server.example.comm.wrapper.HeaderWrapper)
+	 */
+	@Override
+	public ResponseWrapper sendRequest(String method, String url,
+			HeaderWrapper header) {
+
+		ResponseWrapper responseWrapper = new ResponseWrapper();
+		ObjectNode responseNode = JsonNodeFactory.instance.objectNode();
+
+		responseWrapper.setResponseBody(responseNode);
+		
+		if( !HTTPMethod.METHOD_GET.equalsIgnoreCase(method) && !HTTPMethod.METHOD_POST.equalsIgnoreCase(method) && !HTTPMethod.METHOD_PUT.equalsIgnoreCase(method) && !HTTPMethod.METHOD_DELETE.equalsIgnoreCase(method) ) {
+			String msg = MessageTemplate.print(MessageTemplate.UNKNOW_TYPE_MSG, new String[]{method, "HTTP methods"});
+			responseWrapper.addError(msg);
+		}
+		if( StringUtils.isBlank(url) ) {
+			String msg = MessageTemplate.print(MessageTemplate.BLANK_OBJ_MSG, new String[]{"Parameter url"});
+			responseWrapper.addError(msg);
+		}
+		if( !RestAPIUtils.match("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?", url) ) {
+			String msg = MessageTemplate.print(MessageTemplate.INVAILID_FORMAT_MSG, new String[]{"Parameter url"});
+			responseWrapper.addError(msg);
+		}
+		if( null == header ) {
+			String msg = MessageTemplate.print(MessageTemplate.BLANK_OBJ_MSG, new String[]{"Parameter header"});
+			responseWrapper.addError(msg);
+		}
+		
+		if( responseWrapper.hasError() ) {
+			return responseWrapper;
+		}
+		
+		log.debug("=============Request=============");
+		log.debug("Method: " + method);
+		log.debug("URL: " + url);
+		log.debug("Header: " + header);
+		log.debug("===========Request End===========");
+		
+		HttpClient client = RestAPIUtils.getHttpClient( StringUtils.startsWithIgnoreCase(url, "HTTPS") );
+		URL target = null;
+		try {
+			target = new URL(url);
+		} catch (MalformedURLException e) {
+			responseWrapper.addError(e.getMessage());
+			return responseWrapper;
+		}
+		
+		HttpUriRequest request = null;
+		HttpResponse response = null;
+		try{
+	        if (method.equals(HTTPMethod.METHOD_POST)) {
+	        	request = new HttpPost(target.toURI());
+			} 
+	        else if (method.equals(HTTPMethod.METHOD_PUT)) {
+	        	request = new HttpPut(target.toURI());
+			} 
+	        else if (method.equals(HTTPMethod.METHOD_GET)) {
+	        	request = new HttpGet(target.toURI());
+			} 
+	        else if (method.equals(HTTPMethod.METHOD_DELETE)) {
+	        	request = new HttpDelete(target.toURI());
+			}
+	        else {
+	        	String msg = MessageTemplate.print(MessageTemplate.UNKNOW_TYPE_MSG, new String[]{method, "Http Method"});
+	        	log.error(msg);
+	        	throw new RuntimeException(msg);
+	        }
+		} catch(URISyntaxException e) {
+			responseWrapper.addError(e.getMessage());
+			return responseWrapper;
+		}
+		
+		buildHeader(request, header);
+		
+        try {
+			response = client.execute(request);
+		} catch (IOException e) {
+			responseWrapper.addError(e.getMessage());
+			return responseWrapper;
+		}
+
+        responseWrapper = readResponse(responseWrapper, response, false);
+		
+        log.debug("=============Response=============");
+		log.debug(responseWrapper.toString());
+		log.debug("===========Response End===========");
+		return responseWrapper;
+	}
+
 }

@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.easemob.server.example.comm.utils.EmchatOperator;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.model.Person;
@@ -391,16 +393,78 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
-	 * 生成邀请码
+	 * 个人测试专用
 	 * 
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("generateInviteCode")
-	public void generateInviteCode(HttpServletRequest request,
+	@RequestMapping("test")
+	public void test(HttpServletRequest request, HttpServletResponse response) {
+		ResponseWrapper resp = EmchatOperator.getFriends("18627014276");
+		ObjectNode node = (ObjectNode) resp.getResponseBody();
+		JsonNode data = node.get("data");
+		System.out.println("getFriends:" + data);
+		ResponseWrapper rsp = EmchatOperator
+				.getChatGroupUsers("253938345342665136");
+		ObjectNode objectNode = (ObjectNode) rsp.getResponseBody();
+		JsonNode data2 = objectNode.get("data");
+		// JSON.parse(data2.toString())
+		System.out.println("getChatGroupUsers:" + data2);
+		JSONUtils.SUCCESS(response, JSON.parse(data2.toString()));
+	}
+
+	/**
+	 * 获取当前用户好友
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getFriends")
+	public void getFriends(HttpServletRequest request,
 			HttpServletResponse response) {
-		int success = inviteCodeService.batchInsert();
-		JSONUtils.SUCCESS(response, "批量生成邀请码:" + success + "个.");
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		User user = userLoginService.queryUserByPrimaryKey(userId);
+		ResponseWrapper resp = EmchatOperator.getFriends(user.getPhone());
+		if (resp.hasError()) {
+			JSONUtils.ERROR(response, resp.toString());
+			return;
+		}
+
+		ObjectNode node = (ObjectNode) resp.getResponseBody();
+		JsonNode data = node.get("data");
+		JSONUtils.SUCCESS(response, JSON.parse(data.toString()));
+	}
+
+	/**
+	 * 通过群id获取聊天群用户
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getChatGroupUsers")
+	public void getChatGroupUsers(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("groupId", "环信聊天群id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String groupId = request(request, "groupId");
+		ResponseWrapper responseWrapper = EmchatOperator
+				.getChatGroupUsers(groupId);
+		if (responseWrapper.hasError()) {
+			JSONUtils.ERROR(response, responseWrapper.toString());
+			return;
+		}
+
+		ObjectNode objectNode = (ObjectNode) responseWrapper.getResponseBody();
+		JsonNode data = objectNode.get("data");
+		JSONUtils.SUCCESS(response, JSON.parse(data.toString()));
 	}
 
 	/**

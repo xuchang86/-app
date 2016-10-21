@@ -54,7 +54,7 @@ public class EasemobChatGroup extends EasemobRestAPI implements ChatGroupAPI {
         String url = getContext().getSeriveURL() + getResourceRootURI() + "/" + groupId + "/users";
         HeaderWrapper header = HeaderHelper.getDefaultHeaderWithToken();
 
-        return getInvoker().sendRequest(HTTPMethod.METHOD_GET, url, header, null, null);
+        return getInvoker().sendRequest(HTTPMethod.METHOD_GET, url, header);
     }
 
     public Object addSingleUserToChatGroup(String groupId, String userId) {
