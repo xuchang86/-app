@@ -4,54 +4,72 @@ import java.util.Date;
 
 import com.xiaoyao.base.model.BaseVO;
 
-public class Event extends BaseVO{
-    private Integer id;
+public class Event extends BaseVO {
+	private Integer id;
 
-    private String content;
+	private String content;
 
-    private Integer personId;
+	private Integer personId;
 
-    private Date startDate;
+	private Date startDate;
 
-    private Date endDate;
+	private Date endDate;
 
-    public Integer getId() {
-        return id;
-    }
+	/** 事件类型 {@link com.xiaoyao.event.model.EventType} */
+	private String type;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public Integer getPersonId() {
-        return personId;
-    }
+	public void setContent(String content) {
+		this.content = content == null ? null : content.trim();
+	}
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
+	public Integer getPersonId() {
+		return personId;
+	}
 
-    public Date getStartDate() {
-        return startDate;
-    }
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public Date getEndDate() {
-        return endDate;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 }

@@ -7,6 +7,7 @@
     <result column="person_id" property="personId" jdbcType="INTEGER" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, content, person_id, start_date, end_date
+    id, content, person_id, start_date, end_date, type
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.event.model.EventExample" >
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.xiaoyao.event.model.Event" >
     insert into T_MP_EVENT (id, content, person_id, 
-      start_date, end_date)
+      start_date, end_date, type
+      )
     values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{personId,jdbcType=INTEGER}, 
-      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP})
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.event.model.Event" >
     insert into T_MP_EVENT
@@ -123,6 +126,9 @@
       <if test="endDate != null" >
         end_date,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +145,9 @@
       </if>
       <if test="endDate != null" >
         #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.endDate != null" >
         end_date = #{record.endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       content = #{record.content,jdbcType=VARCHAR},
       person_id = #{record.personId,jdbcType=INTEGER},
       start_date = #{record.startDate,jdbcType=TIMESTAMP},
-      end_date = #{record.endDate,jdbcType=TIMESTAMP}
+      end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="endDate != null" >
         end_date = #{endDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +221,8 @@
     set content = #{content,jdbcType=VARCHAR},
       person_id = #{personId,jdbcType=INTEGER},
       start_date = #{startDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP}
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

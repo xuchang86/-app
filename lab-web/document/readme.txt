@@ -11,3 +11,10 @@ URL: https://ip:端口/xyp/xiaoyao/getChatGroupUsers.do?groupId=环信聊天群id不能为
 
 20161023 本次更新内容:
 1.增加活动信息,我的徒弟,逍遥币排行榜,弟子排行榜各个接口中User对象,user对象中URL为个人头像
+
+
+20161024 本次更新内容:
+1.修改查询门派事件接口名称为:querySchoolEvent(URL: https://ip:端口/xyp/event/querySchoolEvent.do),
+以前的queryAllEvent接口已废弃
+2.增加系统事件接口,URL: https://ip:端口/xyp/event/querySystemEvent.do
+

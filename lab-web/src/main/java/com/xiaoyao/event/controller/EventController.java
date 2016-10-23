@@ -38,11 +38,24 @@ public class EventController extends BizBaseController {
 	 * @param response
 	 * @param request
 	 */
-	@RequestMapping("queryAllEvent")
-	public void queryAllEvent(HttpServletRequest request,
+	@RequestMapping("querySchoolEvent")
+	public void querySchoolEvent(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		JSONUtils.toJSONString(response, eventService.queryAllEvent());
+		JSONUtils.toJSONString(response, eventService.querySchoolEvent());
+	}
+
+	/**
+	 * 查询系统事件
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("querySystemEvent")
+	public void querySystemEvent(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		JSONUtils.toJSONString(response, eventService.querySystemEvent());
 	}
 
 }

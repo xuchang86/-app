@@ -15,6 +15,7 @@ import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.event.dao.EventMapper;
 import com.xiaoyao.event.model.Event;
 import com.xiaoyao.event.model.EventExample;
+import com.xiaoyao.event.model.EventType;
 
 /**
  * 门派事件Service
@@ -31,13 +32,26 @@ public class EventService extends BaseService<Event> {
 	private EventMapper eventMapper;
 
 	/**
-	 * 查询门派中所有事件
+	 * 查询门派中的事件
 	 * 
 	 * @return
 	 */
-	public List<Event> queryAllEvent() {
+	public List<Event> querySchoolEvent() {
 		EventExample example = new EventExample();
-		example.or().andIdIsNotNull();
+		example.or().andIdIsNotNull()
+				.andTypeEqualTo(EventType.SCHOOL.getValue());
+		return eventMapper.selectByExample(example);
+	}
+
+	/**
+	 * 查询系统事件
+	 * 
+	 * @return
+	 */
+	public List<Event> querySystemEvent() {
+		EventExample example = new EventExample();
+		example.or().andIdIsNotNull()
+				.andTypeEqualTo(EventType.SYSTEM.getValue());
 		return eventMapper.selectByExample(example);
 	}
 

@@ -10,6 +10,7 @@ create table T_MP_EVENT
    person_id            int comment '公告发起人',
    start_date           timestamp comment '公告开始时间',
    end_date             timestamp comment '公告截止时间',
+   type                 varchar(20) comment '事件类型',
    primary key (id)
 );
 
