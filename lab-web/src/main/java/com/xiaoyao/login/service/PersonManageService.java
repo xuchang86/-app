@@ -42,6 +42,10 @@ public class PersonManageService extends BaseService<Person> {
 	@Autowired
 	private CashPoolService cashPoolService;
 
+	/** 注入UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
+
 	/**
 	 * 保存Person信息
 	 * 
@@ -127,7 +131,25 @@ public class PersonManageService extends BaseService<Person> {
 	public List<Person> queryChildsByParent(Integer parentId) {
 		PersonExample example = new PersonExample();
 		example.or().andParentIdEqualTo(parentId);
-		return personMapper.selectByExample(example);
+		List<Person> persons = personMapper.selectByExample(example);
+		this.wrapperPerson(persons);
+		return persons;
+	}
+
+	/**
+	 * 包装person增加user信息
+	 * 
+	 * @param persons
+	 */
+	private void wrapperPerson(List<Person> persons) {
+		for (Person person : persons) {
+			this.wrapperPerson(person);
+		}
+	}
+
+	private void wrapperPerson(Person person) {
+		person.setUser(userLoginService.queryUserByPrimaryKey(person
+				.getUserId()));
 	}
 
 	/**
@@ -184,7 +206,9 @@ public class PersonManageService extends BaseService<Person> {
 	 * @return
 	 */
 	public List<Person> queryTopBill(PersonQuery query) {
-		return personMapper.queryTopBillByPage(query);
+		List<Person> persons = personMapper.queryTopBillByPage(query);
+		this.wrapperPerson(persons);
+		return persons;
 	}
 
 	/**
@@ -197,7 +221,11 @@ public class PersonManageService extends BaseService<Person> {
 	 * @return
 	 */
 	public List<PersonQuery> queryTopChild(PersonQuery query) {
-		return personMapper.queryTopChildByPage(query);
+		List<PersonQuery> persons = personMapper.queryTopChildByPage(query);
+		for (PersonQuery person : persons) {
+			wrapperPerson(person);
+		}
+		return persons;
 	}
 
 }

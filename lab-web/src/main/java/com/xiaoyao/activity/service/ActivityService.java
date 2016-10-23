@@ -175,6 +175,8 @@ public class ActivityService extends BaseService<Activity> {
 			}
 			activity.setActivityPerson(persons);
 			activity.setUrls(wrapperURL(activity));
+			activity.setUser(userLoginService.queryUserByPerson(activity
+					.getPersonId()));
 		}
 		return lst;
 	}

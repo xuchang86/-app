@@ -3,10 +3,15 @@ package com.xiaoyao.base.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.xiaoyao.login.model.User;
+
 public class Person extends BaseVO{
 	private Integer id;
 
 	private Integer userId;
+	
+	/** 用户信息 */
+	private User user;
 
 	/** {@link com.xiaoyao.base.model.Level} */
 	private Integer level;
@@ -73,5 +78,19 @@ public class Person extends BaseVO{
 
 	public void setName(String name) {
 		this.name = name == null ? null : name.trim();
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

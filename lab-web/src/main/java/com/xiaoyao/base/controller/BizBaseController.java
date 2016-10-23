@@ -20,7 +20,6 @@ import com.xiaoyao.login.exception.LoginException;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
-import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
  * 业务基础Controller
@@ -89,6 +88,7 @@ public class BizBaseController extends BaseController {
 		if (user.getId() != null) {
 			List<Person> lst = personManageService.queryPersonByUser(user);
 			if (!CollectionUtils.isEmpty(lst)) {
+				lst.get(0).setUser(user);
 				setCurrentPerson(request, lst.get(0));
 			}
 		}
@@ -126,9 +126,6 @@ public class BizBaseController extends BaseController {
 		if (StringUtils.isNotEmpty(userId)) {
 			User user = userLoginService.queryUserByPrimaryKey(Integer
 					.valueOf(userId));
-			if (StringUtils.isNotEmpty(user.getUrl())) {
-				user.setUrl(UploadFileUtil.wrapperUserURL(user.getUrl()));
-			}
 			setCurrentUserAndPerson(request, user);
 		} else {
 			throw new LoginException("用户session失效,请重新登录.");

@@ -291,7 +291,10 @@ public class UserLoginService extends BaseService<User> {
 	 * @return
 	 */
 	public User queryUserByPrimaryKey(Integer pk) {
-		return userMapperExt.selectByPrimaryKey(pk);
+		User user = userMapperExt.selectByPrimaryKey(pk);
+		if (StringUtils.isNotEmpty(user.getUrl()))
+			user.setUrl(UploadFileUtil.wrapperUserURL(user.getUrl()));
+		return user;
 	}
 
 	/**
@@ -302,6 +305,17 @@ public class UserLoginService extends BaseService<User> {
 	 */
 	public User queryUserByPrimaryKey(String pk) {
 		return queryUserByPrimaryKey(Integer.parseInt(pk));
+	}
+
+	/**
+	 * 通过personId查询User信息
+	 * 
+	 * @param personId
+	 * @return
+	 */
+	public User queryUserByPerson(Integer personId) {
+		Person person = personManageService.queryPersonByPrimaryKey(personId);
+		return this.queryUserByPrimaryKey(person.getUserId());
 	}
 
 	/**

@@ -111,7 +111,7 @@ public class ActivityController extends BizBaseController {
 		Set<Activity> list = activityService.ipublish(userId);
 
 		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
-		excludes.put(Activity.class, new String[] { "personId",
+		excludes.put(Activity.class, new String[] { "personId", "user",
 				"activityPerson" });
 		JSONUtils.SUCCESS(response, list, null, excludes);
 	}
@@ -133,7 +133,7 @@ public class ActivityController extends BizBaseController {
 		Set<Activity> list = activityService.ijoin(userId);
 
 		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
-		excludes.put(Activity.class, new String[] { "personId",
+		excludes.put(Activity.class, new String[] { "personId", "user",
 				"activityPerson" });
 		JSONUtils.SUCCESS(response, list, null, excludes);
 	}

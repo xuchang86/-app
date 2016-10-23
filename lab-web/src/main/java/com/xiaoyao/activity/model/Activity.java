@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.xiaoyao.base.model.BaseVO;
+import com.xiaoyao.login.model.User;
 
-public class Activity extends BaseVO{
+public class Activity extends BaseVO {
 
 	private Integer id;
 
@@ -22,8 +23,11 @@ public class Activity extends BaseVO{
 
 	private Integer personId;
 
+	/** 用户信息 */
+	private User user;
+
 	private BigDecimal cost;
-	
+
 	private String city;
 
 	/** 活动参与人 */
@@ -126,9 +130,25 @@ public class Activity extends BaseVO{
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
