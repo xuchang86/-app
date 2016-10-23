@@ -288,7 +288,7 @@
     u.name urls
     FROM 
 	T_PUBLISH_ACTIVITY t LEFT JOIN T_UPLOAD_FILE u on u.activity_id = t.id
-	WHERE t.person_id =
+	WHERE t.person_id in
 	(select id from T_BASE_PERSON where user_id = #{userId})
   </select>
   
@@ -307,7 +307,7 @@
 	T_PUBLISH_ACTIVITY t LEFT JOIN T_UPLOAD_FILE u on u.activity_id = t.id
 	WHERE t.id in (
 	SELECT activity_id FROM T_ACTIVITY_PERSON 
-	where person_id = 
+	where person_id in 
 	(select id from T_BASE_PERSON where user_id = #{userId})
 	)
   </select>
