@@ -8,6 +8,8 @@ package com.xiaoyao.login.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.easemob.server.example.comm.utils.EmchatOperator;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -437,7 +441,10 @@ public class UserLoginController extends BizBaseController {
 
 		ObjectNode node = (ObjectNode) resp.getResponseBody();
 		JsonNode data = node.get("data");
-		JSONUtils.SUCCESS(response, JSON.parse(data.toString()));
+		JSONArray array = JSON.parseArray(data.toString());
+		String[] phones = array.toArray(new String[] {});
+		JSONUtils.SUCCESS(response,
+				userLoginService.queryUserByPhones(Arrays.asList(phones)));
 	}
 
 	/**
@@ -464,7 +471,17 @@ public class UserLoginController extends BizBaseController {
 
 		ObjectNode objectNode = (ObjectNode) responseWrapper.getResponseBody();
 		JsonNode data = objectNode.get("data");
-		JSONUtils.SUCCESS(response, JSON.parse(data.toString()));
+		JSONArray array = JSON.parseArray(data.toString());
+		List<String> phones = new ArrayList<String>();
+		for (Object obj : array) {
+			JSONObject json = (JSONObject) obj;
+			if (json.containsKey("owner")) {
+				phones.add(json.getString("owner"));
+			} else if (json.containsKey("member")) {
+				phones.add(json.getString("member"));
+			}
+		}
+		JSONUtils.SUCCESS(response, userLoginService.queryUserByPhones(phones));
 	}
 
 	/**

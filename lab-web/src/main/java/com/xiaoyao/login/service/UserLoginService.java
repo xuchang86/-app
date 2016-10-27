@@ -102,6 +102,18 @@ public class UserLoginService extends BaseService<User> {
 	}
 
 	/**
+	 * 查询用户通过电话
+	 * 
+	 * @param phones
+	 * @return
+	 */
+	public List<User> queryUserByPhones(List<String> phones) {
+		UserExample example = new UserExample();
+		example.or().andPhoneIn(phones);
+		return wrapperUser(userMapperExt.selectByExample(example));
+	}
+
+	/**
 	 * 保存用户信息
 	 * 
 	 * @param user
