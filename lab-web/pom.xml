@@ -20,5 +20,11 @@
 	  		<artifactId>emchat</artifactId>
 	  		<version>0.0.1-SNAPSHOT</version>
 	  	</dependency>
+	  	
+	  	<dependency>
+	  		<groupId>com.group</groupId>
+	  		<artifactId>alipay</artifactId>
+	  		<version>0.0.1-SNAPSHOT</version>
+	  	</dependency>
   </dependencies>
 </project>

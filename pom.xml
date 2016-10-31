@@ -10,6 +10,7 @@
 		<module>lab-alibaba</module>
 		<module>lab-web</module>
 		<module>emchat</module>
+		<module>alipay</module>
 	</modules>
 
 	<properties>

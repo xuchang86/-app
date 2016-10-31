@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alipay.sign.AlipaySignUtil;
 import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
@@ -273,6 +274,30 @@ public class PayController extends BizBaseController {
 	}
 
 	/**
+	 * 支付宝支付签名
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("alipaySign")
+	public void alipaySign(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 校验参数是否为空
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		validateResult.put("inviteCode", "邀请码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+		String userId = request(request, "userId");
+		String inviteCode = request(request, "inviteCode");
+		String notify_url = buildNotifyURL(userId, inviteCode);
+
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url,
+				LoginUtil.getRegistAmount());
+		ResponseUtils.renderText(response, orderInfo);
+	}
+
+	/**
 	 * 获取支付宝付款接口参数URL
 	 * 
 	 * @param request
@@ -288,9 +313,13 @@ public class PayController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		String aliapayURL = LoginUtil.getAliapayURL();
 		String userId = request(request, "userId");
 		String inviteCode = request(request, "inviteCode");
+		ResponseUtils.renderText(response, buildNotifyURL(userId, inviteCode));
+	}
+	
+	private String buildNotifyURL(String userId, String inviteCode) {
+		String aliapayURL = LoginUtil.getAliapayURL();
 		RequestMapping req = this.getClass()
 				.getAnnotation(RequestMapping.class);
 		String classReqValue = req.value().length > 0 ? req.value()[0] : "";
@@ -301,13 +330,14 @@ public class PayController extends BizBaseController {
 					.getAnnotation(RequestMapping.class);
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
-			ResponseUtils.renderText(response, MessageFormat.format(aliapayURL,
-					classReqValue, methodReqValue, userId, inviteCode));
+			return MessageFormat.format(aliapayURL, classReqValue,
+					methodReqValue, userId, inviteCode);
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
+		return null;
 	}
 
 	/**
