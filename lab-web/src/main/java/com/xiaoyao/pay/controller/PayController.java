@@ -31,7 +31,7 @@ import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
-import com.xiaoyao.pay.alipay.util.AlipayNotify;
+import com.alipay.util.AlipayNotify;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;

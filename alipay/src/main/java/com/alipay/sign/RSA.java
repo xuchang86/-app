@@ -1,5 +1,5 @@
 
-package com.xiaoyao.pay.alipay.sign;
+package com.alipay.sign;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

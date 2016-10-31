@@ -1,4 +1,4 @@
-package com.xiaoyao.pay.alipay.util;
+package com.alipay.util;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.PartSource;
 
-import com.xiaoyao.pay.alipay.config.AlipayConfig;
+import com.alipay.config.AlipayConfig;
 
 
 

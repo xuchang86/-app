@@ -1,4 +1,4 @@
-package com.xiaoyao.pay.alipay.util.httpClient;
+package com.alipay.util.client;
 
 import java.io.File;
 import java.io.IOException;

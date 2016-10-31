@@ -1,4 +1,4 @@
-package com.xiaoyao.pay.alipay.config;
+package com.alipay.config;
 
 /* *
  *类名：AlipayConfig

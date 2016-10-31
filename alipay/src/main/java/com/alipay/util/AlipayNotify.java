@@ -1,4 +1,4 @@
-package com.xiaoyao.pay.alipay.util;
+package com.alipay.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,8 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import com.xiaoyao.pay.alipay.config.AlipayConfig;
-import com.xiaoyao.pay.alipay.sign.RSA;
+import com.alipay.config.AlipayConfig;
+import com.alipay.sign.RSA;
 
 
 /* *
