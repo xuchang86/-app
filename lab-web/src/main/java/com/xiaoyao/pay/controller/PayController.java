@@ -290,7 +290,7 @@ public class PayController extends BizBaseController {
 			return;
 		String userId = request(request, "userId");
 		String inviteCode = request(request, "inviteCode");
-		String notify_url = buildNotifyURL(userId, inviteCode);
+		String notify_url = this.buildNotifyURL(userId, inviteCode);
 
 		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url,
 				LoginUtil.getRegistAmount());

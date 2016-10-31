@@ -8,6 +8,7 @@ package com.alipay.sign;
 
 import java.util.Map;
 
+import com.alipay.config.AlipayConfig;
 import com.alipay.sdk.pay.demo.util.OrderInfoUtil2_0;
 
 /**
@@ -23,13 +24,13 @@ public final class AlipaySignUtil {
 	private static final String PID = "";
 
 	/** 支付宝支付业务：入参app_id */
-	private static final String APPID = "2016101702205247";
+	private static final String APPID = AlipayConfig.APPID;
 
 	/** 支付宝账户登录授权业务：入参target_id值 */
 	private static final String TARGET_ID = "";
 
 	/** 商户私钥，pkcs8格式 */
-	private static final String RSA_PRIVATE = "";
+	private static final String RSA_PRIVATE = AlipayConfig.RSA_PRIVATE;
 
 	/**
 	 * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
