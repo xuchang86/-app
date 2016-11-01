@@ -21,3 +21,10 @@ URL: https://ip:端口/xyp/xiaoyao/getChatGroupUsers.do?groupId=环信聊天群id不能为
 URL: https://ip:端口/xyp/xiaoyao/getFriends.do?userId=用户id不能为空
 2.修改通过群id获取聊天群用户接口,返回值封装为User集合
 URL: https://ip:端口/xyp/xiaoyao/getChatGroupUsers.do?groupId=环信聊天群id不能为空
+
+
+20161102 本次更新内容
+1.增加支付宝支付签名接口:
+URL: https://ip:端口/xyp/pay/alipaySign.do?userId=用户id不能为空&inviteCode=邀请码不能为空
+备注:增加该接口后获取支付宝的通知回调接口getAliaPayURL,就不需要调用了,因为在alipaySign接口中已经传递.
+2.暂时先注释掉注册时验证码的校验,该验证交由安卓端验证
