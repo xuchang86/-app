@@ -255,13 +255,13 @@ public class UserLoginController extends BizBaseController {
 				new String[] { "phone", "password", "code" });
 		String phone = params.get("phone");
 		String password = params.get("password");
-		String code = params.get("code");
+//		String code = params.get("code");
 
 		// 校验参数是否为空
 		Map<String, String> validateResult = new HashMap<String, String>();
 		validateResult.put("phone", "手机号不能为空.");
 		validateResult.put("password", "密码不能为空.");
-		validateResult.put("code", "验证码不能为空.");
+//		validateResult.put("code", "验证码不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
@@ -269,12 +269,12 @@ public class UserLoginController extends BizBaseController {
 		if (!this.validateRegist(request, response))
 			return;
 
-		Object sessionCode = request.getSession().getAttribute("code");
-		if (sessionCode == null) {
-			JSONUtils.ERROR(response, "验证码已过期,请重新发送验证码.");
-			return;
-		}
-		if (String.valueOf(sessionCode).equals(code)) {
+//		Object sessionCode = request.getSession().getAttribute("code");
+//		if (sessionCode == null) {
+//			JSONUtils.ERROR(response, "验证码已过期,请重新发送验证码.");
+//			return;
+//		}
+//		if (String.valueOf(sessionCode).equals(code)) {
 			// 创建环信用户
 			ResponseWrapper rsp = EmchatOperator.createIMUser(phone, password,
 					"新建用户");
@@ -289,9 +289,9 @@ public class UserLoginController extends BizBaseController {
 			this.createInviteCode(request);
 
 			JSONUtils.SUCCESS(response, user.getId());
-		} else {
-			JSONUtils.PARAM_ERROR(response, "验证码不匹配请重新输入验证码.");
-		}
+//		} else {
+//			JSONUtils.PARAM_ERROR(response, "验证码不匹配请重新输入验证码.");
+//		}
 	}
 
 	/**
