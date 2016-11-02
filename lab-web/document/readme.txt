@@ -28,3 +28,9 @@ URL: https://ip:端口/xyp/xiaoyao/getChatGroupUsers.do?groupId=环信聊天群id不能为
 URL: https://ip:端口/xyp/pay/alipaySign.do?userId=用户id不能为空&inviteCode=邀请码不能为空
 备注:增加该接口后获取支付宝的通知回调接口getAliaPayURL,就不需要调用了,因为在alipaySign接口中已经传递.
 2.暂时先注释掉注册时验证码的校验,该验证交由安卓端验证
+
+
+20161103 本次更新内容
+1.恢复注册时的验证码校验
+2.修改确认提交的报错缺陷
+3.恢复支付宝签名私钥为旧私钥,避免调用报错(最新申请的私钥还需要修正后验证)
