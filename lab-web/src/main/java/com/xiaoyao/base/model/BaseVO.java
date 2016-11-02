@@ -39,7 +39,8 @@ public abstract class BaseVO {
 	 */
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
-		page.setPageSize(pageSize);
+		if (pageSize != null)
+			page.setPageSize(pageSize);
 	}
 
 	/**
@@ -55,7 +56,8 @@ public abstract class BaseVO {
 	 */
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
-		page.setCurrentPage(pageNo);
+		if (pageNo != null)
+			page.setCurrentPage(pageNo);
 	}
 
 	/**
