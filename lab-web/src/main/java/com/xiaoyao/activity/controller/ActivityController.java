@@ -180,8 +180,9 @@ public class ActivityController extends BizBaseController {
 			HttpServletResponse response) {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
+		String city = request(request, "city");
 		JSONUtils.toJSONString(response,
-				activityService.queryAllActivity(pageSize, pageNo));
+				activityService.queryAllActivity(pageSize, pageNo ,city));
 	}
 
 	/**
@@ -195,7 +196,8 @@ public class ActivityController extends BizBaseController {
 			HttpServletResponse response) {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
-		List<Activity> result = activityService.queryAllTask(pageSize, pageNo);
+		String city = request(request, "city");
+		List<Activity> result = activityService.queryAllTask(pageSize, pageNo ,city);
 		JSONUtils.toJSONString(response, result);
 	}
 
@@ -210,25 +212,13 @@ public class ActivityController extends BizBaseController {
 			HttpServletResponse response) {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
+		String city = request(request, "city");
 		long start = System.currentTimeMillis();
 		List<Activity> result = activityService.queryAllService(pageSize,
-				pageNo);
+				pageNo ,city);
 		JSONUtils.toJSONString(response, result);
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end - start) / 1000 + "秒");
-	}
-
-	/**
-	 * 收弟子
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("addChildPerson")
-	public void addChildPerson(HttpServletRequest request,
-			HttpServletResponse response) {
-		request(request, "parentId");
-		request(request, "");
 	}
 
 	/**

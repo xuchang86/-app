@@ -17,6 +17,8 @@ create table T_MALL_GOODS
    area                 varchar(20) comment '商品地区',
    is_sale              boolean comment '是否出售',
    seller_id            int comment '卖家id',
+   vip_price            decimal(10,2) comment '会员价格',
+   level                int comment '商品等级',
    primary key (id)
 );
 

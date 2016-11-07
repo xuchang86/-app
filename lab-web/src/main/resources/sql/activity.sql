@@ -13,6 +13,8 @@ create table T_PUBLISH_ACTIVITY
    person_id            int comment '活动发起人',
    cost                 decimal(10,2) comment '费用',
    city                 varchar(50) comment '城市',
+   way                  varchar(20) comment '活动方式',
+   payWay               varchar(20) comment '付款方式',
    primary key (id)
 );
 

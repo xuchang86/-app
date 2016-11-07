@@ -100,6 +100,18 @@ public class UserLoginService extends BaseService<User> {
 		List<User> users = queryVOByCondition(condition, userMapperExt);
 		return users;
 	}
+	
+	/**
+	 * 查询用户组信息通过id数组
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public List<User> queryUserByIds(List<Integer> ids) {
+		UserExample example = new UserExample();
+		example.or().andIdIn(ids);
+		return wrapperUser(userMapperExt.selectByExample(example));
+	}
 
 	/**
 	 * 查询用户通过电话
@@ -336,7 +348,6 @@ public class UserLoginService extends BaseService<User> {
 	 * @return
 	 */
 	public int queryMaxIndex() {
-
 		return userMapperExt.queryMaxIndex();
 	}
 

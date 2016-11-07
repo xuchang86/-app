@@ -627,6 +627,146 @@ public class ActivityExample extends BaseVO{
             addCriterion("city not between", value1, value2, "city");
             return (Criteria) this;
         }
+
+        public Criteria andWayIsNull() {
+            addCriterion("way is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayIsNotNull() {
+            addCriterion("way is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayEqualTo(String value) {
+            addCriterion("way =", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayNotEqualTo(String value) {
+            addCriterion("way <>", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayGreaterThan(String value) {
+            addCriterion("way >", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayGreaterThanOrEqualTo(String value) {
+            addCriterion("way >=", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayLessThan(String value) {
+            addCriterion("way <", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayLessThanOrEqualTo(String value) {
+            addCriterion("way <=", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayLike(String value) {
+            addCriterion("way like", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayNotLike(String value) {
+            addCriterion("way not like", value, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayIn(List<String> values) {
+            addCriterion("way in", values, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayNotIn(List<String> values) {
+            addCriterion("way not in", values, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayBetween(String value1, String value2) {
+            addCriterion("way between", value1, value2, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andWayNotBetween(String value1, String value2) {
+            addCriterion("way not between", value1, value2, "way");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayIsNull() {
+            addCriterion("payWay is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayIsNotNull() {
+            addCriterion("payWay is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayEqualTo(String value) {
+            addCriterion("payWay =", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayNotEqualTo(String value) {
+            addCriterion("payWay <>", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayGreaterThan(String value) {
+            addCriterion("payWay >", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayGreaterThanOrEqualTo(String value) {
+            addCriterion("payWay >=", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayLessThan(String value) {
+            addCriterion("payWay <", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayLessThanOrEqualTo(String value) {
+            addCriterion("payWay <=", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayLike(String value) {
+            addCriterion("payWay like", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayNotLike(String value) {
+            addCriterion("payWay not like", value, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayIn(List<String> values) {
+            addCriterion("payWay in", values, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayNotIn(List<String> values) {
+            addCriterion("payWay not in", values, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayBetween(String value1, String value2) {
+            addCriterion("payWay between", value1, value2, "payway");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaywayNotBetween(String value1, String value2) {
+            addCriterion("payWay not between", value1, value2, "payway");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

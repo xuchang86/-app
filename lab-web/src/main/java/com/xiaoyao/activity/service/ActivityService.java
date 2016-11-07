@@ -118,11 +118,17 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllActivity(String pageSize, String pageNo) {
+	public List<Activity> queryAllActivity(String pageSize, String pageNo,
+			String city) {
 		ActivityExample example = new ActivityExample();
 		setPaging(pageSize, pageNo, example);
-		// 门派活动
-		example.or().andTypeEqualTo(ActivityType.SCHOOL_ACTIVITY.getValue());
+		if(StringUtils.isBlank(city)){
+			// 门派活动
+			example.or().andTypeEqualTo(ActivityType.SCHOOL_ACTIVITY.getValue());
+		}else{
+			// 门派活动
+			example.or().andTypeEqualTo(ActivityType.SCHOOL_ACTIVITY.getValue()).andCityEqualTo(city);
+		}
 		return this.queryData(example);
 	}
 
@@ -131,11 +137,16 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllTask(String pageSize, String pageNo) {
+	public List<Activity> queryAllTask(String pageSize, String pageNo ,String city) {
 		ActivityExample example = new ActivityExample();
 		setPaging(pageSize, pageNo, example);
-		// 悬赏任务
-		example.or().andTypeEqualTo(ActivityType.REWARD_TASK.getValue());
+		if(StringUtils.isBlank(city)){
+			// 悬赏任务
+			example.or().andTypeEqualTo(ActivityType.REWARD_TASK.getValue());
+		}else{
+			// 悬赏任务
+			example.or().andTypeEqualTo(ActivityType.REWARD_TASK.getValue()).andCityEqualTo(city);
+		}
 		return this.queryData(example);
 	}
 
@@ -144,11 +155,16 @@ public class ActivityService extends BaseService<Activity> {
 	 * 
 	 * @return
 	 */
-	public List<Activity> queryAllService(String pageSize, String pageNo) {
+	public List<Activity> queryAllService(String pageSize, String pageNo,String city) {
 		ActivityExample example = new ActivityExample();
 		setPaging(pageSize, pageNo, example);
-		// 出售服务
-		example.or().andTypeEqualTo(ActivityType.SALE_SERVICE.getValue());
+		if(StringUtils.isBlank(city)){
+			// 出售服务
+			example.or().andTypeEqualTo(ActivityType.SALE_SERVICE.getValue());
+		}else{
+			// 出售服务
+			example.or().andTypeEqualTo(ActivityType.SALE_SERVICE.getValue()).andCityEqualTo(city);
+		}
 		return this.queryData(example);
 	}
 

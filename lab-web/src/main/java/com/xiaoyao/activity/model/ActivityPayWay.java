@@ -4,36 +4,30 @@
  * 本软件为许畅个人开发研制。未经本人正式书面同意，其他任何个人、团体不得使用、
  * 复制、修改或发布本软件.
  *****************************************************************************/
-package com.xiaoyao.mall.model;
+package com.xiaoyao.activity.model;
 
 /**
- * 订单状态
+ * 活动付款方式
  * 
  * @author 许畅
  * @since JDK1.7
- * @version 2016年9月21日 许畅 新建
+ * @version 2016年11月8日 许畅 新建
  */
-public enum State {
+public enum ActivityPayWay {
 
-	/** 待付款 */
-	TODO("todo"),
+	/** AA付款 */
+	AA("aa"),
 
-	/** 已付款 */
-	PAYING("paying"),
+	/** 男A女免费 */
+	MAN_A_WOMAN_FREE("man_a_woman_free"),
 
-	/** 已发货 */
-	TO("to"),
+	/** 女A男免费 */
+	WOMAN_A_MAN_FREE("woman_a_man_free"),
 
-	/** 已收货 */
-	GET("get"),
+	/** 全部免费 */
+	ALL_FREE("all_free");
 
-	/** 售后 */
-	AFTER_SALE("after_sale"),
-
-	/** 退货 */
-	RETURN("sales_return");
-
-	/** 状态值 */
+	/** 值 */
 	private String value;
 
 	/**
@@ -41,8 +35,8 @@ public enum State {
 	 * 
 	 * @param value
 	 */
-	private State(String value) {
-		this.setValue(value);
+	private ActivityPayWay(String value) {
+		setValue(value);
 	}
 
 	/**
@@ -59,5 +53,4 @@ public enum State {
 	public void setValue(String value) {
 		this.value = value;
 	}
-
 }

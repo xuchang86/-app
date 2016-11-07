@@ -448,6 +448,50 @@ public class UserLoginController extends BizBaseController {
 	}
 
 	/**
+	 * 通过用户id集合获取用户组信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryUserByIds")
+	public void queryUserByIds(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userIds", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String[] userIds = request(request, "userIds").split(",");
+		List<Integer> ids = new ArrayList<Integer>();
+		for (String userId : userIds) {
+			ids.add(Integer.parseInt(userId));
+		}
+		JSONUtils.SUCCESS(response, userLoginService.queryUserByIds(ids));
+	}
+	
+	/**
+	 * 通过用户id集合获取用户组信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryUserByPhones")
+	public void queryUserByPhones(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("phones", "手机号不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String[] phones = request(request, "phones").split(",");
+		List<String> iphones = new ArrayList<String>();
+		for (String phone : phones) {
+			iphones.add(phone);
+		}
+		JSONUtils.SUCCESS(response, userLoginService.queryUserByPhones(iphones));
+	}
+
+	/**
 	 * 通过群id获取聊天群用户
 	 * 
 	 * @param request

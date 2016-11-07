@@ -877,6 +877,126 @@ public class GoodsExample extends BaseVO{
             addCriterion("seller_id not between", value1, value2, "sellerId");
             return (Criteria) this;
         }
+
+        public Criteria andVipPriceIsNull() {
+            addCriterion("vip_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceIsNotNull() {
+            addCriterion("vip_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceEqualTo(BigDecimal value) {
+            addCriterion("vip_price =", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceNotEqualTo(BigDecimal value) {
+            addCriterion("vip_price <>", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceGreaterThan(BigDecimal value) {
+            addCriterion("vip_price >", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("vip_price >=", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceLessThan(BigDecimal value) {
+            addCriterion("vip_price <", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("vip_price <=", value, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceIn(List<BigDecimal> values) {
+            addCriterion("vip_price in", values, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceNotIn(List<BigDecimal> values) {
+            addCriterion("vip_price not in", values, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("vip_price between", value1, value2, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andVipPriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("vip_price not between", value1, value2, "vipPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNull() {
+            addCriterion("level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNotNull() {
+            addCriterion("level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelEqualTo(Integer value) {
+            addCriterion("level =", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotEqualTo(Integer value) {
+            addCriterion("level <>", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThan(Integer value) {
+            addCriterion("level >", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("level >=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThan(Integer value) {
+            addCriterion("level <", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("level <=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIn(List<Integer> values) {
+            addCriterion("level in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotIn(List<Integer> values) {
+            addCriterion("level not in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelBetween(Integer value1, Integer value2) {
+            addCriterion("level between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("level not between", value1, value2, "level");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

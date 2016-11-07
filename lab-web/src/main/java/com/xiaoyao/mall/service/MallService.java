@@ -22,9 +22,12 @@ import com.xiaoyao.mall.model.Comment;
 import com.xiaoyao.mall.model.CommentExample;
 import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsExample;
+import com.xiaoyao.mall.model.GoodsLevel;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.model.GoodsOrderExample;
 import com.xiaoyao.mall.model.State;
+import com.xiaoyao.mall.model.Type;
+import com.xiaoyao.mall.model.TypeExample;
 import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
@@ -63,12 +66,64 @@ public class MallService extends BaseService<Goods> {
 		// 设置分页
 		setPaging(pageSize, pageNo, example);
 		example.or().andIsSaleEqualTo(true);
+
+		return selectByExampleByPage(example);
+	}
+
+	/**
+	 * 通过类型id查询商品
+	 * 
+	 * @param pageSize
+	 * @param pageNo
+	 * @param typeId
+	 * @return
+	 */
+	public List<Goods> queryGoodsByType(String pageSize, String pageNo,
+			String typeId) {
+		GoodsExample example = new GoodsExample();
+		example.or().andTypeIdEqualTo(Integer.parseInt(typeId))
+				.andIsSaleEqualTo(true);
+		// 设置分页
+		setPaging(pageSize, pageNo, example);
+
+		return selectByExampleByPage(example);
+	}
+
+	/**
+	 * 查询精选商品
+	 * 
+	 * @return
+	 */
+	public List<Goods> queryNiceGoods() {
+		GoodsExample example = new GoodsExample();
+		example.or().andLevelEqualTo(GoodsLevel.NICE.getValue());
+		return goodsMapper.selectByExample(example);
+	}
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param example
+	 * @return
+	 */
+	private List<Goods> selectByExampleByPage(GoodsExample example) {
 		List<Goods> goodses = goodsMapper.selectByExampleByPage(example);
 		for (Goods goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
 		}
 		return goodses;
+	}
+
+	/**
+	 * 查询商品类别
+	 * 
+	 * @return
+	 */
+	public List<Type> queryGoodsType() {
+		TypeExample example = new TypeExample();
+		example.or().andIdIsNotNull();
+		return typeMapper.selectByExample(example);
 	}
 
 	/**

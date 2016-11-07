@@ -58,11 +58,47 @@ public class Goods extends BaseVO {
 	/** 卖家 */
 	private Seller seller;
 
+	/** 会员价格 */
+	private BigDecimal vipPrice;
+
+	/** 商品等级 {@link com.xiaoyao.mall.model.GoodsLevel} */
+	private Integer level;
+
 	/** 商品评论 */
 	private List<Comment> comments = new ArrayList<Comment>();
 
 	/** 商品订单 */
 	private List<GoodsOrder> orders = new ArrayList<GoodsOrder>();
+
+	/**
+	 * @return the vipPrice
+	 */
+	public BigDecimal getVipPrice() {
+		return vipPrice;
+	}
+
+	/**
+	 * @param vipPrice
+	 *            the vipPrice to set
+	 */
+	public void setVipPrice(BigDecimal vipPrice) {
+		this.vipPrice = vipPrice;
+	}
+
+	/**
+	 * @return the level
+	 */
+	public Integer getLevel() {
+		return level;
+	}
+
+	/**
+	 * @param level
+	 *            the level to set
+	 */
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 
 	/**
 	 * @return the type 商品类型

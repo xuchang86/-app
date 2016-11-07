@@ -168,12 +168,21 @@ public final class LoginUtil {
 	}
 
 	/**
-	 * 获取支付宝回调URL
+	 * 获取支付宝注册时通知URL
 	 * 
 	 * @return
 	 */
 	public static String getAliapayURL() {
 		return getPropertyValue("aliapay_url");
+	}
+
+	/**
+	 * 获取支付宝充值通知URL
+	 * 
+	 * @return
+	 */
+	public static String getRechargeURL() {
+		return getPropertyValue("recharge_url");
 	}
 
 	/**

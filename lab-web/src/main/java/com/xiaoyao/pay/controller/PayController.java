@@ -21,17 +21,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alipay.sign.AlipaySignUtil;
+import com.alipay.util.AlipayNotify;
 import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
-import com.alipay.util.AlipayNotify;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;
@@ -61,6 +62,10 @@ public class PayController extends BizBaseController {
 	/** 注入 UserLoginService */
 	@Autowired
 	private UserLoginService userLoginService;
+
+	/** 注入 PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
 
 	/** 注入 MallService */
 	@Autowired
@@ -103,6 +108,52 @@ public class PayController extends BizBaseController {
 					|| trade_status.equals("TRADE_SUCCESS")) {
 				// 业务回调
 				this.notifyCallback(out_trade_no, userId, inviteCode);
+				// 支付成功
+				ResponseUtils.renderText(response, "success");
+			}
+		} else {
+			// 验证失败
+			LOGGER.info("参数验证失败");
+		}
+	}
+
+	/**
+	 * 充值付款通知接口
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("rechargeNotify")
+	public void rechargeNotify(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		LOGGER.info("支付宝通知一次：" + (new Date()));
+		Map<String, String> params = aliapayNotifyBefore(request, response);
+		// 验证参数
+		if (AlipayNotify.verify(params)) {
+			// 商户订单号
+			String out_trade_no = new String(request.getParameter(
+					"out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("商户订单号：" + out_trade_no);
+			// 交易状态
+			String trade_status = new String(request.getParameter(
+					"trade_status").getBytes("ISO-8859-1"), "UTF-8");
+			System.out.println("交易状态：" + trade_status);
+
+			// 用户Id
+			String userId = new String(request.getParameter("userId").getBytes(
+					"ISO-8859-1"), "UTF-8");
+			System.out.println("用户id：" + userId);
+			// 充值金额
+			String amount = new String(request.getParameter("amount").getBytes(
+					"ISO-8859-1"), "UTF-8");
+			System.out.println("充值金额:" + amount);
+
+			// 支付成功处理逻辑
+			if (trade_status.equals("TRADE_FINISHED")
+					|| trade_status.equals("TRADE_SUCCESS")) {
+				// 业务回调
+				personManageService.rechargeBill(Integer.parseInt(userId), amount);
 				// 支付成功
 				ResponseUtils.renderText(response, "success");
 			}
@@ -274,7 +325,7 @@ public class PayController extends BizBaseController {
 	}
 
 	/**
-	 * 支付宝支付签名
+	 * 注册时支付宝支付签名
 	 * 
 	 * @param request
 	 * @param response
@@ -317,7 +368,14 @@ public class PayController extends BizBaseController {
 		String inviteCode = request(request, "inviteCode");
 		ResponseUtils.renderText(response, buildNotifyURL(userId, inviteCode));
 	}
-	
+
+	/**
+	 * 构建通知URL
+	 * 
+	 * @param userId
+	 * @param inviteCode
+	 * @return
+	 */
 	private String buildNotifyURL(String userId, String inviteCode) {
 		String aliapayURL = LoginUtil.getAliapayURL();
 		RequestMapping req = this.getClass()
@@ -388,6 +446,58 @@ public class PayController extends BizBaseController {
 	public void getRegistAmount(HttpServletRequest request,
 			HttpServletResponse response) {
 		ResponseUtils.renderText(response, LoginUtil.getRegistAmount());
+	}
+
+	/**
+	 * 充值时支付宝支付签名
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("rechargeSign")
+	public void rechargeSign(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		validateResult.put("amount", "充值金额不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		String amount = request(request, "amount");
+		String notify_url = this.buildRechargeNotifyURL(userId, amount);
+
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, amount);
+		ResponseUtils.renderText(response, orderInfo);
+	}
+
+	/**
+	 * 构建充值通知URL
+	 * 
+	 * @param userId
+	 * @param amount
+	 * @return
+	 */
+	private String buildRechargeNotifyURL(String userId, String amount) {
+		String aliapayURL = LoginUtil.getRechargeURL();
+		RequestMapping req = this.getClass()
+				.getAnnotation(RequestMapping.class);
+		String classReqValue = req.value().length > 0 ? req.value()[0] : "";
+		try {
+			Method method = this.getClass().getMethod("rechargeNotify",
+					HttpServletRequest.class, HttpServletResponse.class);
+			RequestMapping reqMethod = method
+					.getAnnotation(RequestMapping.class);
+			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
+					.value()[0] : "";
+			return MessageFormat.format(aliapayURL, classReqValue,
+					methodReqValue, userId, amount);
+		} catch (NoSuchMethodException e) {
+			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
+		} catch (SecurityException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return null;
 	}
 
 	/**

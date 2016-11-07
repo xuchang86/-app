@@ -7,48 +7,42 @@
 package com.xiaoyao.mall.model;
 
 /**
- * 订单状态
+ * 商品等级
  * 
  * @author 许畅
  * @since JDK1.7
- * @version 2016年9月21日 许畅 新建
+ * @version 2016年11月8日 许畅 新建
  */
-public enum State {
+public enum GoodsLevel {
 
-	/** 待付款 */
-	TODO("todo"),
+	/** 正常 */
+	NORMAL(0),
 
-	/** 已付款 */
-	PAYING("paying"),
+	/** 精品 */
+	NICE(1),
 
-	/** 已发货 */
-	TO("to"),
+	/** 完美 */
+	PERFECT(2),
 
-	/** 已收货 */
-	GET("get"),
+	/** 差 */
+	BAD(3);
 
-	/** 售后 */
-	AFTER_SALE("after_sale"),
-
-	/** 退货 */
-	RETURN("sales_return");
-
-	/** 状态值 */
-	private String value;
+	/** 值 */
+	private int value;
 
 	/**
 	 * 构造方法
 	 * 
 	 * @param value
 	 */
-	private State(String value) {
+	private GoodsLevel(int value) {
 		this.setValue(value);
 	}
 
 	/**
 	 * @return the value
 	 */
-	public String getValue() {
+	public int getValue() {
 		return value;
 	}
 
@@ -56,7 +50,7 @@ public enum State {
 	 * @param value
 	 *            the value to set
 	 */
-	public void setValue(String value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 

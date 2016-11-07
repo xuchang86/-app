@@ -70,6 +70,51 @@ public class MallController extends BizBaseController {
 	}
 
 	/**
+	 * 查询商品分类型
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryGoodsType")
+	public void queryGoodsType(HttpServletRequest request,
+			HttpServletResponse response) {
+		JSONUtils.SUCCESS(response, mallService.queryGoodsType());
+	}
+
+	/**
+	 * 通过商品类型获取商品
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryGoodsByTypeId")
+	public void queryGoodsByTypeId(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("typeId", "类型id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String pageSize = request(request, "pageSize");
+		String pageNo = request(request, "pageNo");
+		String typeId = request(request, "typeId");
+		JSONUtils.SUCCESS(response,
+				mallService.queryGoodsByType(pageSize, pageNo, typeId));
+	}
+
+	/**
+	 * 查询精选商品
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryNiceGoods")
+	public void queryNiceGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		JSONUtils.SUCCESS(response, mallService.queryNiceGoods());
+	}
+
+	/**
 	 * 确认支付(先调用该接口保存商品订单相关信息)
 	 * 
 	 * @param request

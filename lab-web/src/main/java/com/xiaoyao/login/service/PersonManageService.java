@@ -21,6 +21,7 @@ import com.xiaoyao.base.model.Rule;
 import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.model.PersonQuery;
 import com.xiaoyao.login.model.User;
+import com.xiaoyao.login.util.NumberUtils;
 import com.xiaoyao.login.util.RuleOperator;
 import com.xiaoyao.pay.service.CashPoolService;
 
@@ -60,6 +61,21 @@ public class PersonManageService extends BaseService<Person> {
 		}
 
 		return true;
+	}
+
+	/**
+	 * 充值逍遥币
+	 * 
+	 * @param userId
+	 * @param amount
+	 */
+	public void rechargeBill(Integer userId, String amount) {
+		List<Person> persons = queryPersonByUserId(userId);
+		for (Person person : persons) {
+			person.setBill(NumberUtils.releaseNull(person.getBill()).add(
+					new BigDecimal(amount)));
+			savePerson(person);
+		}
 	}
 
 	/**

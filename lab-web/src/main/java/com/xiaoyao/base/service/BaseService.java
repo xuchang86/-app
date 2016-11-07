@@ -24,7 +24,7 @@ import com.xiaoyao.base.dao.BaseMapper;
 import com.xiaoyao.base.model.BaseVO;
 
 /**
- * 基础服务类
+ * 基础服务类(提供保存和查询服务)
  * 
  * @author 许畅
  * @since JDK1.7

@@ -10,6 +10,8 @@
     <result column="person_id" property="personId" jdbcType="INTEGER" />
     <result column="cost" property="cost" jdbcType="DECIMAL" />
     <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="way" property="way" jdbcType="VARCHAR" />
+    <result column="payWay" property="payway" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, type, address, content, date, person_id, cost, city
+    id, type, address, content, date, person_id, cost, city, way, payWay
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityExample" >
     select
@@ -105,10 +107,12 @@
   <insert id="insert" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into T_PUBLISH_ACTIVITY (id, type, address, 
       content, date, person_id, 
-      cost, city)
+      cost, city, way, payWay
+      )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{personId,jdbcType=INTEGER}, 
-      #{cost,jdbcType=DECIMAL}, #{city,jdbcType=VARCHAR})
+      #{cost,jdbcType=DECIMAL}, #{city,jdbcType=VARCHAR}, #{way,jdbcType=VARCHAR}, #{payway,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.activity.model.Activity" useGeneratedKeys="true" keyProperty="id">
     insert into T_PUBLISH_ACTIVITY
@@ -137,6 +141,12 @@
       <if test="city != null" >
         city,
       </if>
+      <if test="way != null" >
+        way,
+      </if>
+      <if test="payway != null" >
+        payWay,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -162,6 +172,12 @@
       </if>
       <if test="city != null" >
         #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="way != null" >
+        #{way,jdbcType=VARCHAR},
+      </if>
+      <if test="payway != null" >
+        #{payway,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +214,12 @@
       <if test="record.city != null" >
         city = #{record.city,jdbcType=VARCHAR},
       </if>
+      <if test="record.way != null" >
+        way = #{record.way,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payway != null" >
+        payWay = #{record.payway,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +234,9 @@
       date = #{record.date,jdbcType=TIMESTAMP},
       person_id = #{record.personId,jdbcType=INTEGER},
       cost = #{record.cost,jdbcType=DECIMAL},
-      city = #{record.city,jdbcType=VARCHAR}
+      city = #{record.city,jdbcType=VARCHAR},
+      way = #{record.way,jdbcType=VARCHAR},
+      payWay = #{record.payway,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +265,12 @@
       <if test="city != null" >
         city = #{city,jdbcType=VARCHAR},
       </if>
+      <if test="way != null" >
+        way = #{way,jdbcType=VARCHAR},
+      </if>
+      <if test="payway != null" >
+        payWay = #{payway,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -252,7 +282,9 @@
       date = #{date,jdbcType=TIMESTAMP},
       person_id = #{personId,jdbcType=INTEGER},
       cost = #{cost,jdbcType=DECIMAL},
-      city = #{city,jdbcType=VARCHAR}
+      city = #{city,jdbcType=VARCHAR},
+      way = #{way,jdbcType=VARCHAR},
+      payWay = #{payway,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   

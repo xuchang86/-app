@@ -15,6 +15,12 @@ public class Activity extends BaseVO {
 	/** 活动类型 {@link com.xiaoyao.activity.model.ActivityType} */
 	private String type;
 
+	/** 活动方式 {@link com.xiaoyao.activity.model.ActivityWay} */
+	private String way;
+
+	/** 付款方式 {@link com.xiaoyao.activity.model.ActivityPayWay} */
+	private String payway;
+
 	private String address;
 
 	private String content;
@@ -150,5 +156,35 @@ public class Activity extends BaseVO {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/**
+	 * @return the way
+	 */
+	public String getWay() {
+		return way;
+	}
+
+	/**
+	 * @param way
+	 *            the way to set
+	 */
+	public void setWay(String way) {
+		this.way = way;
+	}
+
+	/**
+	 * @return the payway
+	 */
+	public String getPayway() {
+		return payway;
+	}
+
+	/**
+	 * @param payway
+	 *            the payway to set
+	 */
+	public void setPayway(String payway) {
+		this.payway = payway;
 	}
 }
