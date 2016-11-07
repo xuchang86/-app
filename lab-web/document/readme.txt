@@ -34,3 +34,28 @@ URL: https://ip:端口/xyp/pay/alipaySign.do?userId=用户id不能为空&inviteCode=邀请
 1.恢复注册时的验证码校验
 2.修改确认提交的报错缺陷
 3.恢复支付宝签名私钥为旧私钥,避免调用报错(最新申请的私钥还需要修正后验证)
+
+
+20161108  本次更新内容
+1、新增商城获取分类接口:  https://ip:port/xyp/mall/queryGoodsType.do
+   新增通过分类获取商品接口: https://ip:port/xyp/mall/queryGoodsByTypeId.do?typeId=类型Id不能为空
+   
+2、商品价格为原价price,增加会员价为vipPrice
+
+3、新增查询精选商品接口:  https://ip:port/xyp/mall/queryNiceGoods.do
+
+4. 增加商品等级level字段,0 正常,1 精品,2 完美,3 差
+
+5、订单中退货状态已有
+
+6、门派活动、悬赏活动、出售活动中
+新增:活动方式(way)字段,活动方式包括:打听(ask_about),兼职(part_time),其他(other)
+新增:付款方式(payway)字段,付款方式包括:AA(aa),男A女免费(man_a_woman_free),女A男免费(woman_a_man_free),全部免费(all_free)
+修改接口:queryAllActivity(查询所有的门派活动),queryAllTask(查询所有悬赏任务),queryAllService(查询所有的出售服务)这三个接口增加参数 城市(city),如果没有传则查全部,传了会查该城市下的活动。
+
+7、新增充值签名接口: https://ip:port/xyp/pay/rechargeSign.do?userId=用户id不能为空&amount=充值金额不能为空 
+
+8、转账需要逍遥派客户人员自己线下转账,无法提供
+
+9.新增通过用户id集合获取用户组信息接口 : https://ip:port/xyp/xiaoyao/queryUserByIds?userId=用户id逗号隔开
+新增通过手机号集合获取用户组信息接口: https://ip:port/xyp/xiaoyao/queryUserByIds?phones=手机号逗号隔开

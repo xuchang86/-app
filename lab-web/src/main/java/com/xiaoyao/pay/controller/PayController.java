@@ -368,6 +368,26 @@ public class PayController extends BizBaseController {
 		String inviteCode = request(request, "inviteCode");
 		ResponseUtils.renderText(response, buildNotifyURL(userId, inviteCode));
 	}
+	
+	/**
+	 * 获取充值通知URL
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getRechargeURL")
+	public void getRechargeURL(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空.");
+		validateResult.put("amount", "充值金额不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		String amount = request(request, "amount");
+		ResponseUtils.renderText(response, buildRechargeNotifyURL(userId, amount));
+	}
 
 	/**
 	 * 构建通知URL

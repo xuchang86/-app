@@ -470,7 +470,7 @@ public class UserLoginController extends BizBaseController {
 	}
 	
 	/**
-	 * 通过用户id集合获取用户组信息
+	 * 通过手机号集合获取用户组信息
 	 * 
 	 * @param request
 	 * @param response
