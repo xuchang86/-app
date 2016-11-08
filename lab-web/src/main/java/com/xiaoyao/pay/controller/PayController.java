@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -341,10 +342,15 @@ public class PayController extends BizBaseController {
 			return;
 		String userId = request(request, "userId");
 		String inviteCode = request(request, "inviteCode");
-		String notify_url = this.buildNotifyURL(userId, inviteCode);
+		String notify_url = this.buildNotifyURL();
+		String extral_param = null;
+		try {
+			extral_param = URLEncoder.encode("userId=" + userId + "&inviteCode=" + inviteCode, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
+		}
 
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url,
-				LoginUtil.getRegistAmount());
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, LoginUtil.getRegistAmount(), extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 
@@ -357,16 +363,7 @@ public class PayController extends BizBaseController {
 	@RequestMapping("getAliaPayURL")
 	public void getAliaPayURL(HttpServletRequest request,
 			HttpServletResponse response) {
-		// 校验参数是否为空
-		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("userId", "用户id不能为空.");
-		validateResult.put("inviteCode", "邀请码不能为空.");
-		if (!validateParamBlank(request, response, validateResult))
-			return;
-
-		String userId = request(request, "userId");
-		String inviteCode = request(request, "inviteCode");
-		ResponseUtils.renderText(response, buildNotifyURL(userId, inviteCode));
+		ResponseUtils.renderText(response, buildNotifyURL());
 	}
 	
 	/**
@@ -378,15 +375,7 @@ public class PayController extends BizBaseController {
 	@RequestMapping("getRechargeURL")
 	public void getRechargeURL(HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("userId", "用户id不能为空.");
-		validateResult.put("amount", "充值金额不能为空.");
-		if (!validateParamBlank(request, response, validateResult))
-			return;
-
-		String userId = request(request, "userId");
-		String amount = request(request, "amount");
-		ResponseUtils.renderText(response, buildRechargeNotifyURL(userId, amount));
+		ResponseUtils.renderText(response, buildRechargeNotifyURL());
 	}
 
 	/**
@@ -396,7 +385,7 @@ public class PayController extends BizBaseController {
 	 * @param inviteCode
 	 * @return
 	 */
-	private String buildNotifyURL(String userId, String inviteCode) {
+	private String buildNotifyURL() {
 		String aliapayURL = LoginUtil.getAliapayURL();
 		RequestMapping req = this.getClass()
 				.getAnnotation(RequestMapping.class);
@@ -408,8 +397,7 @@ public class PayController extends BizBaseController {
 					.getAnnotation(RequestMapping.class);
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
-			return MessageFormat.format(aliapayURL, classReqValue,
-					methodReqValue, userId, inviteCode);
+			return MessageFormat.format(aliapayURL, classReqValue, methodReqValue);
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
@@ -485,9 +473,15 @@ public class PayController extends BizBaseController {
 
 		String userId = request(request, "userId");
 		String amount = request(request, "amount");
-		String notify_url = this.buildRechargeNotifyURL(userId, amount);
-
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, amount);
+		String notify_url = this.buildRechargeNotifyURL();
+		String extral_param = null;
+		try {
+			extral_param = URLEncoder.encode("userId=" + userId + "&amount=" + amount, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
+		}
+		
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, amount ,extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 
@@ -498,7 +492,7 @@ public class PayController extends BizBaseController {
 	 * @param amount
 	 * @return
 	 */
-	private String buildRechargeNotifyURL(String userId, String amount) {
+	private String buildRechargeNotifyURL() {
 		String aliapayURL = LoginUtil.getRechargeURL();
 		RequestMapping req = this.getClass()
 				.getAnnotation(RequestMapping.class);
@@ -510,8 +504,7 @@ public class PayController extends BizBaseController {
 					.getAnnotation(RequestMapping.class);
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
-			return MessageFormat.format(aliapayURL, classReqValue,
-					methodReqValue, userId, amount);
+			return MessageFormat.format(aliapayURL, classReqValue, methodReqValue);
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {

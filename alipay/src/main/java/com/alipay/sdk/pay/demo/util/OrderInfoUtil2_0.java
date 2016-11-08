@@ -68,12 +68,12 @@ public class OrderInfoUtil2_0 {
 	 * @return
 	 */
 	public static Map<String, String> buildOrderParamMap(String app_id,
-			String notify_url, String total_amount) {
+			String notify_url, String total_amount, String extralParam) {
 		Map<String, String> keyValues = new HashMap<String, String>();
 
 		keyValues.put("app_id", app_id);
 
-		keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+total_amount+"\",\"subject\":\"逍遥派费用支付\",\"body\":\"逍遥派费用支付,包括注册支付,会员支付等.\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
+		keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+total_amount+"\",\"subject\":\"逍遥派费用支付\",\"body\":\"逍遥派费用支付,包括注册支付,会员支付等.\",\"passback_params\":\""+extralParam+"\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
 		
 		keyValues.put("charset", "utf-8");
 

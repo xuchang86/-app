@@ -39,9 +39,9 @@ public final class AlipaySignUtil {
 	 * 
 	 * orderInfo的获取必须来自服务端；
 	 */
-	public static String buildOrderSign(String notify_url, String total_amount) {
+	public static String buildOrderSign(String notify_url, String total_amount,String extralParam) {
 		Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID,
-				notify_url, total_amount);
+				notify_url, total_amount, extralParam);
 		String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
 		String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE);
 		final String orderInfo = orderParam + "&" + sign;
