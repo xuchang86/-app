@@ -59,3 +59,8 @@ URL: https://ip:端口/xyp/pay/alipaySign.do?userId=用户id不能为空&inviteCode=邀请
 
 9.新增通过用户id集合获取用户组信息接口 : https://ip:port/xyp/xiaoyao/queryUserByIds?userId=用户id逗号隔开
 新增通过手机号集合获取用户组信息接口: https://ip:port/xyp/xiaoyao/queryUserByIds?phones=手机号逗号隔开
+
+
+20161109  本次更新内容
+1.修改alipaySign支付宝注册接口和rechargeSign支付宝充值接口,去除notify_url中的参数传递
+2.去除getAliaPayURL接口和getRechargeURL接口中的参数传递
