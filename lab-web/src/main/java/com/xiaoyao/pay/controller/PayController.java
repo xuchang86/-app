@@ -84,37 +84,33 @@ public class PayController extends BizBaseController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		LOGGER.info("支付宝通知一次：" + (new Date()));
 		Map<String, String> params = aliapayNotifyBefore(request, response);
-		// 验证参数
-		if (AlipayNotify.verify(params)) {
-			// 商户订单号
-			String out_trade_no = new String(request.getParameter(
-					"out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
-			System.out.println("商户订单号：" + out_trade_no);
-			// 交易状态
-			String trade_status = new String(request.getParameter(
-					"trade_status").getBytes("ISO-8859-1"), "UTF-8");
-			System.out.println("交易状态：" + trade_status);
+		LOGGER.info("支付宝通知params：" + params);
 
-			// 用户Id
-			String userId = new String(request.getParameter("userId").getBytes(
-					"ISO-8859-1"), "UTF-8");
-			System.out.println("用户id：" + userId);
-			// 邀请码
-			String inviteCode = new String(request.getParameter("inviteCode")
-					.getBytes("ISO-8859-1"), "UTF-8");
-			System.out.println("邀请码:" + inviteCode);
+		// 商户订单号
+		String out_trade_no = new String(request.getParameter("out_trade_no")
+				.getBytes("ISO-8859-1"), "UTF-8");
+		LOGGER.info("商户订单号：" + out_trade_no);
+		// 交易状态
+		String trade_status = new String(request.getParameter("trade_status")
+				.getBytes("ISO-8859-1"), "UTF-8");
+		LOGGER.info("交易状态：" + trade_status);
 
-			// 支付成功处理逻辑
-			if (trade_status.equals("TRADE_FINISHED")
-					|| trade_status.equals("TRADE_SUCCESS")) {
-				// 业务回调
-				this.notifyCallback(out_trade_no, userId, inviteCode);
-				// 支付成功
-				ResponseUtils.renderText(response, "success");
-			}
-		} else {
-			// 验证失败
-			LOGGER.info("参数验证失败");
+		// 用户Id
+		String userId = new String(request.getParameter("userId").getBytes(
+				"ISO-8859-1"), "UTF-8");
+		LOGGER.info("用户id：" + userId);
+		// 邀请码
+		String inviteCode = new String(request.getParameter("inviteCode")
+				.getBytes("ISO-8859-1"), "UTF-8");
+		LOGGER.info("邀请码:" + inviteCode);
+
+		// 支付成功处理逻辑
+		if (trade_status.equals("TRADE_FINISHED")
+				|| trade_status.equals("TRADE_SUCCESS")) {
+			// 业务回调
+			this.notifyCallback(out_trade_no, userId, inviteCode);
+			// 支付成功
+			ResponseUtils.renderText(response, "success");
 		}
 	}
 
@@ -131,36 +127,32 @@ public class PayController extends BizBaseController {
 		LOGGER.info("支付宝通知一次：" + (new Date()));
 		Map<String, String> params = aliapayNotifyBefore(request, response);
 		// 验证参数
-		if (AlipayNotify.verify(params)) {
-			// 商户订单号
-			String out_trade_no = new String(request.getParameter(
-					"out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
-			System.out.println("商户订单号：" + out_trade_no);
-			// 交易状态
-			String trade_status = new String(request.getParameter(
-					"trade_status").getBytes("ISO-8859-1"), "UTF-8");
-			System.out.println("交易状态：" + trade_status);
+		LOGGER.info("支付宝rechargeNotify params：" + params);
+		// 商户订单号
+		String out_trade_no = new String(request.getParameter("out_trade_no")
+				.getBytes("ISO-8859-1"), "UTF-8");
+		System.out.println("商户订单号：" + out_trade_no);
+		// 交易状态
+		String trade_status = new String(request.getParameter("trade_status")
+				.getBytes("ISO-8859-1"), "UTF-8");
+		System.out.println("交易状态：" + trade_status);
 
-			// 用户Id
-			String userId = new String(request.getParameter("userId").getBytes(
-					"ISO-8859-1"), "UTF-8");
-			System.out.println("用户id：" + userId);
-			// 充值金额
-			String amount = new String(request.getParameter("amount").getBytes(
-					"ISO-8859-1"), "UTF-8");
-			System.out.println("充值金额:" + amount);
+		// 用户Id
+		String userId = new String(request.getParameter("userId").getBytes(
+				"ISO-8859-1"), "UTF-8");
+		System.out.println("用户id：" + userId);
+		// 充值金额
+		String amount = new String(request.getParameter("amount").getBytes(
+				"ISO-8859-1"), "UTF-8");
+		System.out.println("充值金额:" + amount);
 
-			// 支付成功处理逻辑
-			if (trade_status.equals("TRADE_FINISHED")
-					|| trade_status.equals("TRADE_SUCCESS")) {
-				// 业务回调
-				personManageService.rechargeBill(Integer.parseInt(userId), amount);
-				// 支付成功
-				ResponseUtils.renderText(response, "success");
-			}
-		} else {
-			// 验证失败
-			LOGGER.info("参数验证失败");
+		// 支付成功处理逻辑
+		if (trade_status.equals("TRADE_FINISHED")
+				|| trade_status.equals("TRADE_SUCCESS")) {
+			// 业务回调
+			personManageService.rechargeBill(Integer.parseInt(userId), amount);
+			// 支付成功
+			ResponseUtils.renderText(response, "success");
 		}
 	}
 
@@ -345,12 +337,14 @@ public class PayController extends BizBaseController {
 		String notify_url = this.buildNotifyURL();
 		String extral_param = null;
 		try {
-			extral_param = URLEncoder.encode("userId=" + userId + "&inviteCode=" + inviteCode, "UTF-8");
+			extral_param = URLEncoder.encode("userId=" + userId
+					+ "&inviteCode=" + inviteCode, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
 		}
 
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, LoginUtil.getRegistAmount(), extral_param);
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url,
+				LoginUtil.getRegistAmount(), extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 
@@ -365,7 +359,7 @@ public class PayController extends BizBaseController {
 			HttpServletResponse response) {
 		ResponseUtils.renderText(response, buildNotifyURL());
 	}
-	
+
 	/**
 	 * 获取充值通知URL
 	 * 
@@ -397,7 +391,8 @@ public class PayController extends BizBaseController {
 					.getAnnotation(RequestMapping.class);
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
-			return MessageFormat.format(aliapayURL, classReqValue, methodReqValue);
+			return MessageFormat.format(aliapayURL, classReqValue,
+					methodReqValue);
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
@@ -476,12 +471,14 @@ public class PayController extends BizBaseController {
 		String notify_url = this.buildRechargeNotifyURL();
 		String extral_param = null;
 		try {
-			extral_param = URLEncoder.encode("userId=" + userId + "&amount=" + amount, "UTF-8");
+			extral_param = URLEncoder.encode("userId=" + userId + "&amount="
+					+ amount, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
 		}
-		
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, amount ,extral_param);
+
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, amount,
+				extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 
@@ -504,7 +501,8 @@ public class PayController extends BizBaseController {
 					.getAnnotation(RequestMapping.class);
 			String methodReqValue = reqMethod.value().length > 0 ? reqMethod
 					.value()[0] : "";
-			return MessageFormat.format(aliapayURL, classReqValue, methodReqValue);
+			return MessageFormat.format(aliapayURL, classReqValue,
+					methodReqValue);
 		} catch (NoSuchMethodException e) {
 			LOGGER.error("找不到apilypayNotify方法:" + e.getMessage(), e);
 		} catch (SecurityException e) {
