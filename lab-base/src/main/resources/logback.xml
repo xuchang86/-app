@@ -8,7 +8,7 @@
 	</appender>
 
 	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>../logs/lab.log</file>
+		<file>../logs/xiaoyaopai.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>../logs/ylh.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>

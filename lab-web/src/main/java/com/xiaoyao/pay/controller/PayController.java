@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Date;
@@ -82,9 +83,9 @@ public class PayController extends BizBaseController {
 	@RequestMapping("apilypayNotify")
 	public void apilypayNotify(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		LOGGER.info("支付宝通知一次：" + (new Date()));
+		LOGGER.info("支付宝apilypayNotify通知一次：" + (new Date()));
 		Map<String, String> params = aliapayNotifyBefore(request, response);
-		LOGGER.info("支付宝通知params：" + params);
+		LOGGER.info("支付宝通知apilypayNotify_params：" + params);
 
 		// 商户订单号
 		String out_trade_no = new String(request.getParameter("out_trade_no")
@@ -95,18 +96,19 @@ public class PayController extends BizBaseController {
 				.getBytes("ISO-8859-1"), "UTF-8");
 		LOGGER.info("交易状态：" + trade_status);
 
-		// 用户Id
-		String userId = new String(request.getParameter("userId").getBytes(
-				"ISO-8859-1"), "UTF-8");
-		LOGGER.info("用户id：" + userId);
-		// 邀请码
-		String inviteCode = new String(request.getParameter("inviteCode")
-				.getBytes("ISO-8859-1"), "UTF-8");
-		LOGGER.info("邀请码:" + inviteCode);
-
 		// 支付成功处理逻辑
 		if (trade_status.equals("TRADE_FINISHED")
 				|| trade_status.equals("TRADE_SUCCESS")) {
+			// 业务回调参数 userId=23&inviteCode=121
+			String passback_params = params.get("passback_params");
+			String biz_params = URLDecoder.decode(passback_params, "UTF-8");
+			LOGGER.info("业务参数:" + biz_params);
+			String[] ps = biz_params.split("&");
+			String[] userIds = ps[0].split("=");
+			String userId = userIds[1];
+			String[] inviteCodes = ps[1].split("=");
+			String inviteCode = inviteCodes[1];
+			LOGGER.info("userId:" + userId + ";inviteCode:" + inviteCode);
 			// 业务回调
 			this.notifyCallback(out_trade_no, userId, inviteCode);
 			// 支付成功
@@ -124,7 +126,7 @@ public class PayController extends BizBaseController {
 	@RequestMapping("rechargeNotify")
 	public void rechargeNotify(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		LOGGER.info("支付宝通知一次：" + (new Date()));
+		LOGGER.info("rechargeNotify支付宝通知一次：" + (new Date()));
 		Map<String, String> params = aliapayNotifyBefore(request, response);
 		// 验证参数
 		LOGGER.info("支付宝rechargeNotify params：" + params);
@@ -137,18 +139,19 @@ public class PayController extends BizBaseController {
 				.getBytes("ISO-8859-1"), "UTF-8");
 		System.out.println("交易状态：" + trade_status);
 
-		// 用户Id
-		String userId = new String(request.getParameter("userId").getBytes(
-				"ISO-8859-1"), "UTF-8");
-		System.out.println("用户id：" + userId);
-		// 充值金额
-		String amount = new String(request.getParameter("amount").getBytes(
-				"ISO-8859-1"), "UTF-8");
-		System.out.println("充值金额:" + amount);
-
 		// 支付成功处理逻辑
 		if (trade_status.equals("TRADE_FINISHED")
 				|| trade_status.equals("TRADE_SUCCESS")) {
+			// 业务回调参数 userId=23&amount=121
+			String passback_params = params.get("passback_params");
+			String biz_params = URLDecoder.decode(passback_params, "UTF-8");
+			LOGGER.info("业务参数2:" + biz_params);
+			String[] ps = biz_params.split("&");
+			String[] userIds = ps[0].split("=");
+			String userId = userIds[1];
+			String[] amounts = ps[1].split("=");
+			String amount = amounts[1];
+			LOGGER.info("userId:" + userId + ";amount:" + amount);
 			// 业务回调
 			personManageService.rechargeBill(Integer.parseInt(userId), amount);
 			// 支付成功
@@ -240,7 +243,7 @@ public class PayController extends BizBaseController {
 	public void mallAliapayNotify(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
-		LOGGER.info("支付宝通知一次：" + (new Date()));
+		LOGGER.info("支付宝mallAliapayNotify通知一次：" + (new Date()));
 		Map<String, String> params = aliapayNotifyBefore(request, response);
 		// 验证参数
 		if (AlipayNotify.verify(params)) {
@@ -272,7 +275,7 @@ public class PayController extends BizBaseController {
 			}
 		} else {
 			// 验证失败
-			LOGGER.info("参数验证失败");
+			LOGGER.info("参数验证失败:mallAliapayNotify");
 		}
 	}
 
