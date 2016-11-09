@@ -13,7 +13,7 @@
 
 </head>
 <body ng-controller="testController" ng-init="ready()">
-    <form action="<%=request.getContextPath()%>/activity/uploadPicture.do" method="post" enctype="multipart/form-data">  
+    <form action="<%=request.getContextPath()%>/xiaoyao/uploadHead.do?userId=3" method="post" enctype="multipart/form-data">  
       <input type="file" name="file" /> <input type="submit" value="Submit" />
     </form>  
     <table>

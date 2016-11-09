@@ -163,5 +163,9 @@ public final class UploadFileUtil {
 		index = index == null ? 1 : index + 1;
 		return "IMG_" + sdf.format(new Date()) + "_" + index + "." + suffix;
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(createFileName("11.jpg", 11));
+	}
 
 }

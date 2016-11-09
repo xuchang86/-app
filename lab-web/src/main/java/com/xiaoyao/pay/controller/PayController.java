@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
@@ -28,14 +27,9 @@ import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
-import com.xiaoyao.login.model.IsPay;
-import com.xiaoyao.login.model.User;
-import com.xiaoyao.login.service.PersonManageService;
-import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
-import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;
 
@@ -60,14 +54,6 @@ public class PayController extends BizBaseController {
 	/** 注入 CashPoolService */
 	@Autowired
 	private CashPoolService cashPoolService;
-
-	/** 注入 UserLoginService */
-	@Autowired
-	private UserLoginService userLoginService;
-
-	/** 注入 PersonManageService */
-	@Autowired
-	private PersonManageService personManageService;
 
 	/** 注入 MallService */
 	@Autowired
@@ -110,7 +96,7 @@ public class PayController extends BizBaseController {
 			String inviteCode = inviteCodes[1];
 			LOGGER.info("userId:" + userId + ";inviteCode:" + inviteCode);
 			// 业务回调
-			this.notifyCallback(out_trade_no, userId, inviteCode);
+			payService.notifyCallback(out_trade_no, userId, inviteCode);
 			// 支付成功
 			ResponseUtils.renderText(response, "success");
 		}
@@ -153,7 +139,7 @@ public class PayController extends BizBaseController {
 			String amount = amounts[1];
 			LOGGER.info("userId:" + userId + ";amount:" + amount);
 			// 业务回调
-			personManageService.rechargeBill(Integer.parseInt(userId), amount);
+			payService.rechargeCallback(out_trade_no, userId, amount);
 			// 支付成功
 			ResponseUtils.renderText(response, "success");
 		}
@@ -200,36 +186,10 @@ public class PayController extends BizBaseController {
 					.getBytes("ISO-8859-1"), "UTF-8");
 			System.out.println("邀请码:" + inviteCode);
 			// 业务回调
-			this.notifyCallback(out_trade_no, userId, inviteCode);
+			payService.notifyCallback(out_trade_no, userId, inviteCode);
 			// 支付成功处理逻辑
 			ResponseUtils.renderText(response, "success");
 		}
-	}
-
-	/**
-	 * 支付宝和微信支付回调
-	 * 
-	 * @param out_trade_no
-	 *            订单号
-	 * @param userId
-	 *            用户id
-	 * @param inviteCode
-	 *            邀请码
-	 */
-	private void notifyCallback(String out_trade_no, String userId,
-			String inviteCode) {
-		// 新增订单信息
-		Order order = new Order();
-		order.setOrderCode(out_trade_no);
-		order.setPayDate(new Date());
-		order.setPayAmount(new BigDecimal(LoginUtil.getRegistAmount()));
-		order.setUserId(Integer.valueOf(userId));
-		payService.saveOrder(order);
-		// 更新已付款
-		this.updateIsPay(userId);
-		// 付款并保存person信息反写金额等业务操作
-		User user = userLoginService.queryUserByPrimaryKey(userId);
-		userLoginService.saveUser(user, inviteCode);
 	}
 
 	/**
@@ -306,18 +266,6 @@ public class PayController extends BizBaseController {
 			params.put(name, valueStr);
 		}
 		return params;
-	}
-
-	/**
-	 * 更新已付款
-	 * 
-	 * @param userId
-	 */
-	private void updateIsPay(String userId) {
-		User user = new User();
-		user.setIspay(IsPay.IS_PAY.getValue());
-		user.setId(Integer.valueOf(userId));
-		userLoginService.updateByByPrimaryKey(user);
 	}
 
 	/**

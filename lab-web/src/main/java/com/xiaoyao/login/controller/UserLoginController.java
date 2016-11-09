@@ -206,8 +206,7 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.ERROR(response, "上传的文件非图片格式,不允许上传");
 			return;
 		}
-		Integer index = userLoginService.queryMaxIndex();
-		fileName = UploadFileUtil.createFileName(fileName, index);
+		fileName = UploadFileUtil.createFileName(fileName, user.getId());
 		user.setUrl(fileName);
 		userLoginService.updateByByPrimaryKey(user);
 
@@ -215,6 +214,9 @@ public class UserLoginController extends BizBaseController {
 		File file = new File(realPath, fileName);
 		if (!file.exists())
 			file.mkdirs();
+		else{
+			file.delete();
+		}
 		multipartFile.transferTo(file);
 
 		// 返回上传图片id
