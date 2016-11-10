@@ -195,11 +195,15 @@ public class UserLoginService extends BaseService<User> {
 			List<Person> persons = personManageService
 					.queryPersonByUserId(parentUserId);
 			if (persons.size() > 0) {
+				User parentUser = queryUserByPrimaryKey(parentUserId);
 				// 加入聊天室
 				ResponseWrapper response = EmchatOperator
 						.addBatchUsersToChatGroup(inviteInfo.getChatroomId(),
 								user.getPhone());
-				LOGGER.info("setParentInfo:" + response.getResponseBody());
+				LOGGER.info("addBatchUsersToChatGroup:" + response.getResponseBody());
+				//互相加好友
+				ResponseWrapper rsp= EmchatOperator.addFriendSingle(user.getPhone(), parentUser.getPhone());
+				LOGGER.info("addFriendSingle:" + rsp.getResponseBody());
 				person.setParentId(persons.get(0).getId());
 			}
 		}

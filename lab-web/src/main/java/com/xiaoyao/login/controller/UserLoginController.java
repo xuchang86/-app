@@ -406,6 +406,9 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("test")
 	public void test(HttpServletRequest request, HttpServletResponse response) {
+		ResponseWrapper rsp2= EmchatOperator.addFriendSingle("6763718", "6763717");
+		System.out.println("rsp:" + rsp2.getResponseBody());
+		
 		ResponseWrapper resp = EmchatOperator.getFriends("18627014276");
 		ObjectNode node = (ObjectNode) resp.getResponseBody();
 		JsonNode data = node.get("data");

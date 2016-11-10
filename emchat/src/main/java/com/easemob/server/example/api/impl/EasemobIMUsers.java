@@ -84,7 +84,7 @@ public class EasemobIMUsers extends EasemobRestAPI implements IMUserAPI {
         String url = getContext().getSeriveURL() + getResourceRootURI() + "/" + userName + "/contacts/users/" + friendName;
         HeaderWrapper header = HeaderHelper.getDefaultHeaderWithToken();
 
-        return getInvoker().sendRequest(HTTPMethod.METHOD_POST, url, header, null, null);
+        return getInvoker().sendRequest(HTTPMethod.METHOD_POST, url, header);
 	}
 
 	public Object deleteFriendSingle(String userName, String friendName) {

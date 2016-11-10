@@ -100,6 +100,19 @@ public final class EmchatOperator {
 	}
 
 	/**
+	 * 添加为好友
+	 * 
+	 * @param userName
+	 * @param friendName
+	 * @return
+	 */
+	public static ResponseWrapper addFriendSingle(String userName,
+			String friendName) {
+		return (ResponseWrapper) getIMUserInstance().addFriendSingle(userName,
+				friendName);
+	}
+
+	/**
 	 * 获取用户的朋友信息
 	 * 
 	 * @param userName
