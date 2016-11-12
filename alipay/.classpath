@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="com/alipay/sdk/pay/demo/PayDemoActivity.java|com/alipay/sdk/pay/demo/H5PayDemoActivity.java|com/alipay/sdk/pay/demo/ExternalFragment.java|com/alipay/sdk/pay/demo/AuthResult.java|com/alipay/sdk/pay/demo/PayResult.java" kind="src" output="target/classes" path="src/main/java">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
