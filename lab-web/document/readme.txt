@@ -64,3 +64,12 @@ URL: https://ip:端口/xyp/pay/alipaySign.do?userId=用户id不能为空&inviteCode=邀请
 20161109  本次更新内容
 1.修改alipaySign支付宝注册接口和rechargeSign支付宝充值接口,去除notify_url中的参数传递
 2.去除getAliaPayURL接口和getRechargeURL接口中的参数传递
+
+
+20161118  本次更新内容
+1.增加获取售后订单接口:
+https://ip:port/xyp/mall/querySellAfterOrders.do?userId=用户id不能为空
+2.增加获取退货订单接口
+https://ip:port/xyp/mall/queryReturnOrders.do?userId=用户id不能为空
+3.增加获取物品评论信息接口
+https://ip:port/xyp/mall/getComments.do?goodsId=物品id不能为空

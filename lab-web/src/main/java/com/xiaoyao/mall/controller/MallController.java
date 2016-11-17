@@ -201,6 +201,42 @@ public class MallController extends BizBaseController {
 	}
 
 	/**
+	 * 获取售后订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("querySellAfterOrders")
+	public void querySellAfterOrders(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, mallService.querySellAfterGoods(userId));
+	}
+
+	/**
+	 * 获取退货订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryReturnOrders")
+	public void queryReturnOrders(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, mallService.queryReturnGoods(userId));
+	}
+
+	/**
 	 * 待评价
 	 * 
 	 * @param request
@@ -243,6 +279,24 @@ public class MallController extends BizBaseController {
 		Comment comment = BeanUtils.mapConvert2ToBean(Comment.class, request);
 		mallService.addComments(comment);
 		JSONUtils.SUCCESS(response, "评论成功.");
+	}
+
+	/**
+	 * 获取评论商品评论
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("getComments")
+	public void getComments(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("goodsId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String goodsId = request(request, "goodsId");
+		JSONUtils.SUCCESS(response, mallService.getComments(goodsId));
 	}
 
 	/**

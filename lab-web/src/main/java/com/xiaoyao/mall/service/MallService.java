@@ -149,6 +149,18 @@ public class MallService extends BaseService<Goods> {
 	}
 
 	/**
+	 * 获取商品评论
+	 * 
+	 * @param goodsId
+	 * @return
+	 */
+	public List<Comment> getComments(String goodsId) {
+		CommentExample example = new CommentExample();
+		example.or().andGoodsIdEqualTo(Integer.parseInt(goodsId));
+		return commentMapper.selectByExample(example);
+	}
+
+	/**
 	 * 通过订单id查询订单
 	 * 
 	 * @param id
@@ -211,6 +223,34 @@ public class MallService extends BaseService<Goods> {
 		GoodsOrderExample example = new GoodsOrderExample();
 		example.or().andUserIdEqualTo(Integer.parseInt(userId))
 				.andStateEqualTo(State.PAYING.getValue());
+
+		return queryTodoGoods(example);
+	}
+
+	/**
+	 * 查询售后订单
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<GoodsOrder> querySellAfterGoods(String userId) {
+		GoodsOrderExample example = new GoodsOrderExample();
+		example.or().andUserIdEqualTo(Integer.parseInt(userId))
+				.andStateEqualTo(State.AFTER_SALE.getValue());
+
+		return queryTodoGoods(example);
+	}
+
+	/**
+	 * 查询退货订单
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<GoodsOrder> queryReturnGoods(String userId) {
+		GoodsOrderExample example = new GoodsOrderExample();
+		example.or().andUserIdEqualTo(Integer.parseInt(userId))
+				.andStateEqualTo(State.RETURN.getValue());
 
 		return queryTodoGoods(example);
 	}

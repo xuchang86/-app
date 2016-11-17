@@ -294,8 +294,7 @@ public class PayController extends BizBaseController {
 			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
 		}
 
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url,
-				LoginUtil.getRegistAmount(), extral_param);
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, "0.01", extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 
