@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.group.core.service.ImageService;
 import com.xiaoyao.base.cache.GlobalCache;
+import com.xiaoyao.base.util.SpringContextBeanUtil;
 import com.xiaoyao.login.util.LoginUtil;
 
 /**
@@ -88,18 +91,23 @@ public final class UploadFileUtil {
 	/**
 	 * 包装商城的商品图片URL
 	 * 
-	 * @param fileName
+	 * @param url
 	 *            文件名
 	 * @return
 	 */
-	public static String wrapperMallURL(String fileName) {
-		String ip = GlobalCache.getServerIP() == "null" ? LoginUtil
-				.getServerIP() : GlobalCache.getServerIP();
-		String port = GlobalCache.getServerPort() == "null" ? LoginUtil
-				.getServerPort() : GlobalCache.getServerPort();
-
-		return convertToFileHttpURL(ip, port, GlobalCache.getContextPath(),
-				fileName, "mall");
+	public static String wrapperMallURL(String url) {
+		ImageService imageService = SpringContextBeanUtil
+				.getBean(ImageService.class);
+		List<String> lsturls = imageService.convertImageUrlHtml2(url);
+		String urls = "";
+		for (int i = 0; i < lsturls.size(); i++) {
+			if (i == 0) {
+				urls += lsturls.get(i);
+			} else {
+				urls += "," + lsturls.get(i);
+			}
+		}
+		return urls;
 	}
 
 	/**
@@ -163,7 +171,7 @@ public final class UploadFileUtil {
 		index = index == null ? 1 : index + 1;
 		return "IMG_" + sdf.format(new Date()) + "_" + index + "." + suffix;
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(createFileName("11.jpg", 11));
 	}
