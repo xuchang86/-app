@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alipay.sign.AlipaySignUtil;
@@ -27,6 +29,8 @@ import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.JSONUtils;
+import com.xiaoyao.login.model.InviteCode;
+import com.xiaoyao.login.service.InviteCodeService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
@@ -58,6 +62,10 @@ public class PayController extends BizBaseController {
 	/** 注入 MallService */
 	@Autowired
 	private MallService mallService;
+
+	/** 注入 InviteCodeService */
+	@Autowired
+	private InviteCodeService inviteCodeService;
 
 	/**
 	 * 支付宝支付成功反馈信息
@@ -285,6 +293,14 @@ public class PayController extends BizBaseController {
 			return;
 		String userId = request(request, "userId");
 		String inviteCode = request(request, "inviteCode");
+		// 校验邀请码是否存在
+		List<InviteCode> inviteCodes = inviteCodeService
+				.queryInviteCodeByNumber(inviteCode);
+		if (CollectionUtils.isEmpty(inviteCodes)) {
+			JSONUtils.ERROR(response, "邀请码不存在,请填写正确邀请码.");
+			return;
+		}
+
 		String notify_url = this.buildNotifyURL();
 		String extral_param = null;
 		try {
@@ -294,7 +310,8 @@ public class PayController extends BizBaseController {
 			LOGGER.error("编码extral_param失败:" + e.getMessage(), e);
 		}
 
-		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, "0.01", extral_param);
+		String orderInfo = AlipaySignUtil.buildOrderSign(notify_url, "0.01",
+				extral_param);
 		ResponseUtils.renderText(response, orderInfo);
 	}
 

@@ -37,6 +37,7 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.base.util.MD5Util;
+import com.xiaoyao.base.util.SpringContextBeanUtil;
 import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
@@ -45,6 +46,7 @@ import com.xiaoyao.login.service.InviteCodeService;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.pay.service.PayService;
 import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
@@ -214,7 +216,7 @@ public class UserLoginController extends BizBaseController {
 		File file = new File(realPath, fileName);
 		if (!file.exists())
 			file.mkdirs();
-		else{
+		else {
 			file.delete();
 		}
 		multipartFile.transferTo(file);
@@ -406,20 +408,13 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("test")
 	public void test(HttpServletRequest request, HttpServletResponse response) {
-		ResponseWrapper rsp2= EmchatOperator.addFriendSingle("6763718", "6763717");
-		System.out.println("rsp:" + rsp2.getResponseBody());
-		
-		ResponseWrapper resp = EmchatOperator.getFriends("18627014276");
-		ObjectNode node = (ObjectNode) resp.getResponseBody();
-		JsonNode data = node.get("data");
-		System.out.println("getFriends:" + data);
-		ResponseWrapper rsp = EmchatOperator
-				.getChatGroupUsers("253938345342665136");
-		ObjectNode objectNode = (ObjectNode) rsp.getResponseBody();
-		JsonNode data2 = objectNode.get("data");
-		// JSON.parse(data2.toString())
-		System.out.println("getChatGroupUsers:" + data2);
-		JSONUtils.SUCCESS(response, JSON.parse(data2.toString()));
+		PayService payService = SpringContextBeanUtil.getBean(PayService.class);
+		// 业务回调
+		payService.notifyCallback("9528的订单", "48", "292556");
+		// // 修改聊天室名称为邀请码
+		// EmchatOperator.modifyChatGroup("266180588157796784", "337721",
+		// "测试337721", "9529", new String[] { "9529" });
+		JSONUtils.SUCCESS(response, "success");
 	}
 
 	/**
@@ -473,7 +468,7 @@ public class UserLoginController extends BizBaseController {
 		}
 		JSONUtils.SUCCESS(response, userLoginService.queryUserByIds(ids));
 	}
-	
+
 	/**
 	 * 通过手机号集合获取用户组信息
 	 * 
@@ -493,7 +488,8 @@ public class UserLoginController extends BizBaseController {
 		for (String phone : phones) {
 			iphones.add(phone);
 		}
-		JSONUtils.SUCCESS(response, userLoginService.queryUserByPhones(iphones));
+		JSONUtils
+				.SUCCESS(response, userLoginService.queryUserByPhones(iphones));
 	}
 
 	/**
@@ -650,11 +646,6 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.SUCCESS(response, lst.get(0).getNumber());
 			return;
 		}
-
-		// 创建聊天室并生成邀请码
-		String inviteCode = this.createInviteCode(request);
-
-		JSONUtils.SUCCESS(response, inviteCode);
 	}
 
 	/**
@@ -665,19 +656,24 @@ public class UserLoginController extends BizBaseController {
 	 */
 	private String createInviteCode(HttpServletRequest request) {
 		User user = getCurrentUser(request);
+		String desc = "[" + user.getName() + "]新建群";// 群描述
 		// 创建自己的聊天室
 		ResponseWrapper responseWrapper = EmchatOperator.createChatGroup(
-				user.getPhone(), new String[] { user.getPhone() });
-
+				"新建聊天群", desc, user.getPhone(),
+				new String[] { user.getPhone() });
 		ObjectNode node = (ObjectNode) responseWrapper.getResponseBody();
 		String roomId = node.get("data").get("groupid").asText();
 		logger.info("roomId:" + roomId);
 
+		// 生成邀请码
 		InviteCode code = new InviteCode();
 		code.setNumber(String.valueOf(LoginUtil.getSixCode()));// 邀请码
 		code.setChatroomId(roomId);
 		code.setUserId(user.getId());
 		inviteCodeService.insert(code);
+		
+		// 修改聊天室名称为邀请码
+		EmchatOperator.modifyChatGroup(roomId, code.getNumber(), desc ,user.getPhone() ,new String[] { user.getPhone() });
 		return code.getNumber();
 	}
 

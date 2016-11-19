@@ -151,22 +151,48 @@ public final class EmchatOperator {
 	/**
 	 * 创建300人聊天群
 	 * 
+	 * @param groupName
+	 *            群名称
+	 * @param desc
+	 *            群描述
 	 * @param owner
 	 *            创建者
 	 * @param members
 	 *            群成员
 	 * @return
 	 */
-	public static ResponseWrapper createChatGroup(String owner, String[] members) {
+	public static ResponseWrapper createChatGroup(String groupName,
+			String desc, String owner, String[] members) {
 		ChatGroupAPI chatGroupAPI = getChatGroupInstance();
-		String groupName = "新建聊天群";
-		String desc = "新建聊天群";
 		Boolean approval = Boolean.TRUE;
 		Boolean isPublic = Boolean.TRUE;
 		Long maxUsers = Long.parseLong("200");
 		ChatGroupBody groupBody = new ChatGroupBody(groupName, desc, isPublic,
 				maxUsers, approval, owner, members);
 		return (ResponseWrapper) chatGroupAPI.createChatGroup(groupBody);
+	}
+
+	/**
+	 * 修改群信息
+	 * 
+	 * @param groupId
+	 *            群id
+	 * @param groupName
+	 *            群名称
+	 * @param desc
+	 *            描述
+	 * @return
+	 */
+	public static ResponseWrapper modifyChatGroup(String groupId,
+			String groupName, String desc, String owner, String[] members) {
+		ChatGroupAPI chatGroupAPI = getChatGroupInstance();
+		Boolean approval = Boolean.TRUE;
+		Boolean isPublic = Boolean.TRUE;
+		Long maxUsers = Long.parseLong("200");
+		ChatGroupBody groupBody = new ChatGroupBody(groupName, desc, isPublic,
+				maxUsers, approval, owner, members);
+		return (ResponseWrapper) chatGroupAPI.modifyChatGroup(groupId,
+				groupBody);
 	}
 
 	/**
