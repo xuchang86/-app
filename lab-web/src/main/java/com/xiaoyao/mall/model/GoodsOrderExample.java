@@ -764,6 +764,76 @@ public class GoodsOrderExample {
             addCriterion("state not between", value1, value2, "state");
             return (Criteria) this;
         }
+
+        public Criteria andGoodsModelIsNull() {
+            addCriterion("goods_model is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelIsNotNull() {
+            addCriterion("goods_model is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelEqualTo(String value) {
+            addCriterion("goods_model =", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelNotEqualTo(String value) {
+            addCriterion("goods_model <>", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelGreaterThan(String value) {
+            addCriterion("goods_model >", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_model >=", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelLessThan(String value) {
+            addCriterion("goods_model <", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelLessThanOrEqualTo(String value) {
+            addCriterion("goods_model <=", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelLike(String value) {
+            addCriterion("goods_model like", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelNotLike(String value) {
+            addCriterion("goods_model not like", value, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelIn(List<String> values) {
+            addCriterion("goods_model in", values, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelNotIn(List<String> values) {
+            addCriterion("goods_model not in", values, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelBetween(String value1, String value2) {
+            addCriterion("goods_model between", value1, value2, "goodsModel");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsModelNotBetween(String value1, String value2) {
+            addCriterion("goods_model not between", value1, value2, "goodsModel");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

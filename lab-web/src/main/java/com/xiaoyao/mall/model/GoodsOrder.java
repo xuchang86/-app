@@ -134,4 +134,18 @@ public class GoodsOrder {
 	public void setGoodsId(String goodsId) {
 		this.goodsId = goodsId;
 	}
+
+	/**
+	 * @return the goodsModel
+	 */
+	public String getGoodsModel() {
+		return goodsModel;
+	}
+
+	/**
+	 * @param goodsModel the goodsModel to set
+	 */
+	public void setGoodsModel(String goodsModel) {
+		this.goodsModel = goodsModel;
+	}
 }
