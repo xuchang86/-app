@@ -8,8 +8,10 @@ package com.xiaoyao.login.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,6 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.base.util.MD5Util;
-import com.xiaoyao.base.util.SpringContextBeanUtil;
 import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
@@ -46,7 +47,6 @@ import com.xiaoyao.login.service.InviteCodeService;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
-import com.xiaoyao.pay.service.PayService;
 import com.xiaoyao.upload.util.UploadFileUtil;
 
 /**
@@ -408,12 +408,8 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("test")
 	public void test(HttpServletRequest request, HttpServletResponse response) {
-		PayService payService = SpringContextBeanUtil.getBean(PayService.class);
-		// 业务回调
-		payService.notifyCallback("9528的订单", "48", "292556");
-		// // 修改聊天室名称为邀请码
-		// EmchatOperator.modifyChatGroup("266180588157796784", "337721",
-		// "测试337721", "9529", new String[] { "9529" });
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		System.out.println("XYP-" + sdf.format(new Date()));
 		JSONUtils.SUCCESS(response, "success");
 	}
 

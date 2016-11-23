@@ -9,6 +9,7 @@ package com.xiaoyao.mall.controller;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -143,6 +144,7 @@ public class MallController extends BizBaseController {
 		validateResult.put("contacts", "联系人不能为空.");
 		validateResult.put("phone", "联系电话不能为空.");
 		validateResult.put("amount", "付款金额不能为空.");
+		validateResult.put("goodsModel", "商品型号不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
@@ -168,6 +170,8 @@ public class MallController extends BizBaseController {
 				request);
 		goodsOrder.setCreateDate(new Date());
 		goodsOrder.setState(State.PAYING.getValue());// 订单已付款
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		goodsOrder.setNumber("XYP-" + sdf.format(new Date()));
 		mallService.saveGoodsOrder(goodsOrder);
 		if (goodsOrder.getId() == null) {
 			JSONUtils.ERROR(response, "保存商品订单失败.");
