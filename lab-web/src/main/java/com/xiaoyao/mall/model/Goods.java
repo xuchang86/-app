@@ -63,6 +63,9 @@ public class Goods extends BaseVO {
 
 	/** 商品等级 {@link com.xiaoyao.mall.model.GoodsLevel} */
 	private Integer level;
+	
+	/** 商品型号 */
+	private String model;
 
 	/** 商品评论 */
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -277,5 +280,19 @@ public class Goods extends BaseVO {
 	 */
 	public void setSeller(Seller seller) {
 		this.seller = seller;
+	}
+
+	/**
+	 * @return the model
+	 */
+	public String getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(String model) {
+		this.model = model;
 	}
 }

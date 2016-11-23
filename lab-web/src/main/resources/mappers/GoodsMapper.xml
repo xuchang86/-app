@@ -10,12 +10,16 @@
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="is_sale" property="isSale" jdbcType="BIT" />
     <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
     <result column="vip_price" property="vipPrice" jdbcType="DECIMAL" />
     <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xiaoyao.mall.model.Goods" extends="BaseResultMap" >
+    <result column="url" property="url" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,9 +80,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, description, number, type_id, price, user_id, create_date, url, area, is_sale, 
-    seller_id, vip_price, level
+    id, name, description, number, type_id, price, user_id, create_date, area, is_sale, 
+    seller_id, vip_price, level, model ,url
   </sql>
+  <sql id="Blob_Column_List" >
+    url
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xiaoyao.mall.model.GoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from T_MALL_GOODS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsExample" >
     select
     <if test="distinct" >
@@ -93,9 +116,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from T_MALL_GOODS
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -112,14 +137,16 @@
   <insert id="insert" parameterType="com.xiaoyao.mall.model.Goods" useGeneratedKeys="true" keyProperty="id">
     insert into T_MALL_GOODS (id, name, description, 
       number, type_id, price, 
-      user_id, create_date, url, 
-      area, is_sale, seller_id, 
-      vip_price, level)
+      user_id, create_date, area, 
+      is_sale, seller_id, vip_price, 
+      level, model, url
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{number,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
-      #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{isSale,jdbcType=BIT}, #{sellerId,jdbcType=INTEGER}, 
-      #{vipPrice,jdbcType=DECIMAL}, #{level,jdbcType=INTEGER})
+      #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{area,jdbcType=VARCHAR}, 
+      #{isSale,jdbcType=BIT}, #{sellerId,jdbcType=INTEGER}, #{vipPrice,jdbcType=DECIMAL}, 
+      #{level,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{url,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.Goods" useGeneratedKeys="true" keyProperty="id">
     insert into T_MALL_GOODS
@@ -148,9 +175,6 @@
       <if test="createDate != null" >
         create_date,
       </if>
-      <if test="url != null" >
-        url,
-      </if>
       <if test="area != null" >
         area,
       </if>
@@ -165,6 +189,12 @@
       </if>
       <if test="level != null" >
         level,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="url != null" >
+        url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -192,9 +222,6 @@
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="url != null" >
-        #{url,jdbcType=VARCHAR},
-      </if>
       <if test="area != null" >
         #{area,jdbcType=VARCHAR},
       </if>
@@ -209,6 +236,12 @@
       </if>
       <if test="level != null" >
         #{level,jdbcType=INTEGER},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -245,9 +278,6 @@
       <if test="record.createDate != null" >
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.url != null" >
-        url = #{record.url,jdbcType=VARCHAR},
-      </if>
       <if test="record.area != null" >
         area = #{record.area,jdbcType=VARCHAR},
       </if>
@@ -263,7 +293,34 @@
       <if test="record.level != null" >
         level = #{record.level,jdbcType=INTEGER},
       </if>
+      <if test="record.model != null" >
+        model = #{record.model,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update T_MALL_GOODS
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=VARCHAR},
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      area = #{record.area,jdbcType=VARCHAR},
+      is_sale = #{record.isSale,jdbcType=BIT},
+      seller_id = #{record.sellerId,jdbcType=INTEGER},
+      vip_price = #{record.vipPrice,jdbcType=DECIMAL},
+      level = #{record.level,jdbcType=INTEGER},
+      model = #{record.model,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -278,12 +335,12 @@
       price = #{record.price,jdbcType=DECIMAL},
       user_id = #{record.userId,jdbcType=INTEGER},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
-      url = #{record.url,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
       is_sale = #{record.isSale,jdbcType=BIT},
       seller_id = #{record.sellerId,jdbcType=INTEGER},
       vip_price = #{record.vipPrice,jdbcType=DECIMAL},
-      level = #{record.level,jdbcType=INTEGER}
+      level = #{record.level,jdbcType=INTEGER},
+      model = #{record.model,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -312,9 +369,6 @@
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="url != null" >
-        url = #{url,jdbcType=VARCHAR},
-      </if>
       <if test="area != null" >
         area = #{area,jdbcType=VARCHAR},
       </if>
@@ -330,7 +384,31 @@
       <if test="level != null" >
         level = #{level,jdbcType=INTEGER},
       </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xiaoyao.mall.model.Goods" >
+    update T_MALL_GOODS
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      number = #{number,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      area = #{area,jdbcType=VARCHAR},
+      is_sale = #{isSale,jdbcType=BIT},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      vip_price = #{vipPrice,jdbcType=DECIMAL},
+      level = #{level,jdbcType=INTEGER},
+      model = #{model,jdbcType=VARCHAR},
+      url = #{url,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiaoyao.mall.model.Goods" >
@@ -342,12 +420,12 @@
       price = #{price,jdbcType=DECIMAL},
       user_id = #{userId,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP},
-      url = #{url,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
       is_sale = #{isSale,jdbcType=BIT},
       seller_id = #{sellerId,jdbcType=INTEGER},
       vip_price = #{vipPrice,jdbcType=DECIMAL},
-      level = #{level,jdbcType=INTEGER}
+      level = #{level,jdbcType=INTEGER},
+      model = #{model,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   

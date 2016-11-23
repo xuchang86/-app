@@ -26,6 +26,9 @@ public class GoodsOrder {
 
 	/** 订单状态 {@link com.xiaoyao.mall.model.State} */
 	private String state;
+	
+	/** 商品型号 */
+	private String goodsModel;
 
 	/** 订单物品 */
 	private List<Goods> goods = new ArrayList<Goods>();
