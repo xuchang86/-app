@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,11 +96,23 @@ public class MallController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
+		String sortField = request(request, "sortField");// 排序字段:sales,createDate,price,vipPrice
+		String sortType = request(request, "sortType");// 排序类型: desc,asc
+		
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String typeId = request(request, "typeId");
-		JSONUtils.SUCCESS(response,
-				mallService.queryGoodsByType(pageSize, pageNo, typeId));
+
+		if (StringUtils.isNotEmpty(sortField)
+				&& StringUtils.isNotEmpty(sortType)
+				&& "sales".equals(sortField)) {
+			JSONUtils.SUCCESS(response, mallService.querySalesByType(pageSize,
+					pageNo, typeId, sortField, sortType));
+			return;
+		}
+
+		JSONUtils.SUCCESS(response, mallService.queryGoodsByType(pageSize,
+				pageNo, typeId, sortField, sortType));
 	}
 
 	/**

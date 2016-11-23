@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import com.xiaoyao.mall.model.GoodsExample;
 import com.xiaoyao.mall.model.GoodsLevel;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.model.GoodsOrderExample;
+import com.xiaoyao.mall.model.GoodsQuery;
 import com.xiaoyao.mall.model.State;
 import com.xiaoyao.mall.model.Type;
 import com.xiaoyao.mall.model.TypeExample;
@@ -79,14 +81,43 @@ public class MallService extends BaseService<Goods> {
 	 * @return
 	 */
 	public List<Goods> queryGoodsByType(String pageSize, String pageNo,
-			String typeId) {
+			String typeId, String sortField, String sortType) {
 		GoodsExample example = new GoodsExample();
 		example.or().andTypeIdEqualTo(Integer.parseInt(typeId))
 				.andIsSaleEqualTo(true);
+
+		if (StringUtils.isNotEmpty(sortField)
+				&& StringUtils.isNotEmpty(sortType)) {
+			example.setOrderByClause(sortField + " " + sortType);
+		}
 		// 设置分页
 		setPaging(pageSize, pageNo, example);
 
 		return selectByExampleByPage(example);
+	}
+
+	/**
+	 * 商品销量排序查询
+	 * 
+	 * @param pageSize
+	 * @param pageNo
+	 * @param typeId
+	 * @param sortField
+	 * @param sortType
+	 * @return
+	 */
+	public List<GoodsQuery> querySalesByType(String pageSize, String pageNo,
+			String typeId, String sortField, String sortType) {
+		GoodsQuery param = new GoodsQuery();
+		param.setTypeId(Integer.parseInt(typeId));
+		if (StringUtils.isNotEmpty(sortField)
+				&& StringUtils.isNotEmpty(sortType)) {
+			param.setOrderByClause(sortField + " " + sortType);
+		}
+		// 设置分页
+		setPaging(pageSize, pageNo, param);
+
+		return querySalesByPage(param);
 	}
 
 	/**
@@ -109,6 +140,21 @@ public class MallService extends BaseService<Goods> {
 	private List<Goods> selectByExampleByPage(GoodsExample example) {
 		List<Goods> goodses = goodsMapper.selectByExampleByPage(example);
 		for (Goods goods : goodses) {
+			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
+			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+		}
+		return goodses;
+	}
+	
+	/**
+	 * 销量查询
+	 * 
+	 * @param query
+	 * @return
+	 */
+	private List<GoodsQuery> querySalesByPage(GoodsQuery query) {
+		List<GoodsQuery> goodses = goodsMapper.querySalesByPage(query);
+		for (GoodsQuery goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
 		}

@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsExample;
+import com.xiaoyao.mall.model.GoodsQuery;
 
 /**
  * GoodsMapper扩展接口
@@ -21,5 +22,7 @@ import com.xiaoyao.mall.model.GoodsExample;
 public interface GoodsMapperExt extends GoodsMapper {
 
 	List<Goods> selectByExampleByPage(GoodsExample example);
+
+	List<GoodsQuery> querySalesByPage(GoodsQuery query);
 
 }

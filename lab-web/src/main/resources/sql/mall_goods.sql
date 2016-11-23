@@ -19,6 +19,7 @@ create table T_MALL_GOODS
    seller_id            int comment '卖家id',
    vip_price            decimal(10,2) comment '会员价格',
    level                int comment '商品等级',
+   model                varchar(500) comment '商品型号',
    primary key (id)
 );
 

@@ -15,6 +15,7 @@ create table T_GOODS_ORDER
    contacts             varchar(10) comment '联系人',
    phone                varchar(20) comment '联系电话',
    state                varchar(20) comment '订单状态',
+   goods_model          varchar(20) comment '商品型号',
    primary key (id)
 );
 
