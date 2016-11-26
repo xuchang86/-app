@@ -85,3 +85,13 @@ https://ip:port/xyp/mall/modifyAddress.do?id=地址id不能为空
 返回值:收货地址id
 3.删除收货地址
 https://ip:port/xyp/mall/deleteAddress.do?addressId=地址id不能为空
+4.我的收货地址
+https://ip:port/xyp/mall/queryAddress.do?userId=用户id不能为空
+地址集合
+5.确认订单
+https://ip:port/xyp/mall/confirmOrder.do?userId=用户id不能为空&goodsId=商品id不能为空&amount=付款金额不能为空&goodsModel=商品型号不能为空&addressId=联系地址不能为空
+返回值:订单id
+6.确认支付
+https://ip:port/xyp/mall/confirmPayment.do?orderId=订单id不能为空&userId=用户id&amount=付款金额不能为空
+返回值:订单id
+

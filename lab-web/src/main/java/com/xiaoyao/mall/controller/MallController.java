@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
@@ -135,44 +139,6 @@ public class MallController extends BizBaseController {
 	}
 
 	/**
-	 * 确认订单
-	 * 
-	 * @param request
-	 * @param response
-	 */
-	@RequestMapping("confirmOrder")
-	public void confirmOrder(HttpServletRequest request,
-			HttpServletResponse response) {
-		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("goodsId", "商品id不能为空.");
-		validateResult.put("userId", "用户id不能为空");
-		validateResult.put("amount", "付款金额不能为空.");
-		validateResult.put("goodsModel", "商品型号不能为空.");
-		validateResult.put("addressId", "联系地址不能为空id");
-		if (!validateParamBlank(request, response, validateResult))
-			return;
-		
-		// 生成订单
-		GoodsOrder goodsOrder = BeanUtils.mapConvert2ToBean(GoodsOrder.class,
-				request);
-	    String addressId = request(request, "addressId");
-	    Address address = addressService.queryAddressById(addressId);
-	    
-	    goodsOrder.setAddress(address.getAddress());
-	    goodsOrder.setContacts(address.getContracts());
-	    goodsOrder.setPhone(address.getPhone());
-		goodsOrder.setCreateDate(new Date());
-		goodsOrder.setState(State.TODO.getValue());//待付款
-		mallService.saveGoodsOrder(goodsOrder);
-		if (goodsOrder.getId() == null) {
-			JSONUtils.ERROR(response, "保存商品订单失败.");
-			return;
-		}
-
-		JSONUtils.SUCCESS(response, goodsOrder.getId());
-	}
-	
-	/**
 	 * 查询我的收货地址
 	 * 
 	 * @param request
@@ -209,7 +175,7 @@ public class MallController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		Address address = BeanUtils.mapConvert2ToBean(Address.class, request);
+		Address address = BeanUtils.mapConvertToBean(Address.class, request);
 		addressService.save(address);
 		JSONUtils.SUCCESS(response, address.getId());
 	}
@@ -247,9 +213,123 @@ public class MallController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		Address address = BeanUtils.mapConvert2ToBean(Address.class, request);
+		Address address = BeanUtils.mapConvertToBean(Address.class, request);
 		addressService.save(address);
 		JSONUtils.SUCCESS(response, address.getId());
+	}
+
+	/**
+	 * 批量确认订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("batchConfirmOrder")
+	public void batchConfirmOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("orders", "订单集合不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String orders = request(request, "orders");
+		List<Integer> orderIds = new ArrayList<Integer>();
+		// 设置请求参数:goodsId,userId,amount,goodsModel,addressId
+		JSONArray array = JSONArray.parseArray(orders);
+		for (Object obj : array) {
+			JSONObject json = (JSONObject) obj;
+			GoodsOrder order = JSON.toJavaObject(json, GoodsOrder.class);
+			this.confirmOrder(order);
+			orderIds.add(order.getId());
+		}
+
+		JSONUtils.SUCCESS(response, orderIds);
+	}
+
+	/**
+	 * 批量确认支付
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("batchConfirmPayment")
+	public void batchConfirmPayment(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("orders", "订单集合不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String orders = request(request, "orders");
+		List<Integer> orderIds = new ArrayList<Integer>();
+		// 设置请求参数:orderId,userId,amount
+		JSONArray array = JSONArray.parseArray(orders);
+		for (Object obj : array) {
+			JSONObject json = (JSONObject) obj;
+			GoodsOrder order = this.confirmPayment(json);
+			if (order != null) {
+				orderIds.add(order.getId());
+			}
+		}
+		JSONUtils.SUCCESS(response, orderIds);
+	}
+
+	/**
+	 * 确认订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("confirmOrder")
+	public void confirmOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("goodsId", "商品id不能为空.");
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("amount", "付款金额不能为空.");
+		validateResult.put("goodsModel", "商品型号不能为空.");
+		validateResult.put("addressId", "联系地址不能为空id");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		GoodsOrder goodsOrder = this.confirmOrder(request);
+		if (goodsOrder.getId() == null) {
+			JSONUtils.ERROR(response, "保存商品订单失败.");
+			return;
+		}
+
+		JSONUtils.SUCCESS(response, goodsOrder.getId());
+	}
+
+	/**
+	 * 确认订单
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected GoodsOrder confirmOrder(HttpServletRequest request) {
+		// 生成订单
+		GoodsOrder goodsOrder = BeanUtils.mapConvertToBean(GoodsOrder.class,
+				request);
+		String addressId = request(request, "addressId");
+		confirmOrder(goodsOrder, addressId);
+		return goodsOrder;
+	}
+
+	protected void confirmOrder(GoodsOrder goodsOrder) {
+		// 生成订单
+		String addressId = String.valueOf(goodsOrder.getAddressId());
+		confirmOrder(goodsOrder, addressId);
+	}
+
+	private void confirmOrder(GoodsOrder goodsOrder, String addressId) {
+		Address address = addressService.queryAddressById(addressId);
+		goodsOrder.setAddress(address.getAddress());
+		goodsOrder.setContacts(address.getContracts());
+		goodsOrder.setPhone(address.getPhone());
+		goodsOrder.setCreateDate(new Date());
+		goodsOrder.setState(State.TODO.getValue());// 待付款
+		mallService.saveGoodsOrder(goodsOrder);
 	}
 
 	/**
@@ -262,47 +342,77 @@ public class MallController extends BizBaseController {
 	public void confirmPayment(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("goodsId", "商品id不能为空.");
-		validateResult.put("address", "联系地址不能为空.");
+		validateResult.put("orderId", "订单Id不能为空");
 		validateResult.put("userId", "用户id不能为空");
-		validateResult.put("contacts", "联系人不能为空.");
-		validateResult.put("phone", "联系电话不能为空.");
 		validateResult.put("amount", "付款金额不能为空.");
-		validateResult.put("goodsModel", "商品型号不能为空.");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		// 扣减逍遥币
-		String userId = request(request, "userId");
-		// 付款金额
-		String amount = request(request, "amount");
-		List<Person> persons = personManageService.queryPersonByUserId(Integer
-				.parseInt(userId));
-		if (CollectionUtils.isNotEmpty(persons)) {
-			Person person = persons.get(0);
-			if ((new BigDecimal(amount)).compareTo(person.getBill()) > 0) {
-				JSONUtils.ERROR(response, "当前的逍遥币不足以支付当前商品.");
-				return;
-			}
-			// 扣除逍遥币
-			person.setBill(person.getBill().subtract(new BigDecimal(amount)));
-			personManageService.updatePersonByPrimaryKey(person);
+		GoodsOrder goodsOrder = confirmPayment(request);
+		if (goodsOrder == null) {
+			JSONUtils.ERROR(response, "当前的逍遥币不足以支付当前商品.");
+			return;
 		}
 
-		// 生成订单
-		GoodsOrder goodsOrder = BeanUtils.mapConvert2ToBean(GoodsOrder.class,
-				request);
-		goodsOrder.setCreateDate(new Date());
-		goodsOrder.setState(State.PAYING.getValue());// 订单已付款
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		goodsOrder.setNumber("XYP-" + sdf.format(new Date()));
-		mallService.saveGoodsOrder(goodsOrder);
 		if (goodsOrder.getId() == null) {
 			JSONUtils.ERROR(response, "保存商品订单失败.");
 			return;
 		}
 
 		JSONUtils.SUCCESS(response, goodsOrder.getId());
+	}
+
+	/**
+	 * 确认支付逻辑
+	 * 
+	 * @param userId
+	 * @param amount
+	 * @param orderId
+	 * @return
+	 */
+	private GoodsOrder confirmPayment(String userId, String amount,
+			String orderId) {
+		List<Person> persons = personManageService.queryPersonByUserId(Integer
+				.parseInt(userId));
+		if (CollectionUtils.isNotEmpty(persons)) {
+			Person person = persons.get(0);
+			if ((new BigDecimal(amount)).compareTo(person.getBill()) > 0) {
+				return null;
+			}
+			// 扣除逍遥币
+			person.setBill(person.getBill().subtract(new BigDecimal(amount)));
+			personManageService.updatePersonByPrimaryKey(person);
+		}
+		// 生成订单
+		GoodsOrder goodsOrder = mallService.queryGoodsOrderById(orderId);
+		goodsOrder.setCreateDate(new Date());
+		goodsOrder.setState(State.PAYING.getValue());// 订单已付款
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		goodsOrder.setNumber("XYP-" + sdf.format(new Date()));
+		mallService.saveGoodsOrder(goodsOrder);
+		return goodsOrder;
+	}
+
+	protected GoodsOrder confirmPayment(Map<String, Object> param) {
+		// 扣减逍遥币
+		String userId = String.valueOf(param.get("userId"));
+		// 付款金额
+		String amount = String.valueOf(param.get("amount"));
+		// 订单Id
+		String orderId = String.valueOf(param.get("orderId"));
+
+		return this.confirmPayment(userId, amount, orderId);
+	}
+
+	protected GoodsOrder confirmPayment(HttpServletRequest request) {
+		// 扣减逍遥币
+		String userId = request(request, "userId");
+		// 付款金额
+		String amount = request(request, "amount");
+		// 订单Id
+		String orderId = request(request, "orderId");
+
+		return this.confirmPayment(userId, amount, orderId);
 	}
 
 	/**
@@ -417,7 +527,7 @@ public class MallController extends BizBaseController {
 			return;
 		}
 
-		Comment comment = BeanUtils.mapConvert2ToBean(Comment.class, request);
+		Comment comment = BeanUtils.mapConvertToBean(Comment.class, request);
 		mallService.addComments(comment);
 		JSONUtils.SUCCESS(response, "评论成功.");
 	}

@@ -142,6 +142,7 @@ public class MallService extends BaseService<Goods> {
 		for (Goods goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods.getDescription()));
 		}
 		return goodses;
 	}

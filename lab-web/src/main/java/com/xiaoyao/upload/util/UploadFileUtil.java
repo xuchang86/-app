@@ -109,6 +109,18 @@ public final class UploadFileUtil {
 		}
 		return urls;
 	}
+	
+	/**
+	 * 包装图片HTML
+	 * 
+	 * @param content
+	 * @return
+	 */
+	public static String wrapperImageHTML(String content) {
+		ImageService imageService = SpringContextBeanUtil
+				.getBean(ImageService.class);
+		return imageService.convertImageUrlHtml(content);
+	}
 
 	/**
 	 * 包装个人头像url

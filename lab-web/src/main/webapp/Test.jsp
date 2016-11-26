@@ -47,21 +47,18 @@
 
   	//确认提交
   	$scope.confirm = function() {
+  		var arry = [{
+  			orderId: 11,
+  			userId: 1,
+  			amount: 1
+  		}];
+  		
   		$.ajax({
-  			url: '<%=request.getContextPath()%>/xiaoyao/confirmSubmit.do',
+  			url: '<%=request.getContextPath()%>/mall/batchConfirmPayment.do',
   			dataType: 'json',
   			type: 'POST',
   			data: {
-  				name: '许畅222',
-  				password: '121121',
-  				phone: '18627014277',
-  				birthday: '2016-08-21',
-  				address: '深圳市南山区',
-  				providerid: '黄金万两22',
-  				requiredid: '美女如云22',
-  				city: '深圳市',
-  				sex: 0,
-  				username: 'xcxc1990'
+  				orders:angular.toJson(arry)
   			},
   			success: function(data) {
   				console.log(data);
