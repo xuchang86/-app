@@ -106,6 +106,7 @@ public abstract class BaseService<T extends BaseVO> {
 	public int saveVO(T vo, BaseMapper mapper) {
 		try {
 			Field field = getPrimarykey(vo.getClass());
+			field.setAccessible(true);;
 			Object primarykey = field.get(vo);// 主键值
 			if (primarykey == null) {
 				// 新增

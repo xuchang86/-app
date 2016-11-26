@@ -1,5 +1,6 @@
 package com.xiaoyao.mall.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,11 @@ public class GoodsOrder {
 	
 	/** 商品型号 */
 	private String goodsModel;
+	
+	/** 收货地址id */ 
+	private Integer addressId;
+	
+	private BigDecimal amount;
 
 	/** 订单物品 */
 	private List<Goods> goods = new ArrayList<Goods>();
@@ -147,5 +153,33 @@ public class GoodsOrder {
 	 */
 	public void setGoodsModel(String goodsModel) {
 		this.goodsModel = goodsModel;
+	}
+
+	/**
+	 * @return the addressId
+	 */
+	public Integer getAddressId() {
+		return addressId;
+	}
+
+	/**
+	 * @param addressId the addressId to set
+	 */
+	public void setAddressId(Integer addressId) {
+		this.addressId = addressId;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 }

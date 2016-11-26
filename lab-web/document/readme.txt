@@ -73,3 +73,15 @@ https://ip:port/xyp/mall/querySellAfterOrders.do?userId=用户id不能为空
 https://ip:port/xyp/mall/queryReturnOrders.do?userId=用户id不能为空
 3.增加获取物品评论信息接口
 https://ip:port/xyp/mall/getComments.do?goodsId=物品id不能为空
+
+
+
+20161126  本次更新内容
+1.新增收货地址
+https://ip:port/xyp/mall/addAddress.do?userId=用户id不能为空&contracts=联系人不能为空&phone=联系电话不能为空&city=城市不能为空&address详细地址不能为空
+返回值:收货地址id
+2.修改收货地址
+https://ip:port/xyp/mall/modifyAddress.do?id=地址id不能为空
+返回值:收货地址id
+3.删除收货地址
+https://ip:port/xyp/mall/deleteAddress.do?addressId=地址id不能为空

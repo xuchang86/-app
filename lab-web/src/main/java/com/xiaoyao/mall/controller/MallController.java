@@ -30,10 +30,12 @@ import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.mall.model.Address;
 import com.xiaoyao.mall.model.Comment;
 import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.model.State;
+import com.xiaoyao.mall.service.AddressService;
 import com.xiaoyao.mall.service.MallService;
 import com.xiaoyao.pay.controller.PayController;
 
@@ -55,6 +57,10 @@ public class MallController extends BizBaseController {
 	/** 注入PersonManageService */
 	@Autowired
 	private PersonManageService personManageService;
+
+	/** 注入AddressService */
+	@Autowired
+	private AddressService addressService;
 
 	/**
 	 * 查询所有商品(支持分页查询)
@@ -99,7 +105,7 @@ public class MallController extends BizBaseController {
 
 		String sortField = request(request, "sortField");// 排序字段:sales,createDate,price,vipPrice
 		String sortType = request(request, "sortType");// 排序类型: desc,asc
-		
+
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String typeId = request(request, "typeId");
@@ -126,6 +132,124 @@ public class MallController extends BizBaseController {
 	public void queryNiceGoods(HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONUtils.SUCCESS(response, mallService.queryNiceGoods());
+	}
+
+	/**
+	 * 确认订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("confirmOrder")
+	public void confirmOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("goodsId", "商品id不能为空.");
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("amount", "付款金额不能为空.");
+		validateResult.put("goodsModel", "商品型号不能为空.");
+		validateResult.put("addressId", "联系地址不能为空id");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+		
+		// 生成订单
+		GoodsOrder goodsOrder = BeanUtils.mapConvert2ToBean(GoodsOrder.class,
+				request);
+	    String addressId = request(request, "addressId");
+	    Address address = addressService.queryAddressById(addressId);
+	    
+	    goodsOrder.setAddress(address.getAddress());
+	    goodsOrder.setContacts(address.getContracts());
+	    goodsOrder.setPhone(address.getPhone());
+		goodsOrder.setCreateDate(new Date());
+		goodsOrder.setState(State.TODO.getValue());//待付款
+		mallService.saveGoodsOrder(goodsOrder);
+		if (goodsOrder.getId() == null) {
+			JSONUtils.ERROR(response, "保存商品订单失败.");
+			return;
+		}
+
+		JSONUtils.SUCCESS(response, goodsOrder.getId());
+	}
+	
+	/**
+	 * 查询我的收货地址
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryAddress")
+	public void queryAddress(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		List<Address> addresses = addressService.queryAddress(userId);
+		JSONUtils.SUCCESS(response, addresses);
+	}
+
+	/**
+	 * 新增收货地址
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("addAddress")
+	public void addAddress(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("contracts", "联系人不能为空");
+		validateResult.put("phone", "联系电话不能为空");
+		validateResult.put("city", "城市不能为空");
+		validateResult.put("address", "详细住址不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Address address = BeanUtils.mapConvert2ToBean(Address.class, request);
+		addressService.save(address);
+		JSONUtils.SUCCESS(response, address.getId());
+	}
+
+	/**
+	 * 删除收货地址
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("deleteAddress")
+	public void deleteAddress(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("addressId", "地址id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String id = request(request, "addressId");
+		addressService.delete(Integer.parseInt(id));
+		JSONUtils.SUCCESS(response, "删除地址成功");
+	}
+
+	/**
+	 * 修改收货地址
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("modifyAddress")
+	public void modifyAddress(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("id", "地址id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Address address = BeanUtils.mapConvert2ToBean(Address.class, request);
+		addressService.save(address);
+		JSONUtils.SUCCESS(response, address.getId());
 	}
 
 	/**

@@ -16,6 +16,8 @@ create table T_GOODS_ORDER
    phone                varchar(20) comment '联系电话',
    state                varchar(20) comment '订单状态',
    goods_model          varchar(20) comment '商品型号',
+   address_id           int comment '收货地址ID',
+   amount               decimal(20,2) comment '付款金额',
    primary key (id)
 );
 

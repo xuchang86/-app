@@ -57,7 +57,7 @@ public class MallService extends BaseService<Goods> {
 	/** 注入 CommentMapper */
 	@Autowired
 	private CommentMapper commentMapper;
-
+	
 	/**
 	 * 查询所有出售的商品
 	 * 

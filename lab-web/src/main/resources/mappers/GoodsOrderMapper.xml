@@ -13,6 +13,8 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="goods_model" property="goodsModel" jdbcType="VARCHAR" />
+    <result column="address_id" property="addressId" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, number, create_date, pay_date, user_id, goods_id, address, contacts, phone, state, 
-    goods_model
+    goods_model, address_id, amount
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.GoodsOrderExample" >
     select
@@ -110,11 +112,13 @@
     insert into T_GOODS_ORDER (id, number, create_date, 
       pay_date, user_id, goods_id, 
       address, contacts, phone, 
-      state, goods_model)
+      state, goods_model, address_id, 
+      amount)
     values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{payDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{goodsId,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{state,jdbcType=VARCHAR}, #{goodsModel,jdbcType=VARCHAR})
+      #{state,jdbcType=VARCHAR}, #{goodsModel,jdbcType=VARCHAR}, #{addressId,jdbcType=INTEGER}, 
+      #{amount,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.GoodsOrder" useGeneratedKeys="true" keyProperty="id">
     insert into T_GOODS_ORDER
@@ -152,6 +156,12 @@
       <if test="goodsModel != null" >
         goods_model,
       </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -186,6 +196,12 @@
       </if>
       <if test="goodsModel != null" >
         #{goodsModel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -231,6 +247,12 @@
       <if test="record.goodsModel != null" >
         goods_model = #{record.goodsModel,jdbcType=VARCHAR},
       </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +270,9 @@
       contacts = #{record.contacts,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=VARCHAR},
-      goods_model = #{record.goodsModel,jdbcType=VARCHAR}
+      goods_model = #{record.goodsModel,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +310,12 @@
       <if test="goodsModel != null" >
         goods_model = #{goodsModel,jdbcType=VARCHAR},
       </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -300,7 +330,9 @@
       contacts = #{contacts,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       state = #{state,jdbcType=VARCHAR},
-      goods_model = #{goodsModel,jdbcType=VARCHAR}
+      goods_model = #{goodsModel,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
