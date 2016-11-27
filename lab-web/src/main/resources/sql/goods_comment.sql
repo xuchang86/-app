@@ -10,6 +10,8 @@ create table T_GOODS_COMMENT
    create_date          timestamp comment '评论时间',
    content              varchar(500) comment '评论内容',
    goods_id             int comment '商品id',
+   order_id             int comment '订单id',
+   score                int comment '评分',
    primary key (id)
 );
 

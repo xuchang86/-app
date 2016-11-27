@@ -23,6 +23,12 @@ public abstract class BaseVO {
 	/** 页码数 */
 	private Integer pageNo;
 
+	/** 排序字段 */
+	private String sortField;
+
+	/** 排序类型 */
+	private String sortType;
+
 	/** 分页对象 */
 	private Page page = new Page();
 
@@ -73,6 +79,36 @@ public abstract class BaseVO {
 	 */
 	public void setPage(Page page) {
 		this.page = page;
+	}
+
+	/**
+	 * @return the sortField
+	 */
+	public String getSortField() {
+		return sortField;
+	}
+
+	/**
+	 * @param sortField
+	 *            the sortField to set
+	 */
+	public void setSortField(String sortField) {
+		this.sortField = sortField;
+	}
+
+	/**
+	 * @return the sortType
+	 */
+	public String getSortType() {
+		return sortType;
+	}
+
+	/**
+	 * @param sortType
+	 *            the sortType to set
+	 */
+	public void setSortType(String sortType) {
+		this.sortType = sortType;
 	}
 
 }

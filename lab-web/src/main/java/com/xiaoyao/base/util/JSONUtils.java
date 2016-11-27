@@ -80,8 +80,8 @@ public final class JSONUtils {
 	 */
 	public static void toJSONString(HttpServletResponse response, Object result) {
 		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
-		excludes.put(BaseVO.class,
-				new String[] { "pageSize", "pageNo", "page" });
+		excludes.put(BaseVO.class, new String[] { "pageSize", "pageNo", "page",
+				"sortField", "sortType" });
 		toJSONString(response, result, null, excludes);
 	}
 
@@ -127,8 +127,8 @@ public final class JSONUtils {
 	public static void SUCCESS(HttpServletResponse response, Object content) {
 		// 去除父类的分页属性
 		Map<Class<?>, String[]> excludes = new HashMap<Class<?>, String[]>();
-		excludes.put(BaseVO.class,
-				new String[] { "pageSize", "pageNo", "page" });
+		excludes.put(BaseVO.class, new String[] { "pageSize", "pageNo", "page",
+				"sortField", "sortType" });
 		sendMsgToClient(null, response, SysCode.SUCCESS, content, null,
 				excludes);
 	}
@@ -147,8 +147,8 @@ public final class JSONUtils {
 	 */
 	public static void SUCCESS(HttpServletResponse response, Object content,
 			Map<Class<?>, String[]> includes, Map<Class<?>, String[]> excludes) {
-		excludes.put(BaseVO.class,
-				new String[] { "pageSize", "pageNo", "page" });
+		excludes.put(BaseVO.class, new String[] { "pageSize", "pageNo", "page",
+				"sortField", "sortType" });
 		sendMsgToClient(null, response, SysCode.SUCCESS, content, includes,
 				excludes);
 	}

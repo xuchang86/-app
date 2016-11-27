@@ -2,74 +2,103 @@ package com.xiaoyao.mall.model;
 
 import java.util.Date;
 
-public class Comment {
-    private Integer id;
+import com.xiaoyao.base.model.BaseVO;
+import com.xiaoyao.login.model.User;
 
-    private Integer userId;
+/**
+ * 商品评论信息
+ * 
+ * @author 许畅
+ * @since JDK1.7
+ * @version 2016年11月27日 许畅 新建
+ */
+public class Comment extends BaseVO {
+	private Integer id;
 
-    private Date createDate;
+	private Integer userId;
 
-    private String content;
+	/** 用户信息 */
+	private User user;
 
-    private Integer goodsId;
+	private Date createDate;
 
-    private Integer orderId;
+	private String content;
 
-    private Integer score;
+	private Integer goodsId;
 
-    public Integer getId() {
-        return id;
-    }
+	private Integer orderId;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	/** 评分 */
+	private Integer score;
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public Date getCreateDate() {
+		return createDate;
+	}
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    public Integer getGoodsId() {
-        return goodsId;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
+	public void setContent(String content) {
+		this.content = content == null ? null : content.trim();
+	}
 
-    public Integer getOrderId() {
-        return orderId;
-    }
+	public Integer getGoodsId() {
+		return goodsId;
+	}
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
+	}
 
-    public Integer getScore() {
-        return score;
-    }
+	public Integer getOrderId() {
+		return orderId;
+	}
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user
+	 *            the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

@@ -39,6 +39,7 @@ import com.xiaoyao.mall.model.Address;
 import com.xiaoyao.mall.model.Comment;
 import com.xiaoyao.mall.model.Goods;
 import com.xiaoyao.mall.model.GoodsOrder;
+import com.xiaoyao.mall.model.GoodsQuery;
 import com.xiaoyao.mall.model.State;
 import com.xiaoyao.mall.service.AddressService;
 import com.xiaoyao.mall.service.MallService;
@@ -125,6 +126,24 @@ public class MallController extends BizBaseController {
 
 		JSONUtils.SUCCESS(response, mallService.queryGoodsByType(pageSize,
 				pageNo, typeId, sortField, sortType));
+	}
+
+	/**
+	 * 通过名称查询商品
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryGoods")
+	public void queryGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 排序字段:sales,name,createDate,price,vip_price,area,description,number,model,level等
+		// 排序类型: desc,asc
+		// 分页参数pageSize,pageNo
+		GoodsQuery query = BeanUtils.mapConvert2ToBean(GoodsQuery.class,
+				request);
+		JSONUtils.SUCCESS(response, mallService.queryGoods(query));
+		return;
 	}
 
 	/**
@@ -567,12 +586,12 @@ public class MallController extends BizBaseController {
 	public void getComments(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("goodsId", "用户id不能为空");
+		validateResult.put("goodsId", "商品id不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
-
-		String goodsId = request(request, "goodsId");
-		JSONUtils.SUCCESS(response, mallService.getComments(goodsId));
+		// 支持分页pageNo,pageSize
+		Comment comment = BeanUtils.mapConvert2ToBean(Comment.class, request);
+		JSONUtils.SUCCESS(response, mallService.getComments(comment));
 	}
 
 	/**

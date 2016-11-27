@@ -120,7 +120,7 @@ JSONÊı×é¸ñÊ½Îª:
 3.ĞÂÔöÉ¾³ı¶©µ¥½Ó¿Ú
 https://ip:port/xyp/mall/deleteOrder.do?orderId=¶©µ¥id
 4.ĞÂÔöÍ¨¹ı¶©µ¥×´Ì¬²éÑ¯¶©µ¥½Ó¿Ú
-https://ip:port/xyp/mall/queryOrderByState.do?state=¶©µ¥×´Ì¬(Èç¹ûÊÇ¶à¸ö×´Ì¬ÒÔ¶ººÅ¸ô¿ª,µ¥¸ö×´Ì¬Ö±½Ó´«µİ)
+https://ip:port/xyp/mall/queryOrderByState.do?state=¶©µ¥×´Ì¬(Èç¹ûÊÇ¶à¸ö×´Ì¬ÒÔ¶ººÅ¸ô¿ª,µ¥¸ö×´Ì¬Ö±½Ó´«µİ)&
 ×´Ì¬ÖµÈçÏÂ
 ´ı¸¶¿î:todo
 ÒÑ¸¶¿î:paying
@@ -128,4 +128,54 @@ https://ip:port/xyp/mall/queryOrderByState.do?state=¶©µ¥×´Ì¬(Èç¹ûÊÇ¶à¸ö×´Ì¬ÒÔ¶ºº
 ÒÑÊÕ»õ:get
 ÊÛºó:after_sale
 ÍË»õ:sales_return
-
+5.ĞŞ¸ÄÍ¨¹ı¶©µ¥×´Ì¬²éÑ¯¶©µ¥½Ó¿ÚÖĞÔö¼Ó²ÎÊıuserId
+,¶©µ¥·µ»ØÖµÔö¼ÓÉÌÆ·ĞÅÏ¢
+https://ip:port/xyp/mall/queryOrderByState.do?state=¶©µ¥×´Ì¬&userId=²»ÄÜÎª¿Õ
+6.ĞŞ¸ÄÆÀ¼Û½Ó¿Ú,Ôö¼ÓscoreÆÀ·Ö²ÎÊı;
+https://ip:port/xyp/mall/comments.do?userId=ÓÃ»§id&content=ÆÀÂÛÄÚÈİ&orderId=¶©µ¥id&score=ÆÀ·Ö
+7.ĞŞ¸ÄÍË»õ½Ó¿Ú,Ôö¼Ó²ÎÊı×´Ì¬²ÎÊı(ÍË»õºÍÊÛºóºÏ²¢)
+https://ip:port/xyp/mall/returnSale.do?userId=ÓÃ»§id&orderId=¶©µ¥id&state=¶©µ¥×´Ì¬
+state¶©µ¥×´Ì¬Öµ±ØĞëÊÇsales_return(ÍË»õ),after_sale(ÊÛºó)
+8.Ôö¼ÓÉÌÆ·²éÑ¯Í¨ÓÃ²éÑ¯
+https://ip:port/xyp/mall/queryGoods.do
+²ÎÊıËµÃ÷:
+(1).²»´«²ÎÊıÎª²éÑ¯ËùÓĞ
+(2).sortFieldÅÅĞò×Ö¶Î¿ÉÒÔÊÇid, name(Ãû³Æ), description(ÃèÊö), number(±àÂë), type_id, price(¼Û¸ñ), user_id, create_date(´´½¨ÈÕÆÚ), url, area, is_sale, seller_id, vip_price(»áÔ±¼Û¸ñ), level(¼¶±ğ), model, sales(ÏúÁ¿)
+(3).sortTypeÅÅĞòÀàĞÍ:desc,asc
+(4).pageSize ·ÖÒ³²ÎÊı,ÏÔÊ¾µÄÒ³Êı
+(5).pageNo Ò³Âë
+(6).×Ö¶ÎÊôĞÔ¿ÉÒÔÊÇÈçÏÂ:
+/** ÉÌÆ·Ö÷¼ü */
+private Integer id;
+/** ÉÌÆ·Ãû³Æ */
+private String name;
+/** ÉÌÆ·ÃèÊö */
+private String description;
+/** ÉÌÆ·±àÂë */
+private String number;
+/** ÉÌÆ·Àà±ğid */
+private Integer typeId;
+/** ÉÌÆ·¼Û¸ñ */
+private BigDecimal price;
+/** ÓÃ»§id */
+private Integer userId;
+/** ´´½¨Ê±¼ä */
+private Date createDate;(ÈÕÆÚ¸ñÊ½ÒÔ2016-11-27ÀàËÆ¼´¿É)
+/** ÉÌÆ·Í¼Æ¬url */
+private String url;
+/** ÉÌÆ·ËùÔÚµØ */
+private String area;
+/** ÊÇ·ñ³öÊÛ */
+private Boolean isSale;
+/** Âô¼Òid */
+private Integer sellerId;
+/** »áÔ±¼Û¸ñ */
+private BigDecimal vipPrice;
+/** ÉÌÆ·µÈ¼¶ {@link com.xiaoyao.mall.model.GoodsLevel} */
+private Integer level;
+/** ÏúÁ¿ */
+private Integer sales;
+/** ÉÌÆ·ĞÍºÅ */
+private String model;
+9.ĞŞ¸Ä»ñÈ¡ÆÀÂÛĞÅÏ¢,Ôö¼Ó·ÖÒ³²ÎÊıpageSize,pageNo,
+ÆÀÂÛĞÅÏ¢·µ»ØÖµÔö¼ÓÓÃ»§ĞÅÏ¢

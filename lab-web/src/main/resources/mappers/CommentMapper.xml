@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.mall.dao.CommentMapper" >
+<mapper namespace="com.xiaoyao.mall.dao.CommentMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.mall.model.Comment" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
@@ -240,4 +240,20 @@
       score = #{score,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 分页查询 -->
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.mall.model.CommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_GOODS_COMMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

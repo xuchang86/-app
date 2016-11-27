@@ -65,6 +65,9 @@ public class GoodsQuery extends BaseVO {
 	/** 销量 */
 	private Integer sales;
 
+	/** 商品型号 */
+	private String model;
+
 	private String orderByClause;
 
 	/**
@@ -274,6 +277,20 @@ public class GoodsQuery extends BaseVO {
 	 */
 	public void setOrderByClause(String orderByClause) {
 		this.orderByClause = orderByClause;
+	}
+
+	/**
+	 * @return the model
+	 */
+	public String getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 }

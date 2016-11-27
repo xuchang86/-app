@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CommentExample {
+import com.xiaoyao.base.model.BaseVO;
+
+public class CommentExample extends BaseVO{
     protected String orderByClause;
 
     protected boolean distinct;

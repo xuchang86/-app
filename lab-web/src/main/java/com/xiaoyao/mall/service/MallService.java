@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xiaoyao.base.service.BaseService;
-import com.xiaoyao.mall.dao.CommentMapper;
+import com.xiaoyao.login.service.UserLoginService;
+import com.xiaoyao.mall.dao.CommentMapperExt;
 import com.xiaoyao.mall.dao.GoodsMapperExt;
 import com.xiaoyao.mall.dao.GoodsOrderMapper;
 import com.xiaoyao.mall.dao.TypeMapper;
@@ -57,11 +58,15 @@ public class MallService extends BaseService<Goods> {
 
 	/** 注入 CommentMapper */
 	@Autowired
-	private CommentMapper commentMapper;
+	private CommentMapperExt commentMapper;
 
 	/** 注入 AddressService */
 	@Autowired
 	private AddressService addressService;
+
+	/** 注入 UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
 
 	/**
 	 * 查询所有出售的商品
@@ -122,7 +127,23 @@ public class MallService extends BaseService<Goods> {
 		// 设置分页
 		setPaging(pageSize, pageNo, param);
 
-		return querySalesByPage(param);
+		return queryGoodsByPage(param);
+	}
+
+	/**
+	 * 查询商品信息
+	 * 
+	 * @param vo
+	 * @return
+	 */
+	public List<GoodsQuery> queryGoods(GoodsQuery vo) {
+		String sortField = vo.getSortField();
+		String sortType = vo.getSortType();
+		if (StringUtils.isNotEmpty(sortField)
+				&& StringUtils.isNotEmpty(sortType)) {
+			vo.setOrderByClause(sortField + " " + sortType);
+		}
+		return queryGoodsByPage(vo);
 	}
 
 	/**
@@ -159,11 +180,13 @@ public class MallService extends BaseService<Goods> {
 	 * @param query
 	 * @return
 	 */
-	private List<GoodsQuery> querySalesByPage(GoodsQuery query) {
+	private List<GoodsQuery> queryGoodsByPage(GoodsQuery query) {
 		List<GoodsQuery> goodses = goodsMapper.querySalesByPage(query);
 		for (GoodsQuery goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods
+					.getDescription()));
 		}
 		return goodses;
 	}
@@ -208,10 +231,28 @@ public class MallService extends BaseService<Goods> {
 	 * @param goodsId
 	 * @return
 	 */
-	public List<Comment> getComments(String goodsId) {
+	public List<Comment> getComments(Comment param) {
 		CommentExample example = new CommentExample();
-		example.or().andGoodsIdEqualTo(Integer.parseInt(goodsId));
-		return commentMapper.selectByExample(example);
+		example.or().andGoodsIdEqualTo(param.getGoodsId());
+		// 设置分页
+		setPaging(param.getPageSize(), param.getPageNo(), example);
+
+		List<Comment> comments = commentMapper.selectByExampleByPage(example);
+		// 包装评论
+		wrapperComment(comments);
+		return comments;
+	}
+
+	/**
+	 * 包装评论信息
+	 * 
+	 * @param comments
+	 */
+	private void wrapperComment(List<Comment> comments) {
+		for (Comment comment : comments) {
+			comment.setUser(userLoginService.queryUserByPrimaryKey(comment
+					.getUserId()));
+		}
 	}
 
 	/**
@@ -412,6 +453,10 @@ public class MallService extends BaseService<Goods> {
 			for (String goodsId : goodsIds) {
 				Goods goods = goodsMapper.selectByPrimaryKey(Integer
 						.parseInt(goodsId));
+				if (goods == null)
+					continue;
+				goods.setDescription(UploadFileUtil.wrapperImageHTML(goods
+						.getDescription()));
 				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 				if (goods.getTypeId() != null) {
 					goods.setType(typeMapper.selectByPrimaryKey(goods
