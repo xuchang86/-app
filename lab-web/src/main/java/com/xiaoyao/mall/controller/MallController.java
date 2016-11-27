@@ -542,6 +542,7 @@ public class MallController extends BizBaseController {
 		validateResult.put("userId", "用户id不能为空");
 		validateResult.put("content", "评论内容不能为空.");
 		validateResult.put("orderId", "订单id不能为空.");
+		validateResult.put("score", "评分不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
@@ -586,13 +587,15 @@ public class MallController extends BizBaseController {
 		Map<String, String> validateResult = new HashMap<String, String>();
 		validateResult.put("userId", "用户id不能为空");
 		validateResult.put("orderId", "订单id不能为空.");
+		validateResult.put("state", "订单状态不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
 		String orderId = request(request, "orderId");
+		String state = request(request, "state");// 值必须为sales_return,after_sale(退货和售后)
 
 		GoodsOrder order = new GoodsOrder();
-		order.setState(State.RETURN.getValue());
+		order.setState(state);
 		order.setId(Integer.parseInt(orderId));
 		mallService.updateGoodsOrderByPK(order);
 		JSONUtils.SUCCESS(response, "申请退货成功.");
@@ -627,13 +630,16 @@ public class MallController extends BizBaseController {
 	public void queryOrderByState(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, String> validateResult = new HashMap<String, String>();
-		validateResult.put("state", "订单状态");
+		validateResult.put("state", "订单状态不能为空");
+		validateResult.put("userId", "用户id不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
 		String state = request(request, "state");// 订单状态多个以逗号隔开
+		Integer userId = Integer.parseInt(request(request, "userId"));
 		List<String> states = Arrays.asList(state.split(","));
-		List<GoodsOrder> orders = mallService.queryGoodsOrderByState(states);
+		List<GoodsOrder> orders = mallService.queryGoodsOrderByState(states,
+				userId);
 		JSONUtils.SUCCESS(response, orders);
 	}
 

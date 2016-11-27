@@ -15,6 +15,8 @@ public class Comment {
 
     private Integer orderId;
 
+    private Integer score;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class Comment {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

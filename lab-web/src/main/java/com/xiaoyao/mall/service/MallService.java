@@ -196,6 +196,7 @@ public class MallService extends BaseService<Goods> {
 			cmt.setGoodsId(Integer.parseInt(goodsId));
 			cmt.setOrderId(order.getId());
 			cmt.setUserId(comment.getUserId());
+			cmt.setScore(comment.getScore());
 			commentMapper.insertSelective(cmt);
 		}
 		return 0;
@@ -370,18 +371,7 @@ public class MallService extends BaseService<Goods> {
 	 */
 	private List<GoodsOrder> queryTodoGoods(GoodsOrderExample example) {
 		List<GoodsOrder> orders = goodsOrderMapper.selectByExample(example);
-		for (GoodsOrder order : orders) {
-			String[] goodsIds = order.getGoodsId().split(",");
-			List<Goods> goodses = new ArrayList<Goods>();
-			for (String goodsId : goodsIds) {
-				Goods goods = goodsMapper.selectByPrimaryKey(Integer
-						.parseInt(goodsId));
-				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
-				goodses.add(goods);
-			}
-			order.setGoods(goodses);
-		}
-		wrapperGoodsOrder(orders);
+		wrapperOrder(orders);
 		return orders;
 	}
 
@@ -401,16 +391,45 @@ public class MallService extends BaseService<Goods> {
 	 * @param state
 	 * @return
 	 */
-	public List<GoodsOrder> queryGoodsOrderByState(List<String> values) {
+	public List<GoodsOrder> queryGoodsOrderByState(List<String> values,
+			Integer userId) {
 		GoodsOrderExample example = new GoodsOrderExample();
-		example.or().andStateIn(values);
+		example.or().andStateIn(values).andUserIdEqualTo(userId);
 		List<GoodsOrder> orders = goodsOrderMapper.selectByExample(example);
-		this.wrapperGoodsOrder(orders);
+		this.wrapperOrder(orders);
 		return orders;
 	}
 
 	/**
-	 * 包装商品订单
+	 * 包装订单中所有需要的信息
+	 * 
+	 * @param orders
+	 */
+	private void wrapperOrder(List<GoodsOrder> orders) {
+		for (GoodsOrder order : orders) {
+			String[] goodsIds = order.getGoodsId().split(",");
+			List<Goods> goodses = new ArrayList<Goods>();
+			for (String goodsId : goodsIds) {
+				Goods goods = goodsMapper.selectByPrimaryKey(Integer
+						.parseInt(goodsId));
+				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
+				if (goods.getTypeId() != null) {
+					goods.setType(typeMapper.selectByPrimaryKey(goods
+							.getTypeId()));
+				}
+				goodses.add(goods);
+			}
+			order.setGoods(goodses);
+			if (order.getAddressId() != null) {
+				Address address = addressService.queryAddressById(order
+						.getAddressId());
+				order.setAddressVO(address);
+			}
+		}
+	}
+
+	/**
+	 * 包装商品订单中地址信息
 	 * 
 	 * @param orders
 	 */
