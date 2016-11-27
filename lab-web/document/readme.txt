@@ -95,3 +95,37 @@ https://ip:port/xyp/mall/confirmOrder.do?userId=ÓÃ»§id²»ÄÜÎª¿Õ&goodsId=ÉÌÆ·id²»Ä
 https://ip:port/xyp/mall/confirmPayment.do?orderId=¶©µ¥id²»ÄÜÎª¿Õ&userId=ÓÃ»§id&amount=¸¶¿î½ğ¶î²»ÄÜÎª¿Õ
 ·µ»ØÖµ:¶©µ¥id
 
+
+20161127  ±¾´Î¸üĞÂÄÚÈİ
+1.ĞÂÔöÅúÁ¿È·ÈÏ¶©µ¥
+https://ip:port/xyp/mall/batchConfirmOrder.do?orders=JSONÊı×é¸ñÊ½
+JSONÊı×é¸ñÊ½Îª:
+[{
+	goodsId: 2,//ÎïÆ·id
+	userId: 1,//ÓÃ»§id
+	amount: 100,//¶©µ¥½ğ¶î
+	goodsModel: X,//ĞÍºÅ
+	addressId: 2 //µØÖ·id
+}]
+·µ»ØÖµ:¶©µ¥idÊı×é
+2.ĞÂÔöÅúÁ¿È·ÈÏÖ§¸¶
+https://ip:port/xyp/mall/batchConfirmPayment.do?orders=JSONÊı×é¸ñÊ½
+JSONÊı×é¸ñÊ½Îª:
+[{
+	orderId: 11,//¶©µ¥id
+	userId: 1,//ÓÃ»§id
+	amount: 1//¶©µ¥½ğ¶î
+}];	
+·µ»ØÖµ:¶©µ¥idÊı×é
+3.ĞÂÔöÉ¾³ı¶©µ¥½Ó¿Ú
+https://ip:port/xyp/mall/deleteOrder.do?orderId=¶©µ¥id
+4.ĞÂÔöÍ¨¹ı¶©µ¥×´Ì¬²éÑ¯¶©µ¥½Ó¿Ú
+https://ip:port/xyp/mall/queryOrderByState.do?state=¶©µ¥×´Ì¬(Èç¹ûÊÇ¶à¸ö×´Ì¬ÒÔ¶ººÅ¸ô¿ª,µ¥¸ö×´Ì¬Ö±½Ó´«µİ)
+×´Ì¬ÖµÈçÏÂ
+´ı¸¶¿î:todo
+ÒÑ¸¶¿î:paying
+ÒÑ·¢»õ:to
+ÒÑÊÕ»õ:get
+ÊÛºó:after_sale
+ÍË»õ:sales_return
+

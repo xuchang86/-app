@@ -10,8 +10,10 @@ public class GoodsOrder {
 
 	private String number;
 
+	/** 创建日期 */
 	private Date createDate;
 
+	/** 付款日期 */
 	private Date payDate;
 
 	private Integer userId;
@@ -19,21 +21,28 @@ public class GoodsOrder {
 	/** 物品ids */
 	private String goodsId;
 
+	/** 详细地址 */
 	private String address;
 
+	/** 联系人 */
 	private String contacts;
 
+	/** 联系电话 */
 	private String phone;
 
 	/** 订单状态 {@link com.xiaoyao.mall.model.State} */
 	private String state;
-	
+
 	/** 商品型号 */
 	private String goodsModel;
-	
-	/** 收货地址id */ 
+
+	/** 收货地址id */
 	private Integer addressId;
-	
+
+	/** 地址对象 */
+	private Address addressVO;
+
+	/** 订单金额 */
 	private BigDecimal amount;
 
 	/** 订单物品 */
@@ -149,7 +158,8 @@ public class GoodsOrder {
 	}
 
 	/**
-	 * @param goodsModel the goodsModel to set
+	 * @param goodsModel
+	 *            the goodsModel to set
 	 */
 	public void setGoodsModel(String goodsModel) {
 		this.goodsModel = goodsModel;
@@ -163,7 +173,8 @@ public class GoodsOrder {
 	}
 
 	/**
-	 * @param addressId the addressId to set
+	 * @param addressId
+	 *            the addressId to set
 	 */
 	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
@@ -177,9 +188,25 @@ public class GoodsOrder {
 	}
 
 	/**
-	 * @param amount the amount to set
+	 * @param amount
+	 *            the amount to set
 	 */
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	/**
+	 * @return the addressVO
+	 */
+	public Address getAddressVO() {
+		return addressVO;
+	}
+
+	/**
+	 * @param addressVO
+	 *            the addressVO to set
+	 */
+	public void setAddressVO(Address addressVO) {
+		this.addressVO = addressVO;
 	}
 }

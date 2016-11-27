@@ -68,6 +68,16 @@ public class AddressService extends BaseService<Address> {
 	 * @return
 	 */
 	public Address queryAddressById(String id) {
-		return addressMapper.selectByPrimaryKey(Integer.parseInt(id));
+		return this.queryAddressById(Integer.parseInt(id));
+	}
+
+	/**
+	 * 查询地址
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Address queryAddressById(Integer id) {
+		return addressMapper.selectByPrimaryKey(id);
 	}
 }

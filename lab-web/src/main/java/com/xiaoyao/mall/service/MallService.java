@@ -19,6 +19,7 @@ import com.xiaoyao.mall.dao.CommentMapper;
 import com.xiaoyao.mall.dao.GoodsMapperExt;
 import com.xiaoyao.mall.dao.GoodsOrderMapper;
 import com.xiaoyao.mall.dao.TypeMapper;
+import com.xiaoyao.mall.model.Address;
 import com.xiaoyao.mall.model.Comment;
 import com.xiaoyao.mall.model.CommentExample;
 import com.xiaoyao.mall.model.Goods;
@@ -57,7 +58,11 @@ public class MallService extends BaseService<Goods> {
 	/** 注入 CommentMapper */
 	@Autowired
 	private CommentMapper commentMapper;
-	
+
+	/** 注入 AddressService */
+	@Autowired
+	private AddressService addressService;
+
 	/**
 	 * 查询所有出售的商品
 	 * 
@@ -142,11 +147,12 @@ public class MallService extends BaseService<Goods> {
 		for (Goods goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
-			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods.getDescription()));
+			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods
+					.getDescription()));
 		}
 		return goodses;
 	}
-	
+
 	/**
 	 * 销量查询
 	 * 
@@ -225,6 +231,16 @@ public class MallService extends BaseService<Goods> {
 	public int updateGoodsOrderByPK(GoodsOrder record) {
 
 		return goodsOrderMapper.updateByPrimaryKeySelective(record);
+	}
+
+	/**
+	 * 删除订单
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int deleteOrder(String id) {
+		return goodsOrderMapper.deleteByPrimaryKey(Integer.parseInt(id));
 	}
 
 	/**
@@ -342,6 +358,7 @@ public class MallService extends BaseService<Goods> {
 			order.setGoods(goodses);
 			todoComments.add(order);
 		}
+		wrapperGoodsOrder(todoComments);
 		return todoComments;
 	}
 
@@ -364,6 +381,7 @@ public class MallService extends BaseService<Goods> {
 			}
 			order.setGoods(goodses);
 		}
+		wrapperGoodsOrder(orders);
 		return orders;
 	}
 
@@ -375,5 +393,34 @@ public class MallService extends BaseService<Goods> {
 	 */
 	public int updateGoodsOrder(GoodsOrder order) {
 		return goodsOrderMapper.updateByPrimaryKeySelective(order);
+	}
+
+	/**
+	 * 根据订单状态查询订单
+	 * 
+	 * @param state
+	 * @return
+	 */
+	public List<GoodsOrder> queryGoodsOrderByState(List<String> values) {
+		GoodsOrderExample example = new GoodsOrderExample();
+		example.or().andStateIn(values);
+		List<GoodsOrder> orders = goodsOrderMapper.selectByExample(example);
+		this.wrapperGoodsOrder(orders);
+		return orders;
+	}
+
+	/**
+	 * 包装商品订单
+	 * 
+	 * @param orders
+	 */
+	private void wrapperGoodsOrder(List<GoodsOrder> orders) {
+		for (GoodsOrder order : orders) {
+			if (order.getAddressId() != null) {
+				Address address = addressService.queryAddressById(order
+						.getAddressId());
+				order.setAddressVO(address);
+			}
+		}
 	}
 }

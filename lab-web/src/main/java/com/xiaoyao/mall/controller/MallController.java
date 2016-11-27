@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -316,12 +317,23 @@ public class MallController extends BizBaseController {
 		return goodsOrder;
 	}
 
+	/**
+	 * 确认订单
+	 * 
+	 * @param goodsOrder
+	 */
 	protected void confirmOrder(GoodsOrder goodsOrder) {
 		// 生成订单
 		String addressId = String.valueOf(goodsOrder.getAddressId());
 		confirmOrder(goodsOrder, addressId);
 	}
 
+	/**
+	 * 确认订单
+	 * 
+	 * @param goodsOrder
+	 * @param addressId
+	 */
 	private void confirmOrder(GoodsOrder goodsOrder, String addressId) {
 		Address address = addressService.queryAddressById(addressId);
 		goodsOrder.setAddress(address.getAddress());
@@ -385,7 +397,7 @@ public class MallController extends BizBaseController {
 		}
 		// 生成订单
 		GoodsOrder goodsOrder = mallService.queryGoodsOrderById(orderId);
-		goodsOrder.setCreateDate(new Date());
+		goodsOrder.setPayDate(new Date());
 		goodsOrder.setState(State.PAYING.getValue());// 订单已付款
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		goodsOrder.setNumber("XYP-" + sdf.format(new Date()));
@@ -393,6 +405,12 @@ public class MallController extends BizBaseController {
 		return goodsOrder;
 	}
 
+	/**
+	 * 确认付款
+	 * 
+	 * @param param
+	 * @return
+	 */
 	protected GoodsOrder confirmPayment(Map<String, Object> param) {
 		// 扣减逍遥币
 		String userId = String.valueOf(param.get("userId"));
@@ -404,6 +422,12 @@ public class MallController extends BizBaseController {
 		return this.confirmPayment(userId, amount, orderId);
 	}
 
+	/**
+	 * 确认付款
+	 * 
+	 * @param request
+	 * @return
+	 */
 	protected GoodsOrder confirmPayment(HttpServletRequest request) {
 		// 扣减逍遥币
 		String userId = request(request, "userId");
@@ -572,6 +596,45 @@ public class MallController extends BizBaseController {
 		order.setId(Integer.parseInt(orderId));
 		mallService.updateGoodsOrderByPK(order);
 		JSONUtils.SUCCESS(response, "申请退货成功.");
+	}
+
+	/**
+	 * 删除订单
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("deleteOrder")
+	public void deleteOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("orderId", "订单id不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String orderId = request(request, "orderId");
+		mallService.deleteOrder(orderId);
+		JSONUtils.SUCCESS(response, "删除订单成功");
+	}
+
+	/**
+	 * 查询订单通过状态
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryOrderByState")
+	public void queryOrderByState(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("state", "订单状态");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String state = request(request, "state");// 订单状态多个以逗号隔开
+		List<String> states = Arrays.asList(state.split(","));
+		List<GoodsOrder> orders = mallService.queryGoodsOrderByState(states);
+		JSONUtils.SUCCESS(response, orders);
 	}
 
 	/**
