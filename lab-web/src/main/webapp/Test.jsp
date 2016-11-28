@@ -48,7 +48,7 @@
   	//确认提交
   	$scope.confirm = function() {
   		var arry = [{
-  			orderId: 11,
+  			orderId: 34,
   			userId: 1,
   			amount: 1
   		}];
