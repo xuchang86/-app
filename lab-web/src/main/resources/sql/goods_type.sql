@@ -10,6 +10,7 @@ create table T_GOODS_TYPE
    number               varchar(20) comment '类型编码',
    level                int comment '类型级别',
    parent_id            int comment '上级id',
+   url                  varchar(100) comment '类型图片',
    primary key (id)
 );
 

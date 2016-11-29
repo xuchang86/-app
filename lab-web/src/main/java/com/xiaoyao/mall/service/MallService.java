@@ -167,11 +167,32 @@ public class MallService extends BaseService<Goods> {
 		List<Goods> goodses = goodsMapper.selectByExampleByPage(example);
 		for (Goods goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
-			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+			goods.setType(selectByPrimaryKey(goods.getTypeId()));
 			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods
 					.getDescription()));
 		}
 		return goodses;
+	}
+
+	/**
+	 * 包装商品类别
+	 * 
+	 * @param type
+	 */
+	private void wrapperType(Type type) {
+		type.setUrl(UploadFileUtil.wrapperImageURL(type.getUrl()));
+	}
+
+	/**
+	 * 查询商品类型
+	 * 
+	 * @param typeId
+	 * @return
+	 */
+	public Type selectByPrimaryKey(Integer typeId) {
+		Type type = typeMapper.selectByPrimaryKey(typeId);
+		this.wrapperType(type);
+		return type;
 	}
 
 	/**
@@ -184,7 +205,7 @@ public class MallService extends BaseService<Goods> {
 		List<GoodsQuery> goodses = goodsMapper.querySalesByPage(query);
 		for (GoodsQuery goods : goodses) {
 			goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
-			goods.setType(typeMapper.selectByPrimaryKey(goods.getTypeId()));
+			goods.setType(selectByPrimaryKey(goods.getTypeId()));
 			goods.setDescription(UploadFileUtil.wrapperImageHTML(goods
 					.getDescription()));
 		}
@@ -199,7 +220,14 @@ public class MallService extends BaseService<Goods> {
 	public List<Type> queryGoodsType() {
 		TypeExample example = new TypeExample();
 		example.or().andIdIsNotNull();
-		return typeMapper.selectByExample(example);
+		return wrapperGoodsType(typeMapper.selectByExample(example));
+	}
+
+	private List<Type> wrapperGoodsType(List<Type> types) {
+		for (Type type : types) {
+			wrapperType(type);
+		}
+		return types;
 	}
 
 	/**
@@ -459,8 +487,7 @@ public class MallService extends BaseService<Goods> {
 						.getDescription()));
 				goods.setUrl(UploadFileUtil.wrapperMallURL(goods.getUrl()));
 				if (goods.getTypeId() != null) {
-					goods.setType(typeMapper.selectByPrimaryKey(goods
-							.getTypeId()));
+					goods.setType(selectByPrimaryKey(goods.getTypeId()));
 				}
 				goodses.add(goods);
 			}
