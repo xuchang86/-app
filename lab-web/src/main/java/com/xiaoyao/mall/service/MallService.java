@@ -180,7 +180,8 @@ public class MallService extends BaseService<Goods> {
 	 * @param type
 	 */
 	private void wrapperType(Type type) {
-		type.setUrl(UploadFileUtil.wrapperImageURL(type.getUrl()));
+		if (type != null)
+			type.setUrl(UploadFileUtil.wrapperImageURL(type.getUrl()));
 	}
 
 	/**
