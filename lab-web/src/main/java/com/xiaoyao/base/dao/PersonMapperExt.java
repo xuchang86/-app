@@ -26,4 +26,7 @@ public interface PersonMapperExt extends PersonMapper {
 	/** 弟子数排行榜查询 */
 	List<PersonQuery> queryTopChildByPage(PersonQuery personQuery);
 
+	/** 通过属性条件查询人物信息 */
+	List<Person> queryPersonByPage(Person person);
+
 }

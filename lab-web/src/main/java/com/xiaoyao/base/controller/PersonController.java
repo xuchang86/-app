@@ -6,6 +6,7 @@
  *****************************************************************************/
 package com.xiaoyao.base.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,5 +74,53 @@ public class PersonController extends BizBaseController {
 				"parentId", "createDate" });
 		JSONUtils.SUCCESS(response, personManageService.queryTopChild(query),
 				null, excludes);
+	}
+
+	/**
+	 * 用户之间互相转账
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("exchangeBill")
+	public void exchangeBill(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("srcPersonId", "来源人物id不能为空.");
+		validateResult.put("targetPersonId", "目标人物id不能为空.");
+		validateResult.put("amount", "转账金额不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		Integer srcPersonId = Integer.parseInt(request(request, "srcPersonId"));
+		Integer targetPersonId = Integer.parseInt(request(request,
+				"targetPersonId"));
+		BigDecimal amount = new BigDecimal(request(request, "amount"));
+		Person person = personManageService
+				.queryPersonByPrimaryKey(srcPersonId);
+		if (amount.compareTo(person.getBill()) > 0) {
+			JSONUtils.ERROR(response, "转账金额[" + amount + "]超出了本人账户余额,转账失败.");
+			return;
+		}
+
+		personManageService.rechargeBill(targetPersonId, amount);
+		JSONUtils.SUCCESS(response, "充值[" + amount + "]成功.");
+	}
+
+	/**
+	 * 查询人物信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryPerson")
+	public void queryPerson(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 排序字段:id, user_id, level, bill, parent_id, create_date, name
+		// 排序类型: desc,asc (sortField,sortType)
+		// 分页参数pageSize,pageNo
+		// 查询参数:id,userId,level,bill,parentId,createDate,name
+		Person person = BeanUtils.mapConvert2ToBean(Person.class, request);
+		JSONUtils.SUCCESS(response, personManageService.queryPerson(person));
 	}
 }

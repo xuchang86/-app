@@ -18,6 +18,24 @@
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="Base4ResultMap" type="com.xiaoyao.mall.model.GoodsQuery" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="is_sale" property="isSale" jdbcType="BIT" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="vip_price" property="vipPrice" jdbcType="DECIMAL" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="LONGVARCHAR" />
+    <result column="sales" property="sales" jdbcType="INTEGER" />
+  </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.xiaoyao.mall.model.Goods" extends="BaseResultMap" >
     <result column="url" property="url" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -446,7 +464,7 @@
  </select>
  
   <!-- 查询商品信息分页(包括查询销量) -->
- <select id="querySalesByPage" resultType="com.xiaoyao.mall.model.GoodsQuery" parameterType="com.xiaoyao.mall.model.GoodsQuery" >
+ <select id="querySalesByPage" resultMap="Base4ResultMap" parameterType="com.xiaoyao.mall.model.GoodsQuery" >
    SELECT  
    t1.id, t1.name, t1.description, t1.number, t1.type_id, 
    t1.price, t1.user_id, t1.create_date, t1.url, t1.area, 

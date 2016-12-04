@@ -79,6 +79,28 @@ public class PersonManageService extends BaseService<Person> {
 	}
 
 	/**
+	 * 个人充值
+	 * 
+	 * @param personId
+	 * @param amount
+	 */
+	public void rechargeBill(Integer personId, BigDecimal amount) {
+		Person person = queryPersonByPrimaryKey(personId);
+		person.setBill(NumberUtils.releaseNull(person.getBill()).add(amount));
+		savePerson(person);
+	}
+
+	/**
+	 * 通过查询条件查询人物信息,支持分页,排序
+	 * 
+	 * @param person
+	 * @return
+	 */
+	public List<Person> queryPerson(Person person) {
+		return personMapper.queryPersonByPage(person);
+	}
+
+	/**
 	 * 更新师傅信息(包括级别和逍遥币)以及资金池资金
 	 * 
 	 * @param person

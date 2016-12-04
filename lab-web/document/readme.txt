@@ -96,6 +96,7 @@ https://ip:port/xyp/mall/confirmPayment.do?orderId=订单id不能为空&userId=用户id&
 返回值:订单id
 
 
+
 20161127  本次更新内容
 1.新增批量确认订单
 https://ip:port/xyp/mall/batchConfirmOrder.do?orders=JSON数组格式
@@ -179,3 +180,18 @@ private Integer sales;
 private String model;
 9.修改获取评论信息,增加分页参数pageSize,pageNo,
 评论信息返回值增加用户信息
+
+
+
+20161204  本次更新内容
+1.增加人物之间的转账功能
+URL:https://ip:port/xyp/person/exchangeBill.do?srcPersonId=来源人物id不能为空&targetPersonId=目标人物id不能为空&amount=转账金额不能为空
+参数:注传的都是人物(person)id不是用户(User)id,可通过queryPerson接口获取其他人物信息
+2.增加人物通用查询功能
+URL:https://ip:port/xyp/person/queryPerson.do?pageSize=20&sortField=bill&sortType=desc&name=人物名称
+支持分页,排序，以及各条件查询,不传参数为全部查询
+排序参数:sortField(排序字段),sortType(排序类型)
+排序字段值:id, user_id, level, bill, parent_id, create_date, name
+排序类型值: desc,asc 
+分页参数:pageSize,pageNo(默认不传参显示10个每页)
+查询参数:id,userId(用户id),level(级别),bill(逍遥币),parentId(师傅id),createDate(创建时间),name(人物名称)

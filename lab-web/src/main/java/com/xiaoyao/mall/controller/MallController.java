@@ -694,4 +694,5 @@ public class MallController extends BizBaseController {
 				methodReqValue, goodsOrderId);
 		JSONUtils.SUCCESS(response, url);
 	}
+
 }

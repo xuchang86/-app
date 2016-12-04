@@ -267,4 +267,37 @@
     </if>
   </select>
   
+   <!-- 查询人物信息 -->
+ <select id="queryPersonByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.base.model.Person" >
+   SELECT  
+   <include refid="Base_Column_List" />
+   FROM T_BASE_PERSON  
+   <trim prefix="WHERE" prefixOverrides="AND" >
+    <if test="id != null">
+    AND id= #{id} 
+    </if>
+    <if test="userId != null">
+    AND user_id= #{userId} 
+    </if>
+    <if test="level != null">
+    AND level= #{level} 
+    </if>
+    <if test="bill != null">
+    AND bill= #{bill} 
+    </if>
+    <if test="parentId != null">
+    AND parent_id= #{parentId} 
+    </if>
+    <if test="createDate != null">
+    AND create_date= #{createDate} 
+    </if>
+    <if test="name != null">
+     AND name like CONCAT('%',#{name},'%')
+    </if>
+   </trim>
+   <if test="sortField != null and sortType != null and '' !=sortField and '' !=sortType ">
+     order by ${sortField} ${sortType}
+   </if>
+ </select>
+  
 </mapper>
