@@ -195,3 +195,9 @@ URL:https://ip:port/xyp/person/queryPerson.do?pageSize=20&sortField=bill&sortTyp
 排序类型值: desc,asc 
 分页参数:pageSize,pageNo(默认不传参显示10个每页)
 查询参数:id,userId(用户id),level(级别),bill(逍遥币),parentId(师傅id),createDate(创建时间),name(人物名称)
+
+
+
+20161207  本次更新内容
+1.增加发布活动时的个人权限控制(需在后台管理,用户信息中维护个人发布权限)
+2.修改注册时生成的群名称
