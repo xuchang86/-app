@@ -669,7 +669,7 @@ public class UserLoginController extends BizBaseController {
 		inviteCodeService.insert(code);
 		
 		// 修改聊天室名称为邀请码
-		EmchatOperator.modifyChatGroup(roomId, code.getNumber(), desc ,user.getPhone() ,new String[] { user.getPhone() });
+		EmchatOperator.modifyChatGroup(roomId, desc+"_"+code.getNumber(), desc ,user.getPhone() ,new String[] { user.getPhone() });
 		return code.getNumber();
 	}
 

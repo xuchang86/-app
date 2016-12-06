@@ -18,6 +18,7 @@ create table T_LOGIN_USER
    userName             varchar(15) comment '用户名',
    isPay                int comment '是否支付',
    url                  varchar(100) comment '个人头像',
+   permission           int comment '权限等级',
    primary key (id)
 );
 

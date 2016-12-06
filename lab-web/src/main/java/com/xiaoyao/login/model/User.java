@@ -35,6 +35,9 @@ public class User extends BaseVO {
 
 	/** 个人头像 */
 	private String url;
+	
+	/** 人物权限 {@link com.xiaoyao.login.model.Permission} */
+	private Integer permission = Permission.NORMAL.getValue();
 
 	public Integer getId() {
 		return id;
@@ -145,5 +148,19 @@ public class User extends BaseVO {
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	/**
+	 * @return the permission
+	 */
+	public Integer getPermission() {
+		return permission;
+	}
+
+	/**
+	 * @param permission the permission to set
+	 */
+	public void setPermission(Integer permission) {
+		this.permission = permission;
 	}
 }

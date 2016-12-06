@@ -29,8 +29,10 @@ import com.xiaoyao.activity.service.ActivityService;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
+import com.xiaoyao.login.model.Permission;
 import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.PersonManageService;
+import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.upload.model.FileType;
 import com.xiaoyao.upload.model.UploadFile;
 import com.xiaoyao.upload.service.UploadFileService;
@@ -59,6 +61,10 @@ public class ActivityController extends BizBaseController {
 	@Autowired
 	private UploadFileService uploadFileService;
 
+	/** 注入 UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
+
 	/**
 	 * 发布活动
 	 * 
@@ -77,6 +83,15 @@ public class ActivityController extends BizBaseController {
 		validateResult.put("city", "城市不能为空");
 		if (!validateParamBlank(request, response, validateResult))
 			return;
+
+		String userId = request(request, "userId");
+		// 校验是否存在发布权限
+		User user = userLoginService.queryUserByPrimaryKey(userId);
+		if (user.getPermission() == null
+				|| user.getPermission().equals(Permission.NORMAL.getValue())) {
+			JSONUtils.ERROR(response, "当前用户没有发布活动权限,请分配权限后使用该功能.");
+			return;
+		}
 
 		// 文件id
 		String fileId = request(request, "fileId");
@@ -182,7 +197,7 @@ public class ActivityController extends BizBaseController {
 		String pageNo = request(request, "pageNo");
 		String city = request(request, "city");
 		JSONUtils.toJSONString(response,
-				activityService.queryAllActivity(pageSize, pageNo ,city));
+				activityService.queryAllActivity(pageSize, pageNo, city));
 	}
 
 	/**
@@ -197,7 +212,8 @@ public class ActivityController extends BizBaseController {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String city = request(request, "city");
-		List<Activity> result = activityService.queryAllTask(pageSize, pageNo ,city);
+		List<Activity> result = activityService.queryAllTask(pageSize, pageNo,
+				city);
 		JSONUtils.toJSONString(response, result);
 	}
 
@@ -215,7 +231,7 @@ public class ActivityController extends BizBaseController {
 		String city = request(request, "city");
 		long start = System.currentTimeMillis();
 		List<Activity> result = activityService.queryAllService(pageSize,
-				pageNo ,city);
+				pageNo, city);
 		JSONUtils.toJSONString(response, result);
 		long end = System.currentTimeMillis();
 		System.out.println("total time:" + (end - start) / 1000 + "秒");

@@ -1001,6 +1001,66 @@ public class UserExample {
             addCriterion("url not between", value1, value2, "url");
             return (Criteria) this;
         }
+
+        public Criteria andPermissionIsNull() {
+            addCriterion("permission is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionIsNotNull() {
+            addCriterion("permission is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionEqualTo(Integer value) {
+            addCriterion("permission =", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotEqualTo(Integer value) {
+            addCriterion("permission <>", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionGreaterThan(Integer value) {
+            addCriterion("permission >", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("permission >=", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionLessThan(Integer value) {
+            addCriterion("permission <", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionLessThanOrEqualTo(Integer value) {
+            addCriterion("permission <=", value, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionIn(List<Integer> values) {
+            addCriterion("permission in", values, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotIn(List<Integer> values) {
+            addCriterion("permission not in", values, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionBetween(Integer value1, Integer value2) {
+            addCriterion("permission between", value1, value2, "permission");
+            return (Criteria) this;
+        }
+
+        public Criteria andPermissionNotBetween(Integer value1, Integer value2) {
+            addCriterion("permission not between", value1, value2, "permission");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

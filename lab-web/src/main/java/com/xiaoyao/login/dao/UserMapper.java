@@ -30,5 +30,4 @@ public interface UserMapper extends BaseMapper{
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-   
 }
