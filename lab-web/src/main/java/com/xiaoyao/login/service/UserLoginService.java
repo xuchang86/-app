@@ -157,7 +157,7 @@ public class UserLoginService extends BaseService<User> {
 	public Person saveUser(User user, String inviteCode) {
 		// 组装个人信息
 		Person person = new Person();
-		person.setBill(LoginUtil.getRegistCashPoolAmt());// 逍遥币
+		person.setBill(BigDecimal.ZERO);// 逍遥币
 		person.setCreateDate(new Date());
 		person.setName(user.getName());
 		person.setLevel(Level.JIAN_XI_DIZI.getValue());// 见习弟子
@@ -172,9 +172,9 @@ public class UserLoginService extends BaseService<User> {
 		personManageService.savePerson(person);
 
 		// 2.增加资金池资金
-		cashPoolService.addCashPool(person.getBill(), platformAmt);
+		cashPoolService.addCashPool(LoginUtil.getRegistCashPoolAmt(), platformAmt);
 
-		// 3.更新师傅等级,逍遥币,减少平台收入等信息
+		// 3.更新师傅等级,逍遥币,减少资金池资金等信息
 		personManageService.updateParentAndCashPool(person);
 
 		return person;

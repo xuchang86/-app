@@ -87,7 +87,7 @@ public class CashPoolService extends BaseService<CashPool> {
 	 * 更新资金池资金
 	 * 
 	 * @param cash
-	 *            资金
+	 *            资金池
 	 * @param platform
 	 *            平台收入
 	 * @param isAdd

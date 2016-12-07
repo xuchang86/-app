@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xiaoyao.activity.model.Activity;
 import com.xiaoyao.activity.model.ActivityPerson;
+import com.xiaoyao.activity.model.ActivityType;
 import com.xiaoyao.activity.service.ActivityService;
 import com.xiaoyao.base.controller.BizBaseController;
 import com.xiaoyao.base.util.BeanUtils;
@@ -85,12 +86,15 @@ public class ActivityController extends BizBaseController {
 			return;
 
 		String userId = request(request, "userId");
+		String type = request(request, "type");
 		// 校验是否存在发布权限
 		User user = userLoginService.queryUserByPrimaryKey(userId);
 		if (user.getPermission() == null
 				|| user.getPermission().equals(Permission.NORMAL.getValue())) {
-			JSONUtils.ERROR(response, "当前用户没有发布活动权限,请分配权限后使用该功能.");
-			return;
+			if (ActivityType.SCHOOL_ACTIVITY.getValue().equals(type)) {//发布活动需要权限
+				JSONUtils.ERROR(response, "当前用户没有发布活动权限,请分配权限后使用该功能.");
+				return;
+			}
 		}
 
 		// 文件id

@@ -139,9 +139,9 @@ public class PersonManageService extends BaseService<Person> {
 				// 减少徒弟的逍遥币
 				person.setBill(person.getBill().subtract(rule.getPacket()));
 				this.updatePersonByPrimaryKey(person);
-				// TODO 升级奖励 :从平台收入中扣除?
-				cashPoolService.reduceCashPool(BigDecimal.ZERO,
-						rule.getUpgradeAwards());
+				// TODO 升级奖励 :从资金池中扣除 ??
+				cashPoolService.reduceCashPool(rule.getUpgradeAwards(),
+						BigDecimal.ZERO);
 			}
 		}
 	}
