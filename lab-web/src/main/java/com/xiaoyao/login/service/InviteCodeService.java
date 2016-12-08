@@ -76,8 +76,12 @@ public class InviteCodeService extends BaseService<InviteCode> {
 	 * @return
 	 */
 	public List<InviteCode> queryInviteCode(String userId) {
+		return queryInviteCode(Integer.parseInt(userId));
+	}
+
+	public List<InviteCode> queryInviteCode(Integer userId) {
 		InviteCodeExample vo = new InviteCodeExample();
-		vo.or().andUserIdEqualTo(Integer.parseInt(userId));
+		vo.or().andUserIdEqualTo(userId);
 		return inviteCodeMapper.selectByExample(vo);
 	}
 

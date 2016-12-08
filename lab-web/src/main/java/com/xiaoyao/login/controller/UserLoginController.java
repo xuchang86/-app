@@ -394,9 +394,27 @@ public class UserLoginController extends BizBaseController {
 		setCurrentUser(request, user);
 		// 更新User信息
 		if (userLoginService.updateUser(user)) {
+			// 更新群名称
+			this.updateChatGroup(user);
 			JSONUtils.SUCCESS(response, "完善个人信息成功.");
 		} else {
 			JSONUtils.ERROR(response, "个人信息更新失败.");
+		}
+	}
+	
+	/**
+	 * 更新聊天群名称
+	 * 
+	 * @param user
+	 */
+	private void updateChatGroup(User user) {
+		List<InviteCode> inviteCodes = inviteCodeService.queryInviteCode(user.getId());
+		if (!CollectionUtils.isEmpty(inviteCodes)) {
+			InviteCode inviteCode = inviteCodes.get(0);
+			// 修改聊天室名称为邀请码
+			EmchatOperator.modifyChatGroup(inviteCode.getChatroomId(), user.getName() + "的徒弟",
+					"[" + user.getName() + "]新建群" + "_" + inviteCode.getNumber(), user.getPhone(),
+					new String[] { user.getPhone() });
 		}
 	}
 
@@ -652,7 +670,7 @@ public class UserLoginController extends BizBaseController {
 	 */
 	private String createInviteCode(HttpServletRequest request) {
 		User user = getCurrentUser(request);
-		String desc = "[" + user.getName() + "]新建群";// 群描述
+		String desc = "[" + user.getPhone() + "]新建群";// 群描述
 		// 创建自己的聊天室
 		ResponseWrapper responseWrapper = EmchatOperator.createChatGroup(
 				"新建聊天群", desc, user.getPhone(),
@@ -669,7 +687,7 @@ public class UserLoginController extends BizBaseController {
 		inviteCodeService.insert(code);
 		
 		// 修改聊天室名称为邀请码
-		EmchatOperator.modifyChatGroup(roomId, user.getName() + "的徒弟", desc+"_"+code.getNumber() ,user.getPhone() ,new String[] { user.getPhone() });
+		EmchatOperator.modifyChatGroup(roomId, user.getPhone() + "的徒弟", desc+"_"+code.getNumber() ,user.getPhone() ,new String[] { user.getPhone() });
 		return code.getNumber();
 	}
 
