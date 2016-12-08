@@ -150,21 +150,21 @@ public final class LoginUtil {
 	}
 
 	/**
-	 * 获取注册时资金池收入400
+	 * 获取注册时资金池收入0
 	 * 
 	 * @return
 	 */
 	public static String getCashPoolIncome() {
-		return getPropertyValue("cash_pool_income", "400");
+		return getPropertyValue("cash_pool_income", "0");
 	}
 
 	/**
-	 * 获取注册时平台收入金额298
+	 * 获取注册时平台收入金额698
 	 * 
 	 * @return
 	 */
 	public static String getPlatformIncome() {
-		return getPropertyValue("platform_income", "298");
+		return getPropertyValue("platform_income", "698");
 	}
 
 	/**

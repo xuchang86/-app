@@ -49,4 +49,14 @@ public final class RuleOperator {
 		return null;
 	}
 
+	/**
+	 * 通过级数获取奖励规则
+	 * 
+	 * @param level
+	 * @return
+	 */
+	public static Rule getRuleByLevel(Integer level) {
+		return GlobalCache.getRule(level);
+	}
+
 }

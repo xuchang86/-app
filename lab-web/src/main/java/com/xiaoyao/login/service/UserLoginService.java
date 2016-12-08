@@ -100,7 +100,7 @@ public class UserLoginService extends BaseService<User> {
 		List<User> users = queryVOByCondition(condition, userMapperExt);
 		return users;
 	}
-	
+
 	/**
 	 * 查询用户组信息通过id数组
 	 * 
@@ -171,10 +171,10 @@ public class UserLoginService extends BaseService<User> {
 		// 1.新增个人信息
 		personManageService.savePerson(person);
 
-		// 2.增加资金池资金
-		cashPoolService.addCashPool(LoginUtil.getRegistCashPoolAmt(), platformAmt);
+		// 2.增加平台收入(资金池中资金和平台收入合并,全部合并为平台收入)
+		cashPoolService.addCashPool(BigDecimal.ZERO, platformAmt);
 
-		// 3.更新师傅等级,逍遥币,减少资金池资金等信息
+		// 3.更新师傅等级,分配师傅逍遥币,减少资金池中平台收入
 		personManageService.updateParentAndCashPool(person);
 
 		return person;
@@ -200,9 +200,11 @@ public class UserLoginService extends BaseService<User> {
 				ResponseWrapper response = EmchatOperator
 						.addBatchUsersToChatGroup(inviteInfo.getChatroomId(),
 								user.getPhone());
-				LOGGER.info("addBatchUsersToChatGroup:" + response.getResponseBody());
-				//互相加好友
-				ResponseWrapper rsp= EmchatOperator.addFriendSingle(user.getPhone(), parentUser.getPhone());
+				LOGGER.info("addBatchUsersToChatGroup:"
+						+ response.getResponseBody());
+				// 互相加好友
+				ResponseWrapper rsp = EmchatOperator.addFriendSingle(
+						user.getPhone(), parentUser.getPhone());
 				LOGGER.info("addFriendSingle:" + rsp.getResponseBody());
 				person.setParentId(persons.get(0).getId());
 			}

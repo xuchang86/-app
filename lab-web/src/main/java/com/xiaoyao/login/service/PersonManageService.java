@@ -9,7 +9,6 @@ package com.xiaoyao.login.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -101,7 +100,10 @@ public class PersonManageService extends BaseService<Person> {
 	}
 
 	/**
-	 * 更新师傅信息(包括级别和逍遥币)以及资金池资金
+	 * 更新师傅信息(包括级别和逍遥币)以及平台收入金额
+	 * <p>
+	 * 资金池资金已和平台收入合并全部纳入平台收入
+	 * </p>
 	 * 
 	 * @param person
 	 *            个人信息
@@ -112,36 +114,50 @@ public class PersonManageService extends BaseService<Person> {
 		if (!StringUtils.isEmpty(parentId)) {
 			// 弟子数
 			int childCount = queryChildCount(parentId);
+			// 师傅信息
+			Person parent = queryPersonByPrimaryKey(parentId);
 			// 调用升级算法
 			Rule rule = RuleOperator.upgrade(childCount);
-			if (rule != null) {
-				Person parent = queryPersonByPrimaryKey(parentId);
+			if (rule != null) { // 升级情况下的算法
 				parent.setLevel(rule.getLevel() + 1);// 等级
 				BigDecimal bill = parent.getBill().add(
 						rule.getUpgradeAwards().add(rule.getPacket()));// 升级奖励+徒弟红包
-
-				// 查询当前弟子是否有徒弟,如果有徒弟扣取他们的逍遥币
-				List<Person> childs = queryChildsByParent(person.getId());
-				if (CollectionUtils.isNotEmpty(childs)) {
-					for (Person child : childs) {
-						// 扣减徒孙的逍遥币
-						child.setBill(child.getBill().subtract(
-								rule.getChildPacket()));
-						this.updatePersonByPrimaryKey(child);
-						// 增加徒孙红包
-						bill = bill.add(rule.getChildPacket());
-					}
-				}
-
-				// 更新师傅信息
+				// 增加师傅的金额
 				parent.setBill(bill);
 				this.updatePersonByPrimaryKey(parent);
-				// 减少徒弟的逍遥币
-				person.setBill(person.getBill().subtract(rule.getPacket()));
-				this.updatePersonByPrimaryKey(person);
-				// TODO 升级奖励 :从资金池中扣除 ??
-				cashPoolService.reduceCashPool(rule.getUpgradeAwards(),
-						BigDecimal.ZERO);
+
+				// 升级奖励,师傅的红包的费用
+				BigDecimal cost = rule.getUpgradeAwards().add(rule.getPacket());
+
+				// 查询师傅是否还有师傅,如果有师傅则给师傅的师傅红包
+				if (!StringUtils.isEmpty(parent.getParentId())) {
+					Person pp = queryPersonByPrimaryKey(parent.getParentId());
+					pp.setBill(pp.getBill().add(rule.getChildPacket()));
+					this.updatePersonByPrimaryKey(pp);
+					// 增加师傅的师傅费用
+					cost.add(rule.getChildPacket());
+				}
+
+				// 升级奖励,师傅的红包,师傅的师傅红包费用 从平台收入中扣除
+				cashPoolService.reduceCashPool(BigDecimal.ZERO, cost);
+			} else { // 没有升级情况下的算法
+				Rule ngRule = RuleOperator.getRuleByLevel(parent.getLevel());
+				// 增加师傅金额
+				parent.setBill(parent.getBill().add(ngRule.getPacket()));
+				this.updatePersonByPrimaryKey(parent);
+
+				// 师傅的费用,师傅的红包的费用
+				BigDecimal cost = ngRule.getPacket();
+
+				// 查询师傅是否还有师傅,如果有师傅则给师傅的师傅红包
+				if (!StringUtils.isEmpty(parent.getParentId())) {
+					Person pp = queryPersonByPrimaryKey(parent.getParentId());
+					pp.setBill(pp.getBill().add(ngRule.getChildPacket()));
+					cost.add(ngRule.getChildPacket());
+				}
+
+				// 师傅的红包,师傅的师傅红包费用 从平台收入中扣除
+				cashPoolService.reduceCashPool(BigDecimal.ZERO, cost);
 			}
 		}
 	}
