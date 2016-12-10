@@ -168,7 +168,13 @@ public class UserLoginController extends BizBaseController {
 		if (!validateParamBlank(request, response, validateResult))
 			return;
 
-		User user = BeanUtils.mapConvertToBean(User.class, request);
+		String id = request(request, "id");
+		User user = BeanUtils.mapConvert2ToBean(User.class, request);
+		// 重新设置是否已付款和权限因为VO中有默认值
+		User currentUser = userLoginService.queryUserByPrimaryKey(id);
+		user.setIspay(currentUser.getIspay());
+		user.setPermission(currentUser.getPermission());
+
 		userLoginService.editUser(user);
 		JSONUtils.SUCCESS(response, "更新个人信息成功.");
 	}
@@ -401,19 +407,21 @@ public class UserLoginController extends BizBaseController {
 			JSONUtils.ERROR(response, "个人信息更新失败.");
 		}
 	}
-	
+
 	/**
 	 * 更新聊天群名称
 	 * 
 	 * @param user
 	 */
 	private void updateChatGroup(User user) {
-		List<InviteCode> inviteCodes = inviteCodeService.queryInviteCode(user.getId());
+		List<InviteCode> inviteCodes = inviteCodeService.queryInviteCode(user
+				.getId());
 		if (!CollectionUtils.isEmpty(inviteCodes)) {
 			InviteCode inviteCode = inviteCodes.get(0);
 			// 修改聊天室名称为邀请码
-			EmchatOperator.modifyChatGroup(inviteCode.getChatroomId(), user.getName() + "的徒弟",
-					"[" + user.getName() + "]新建群" + "_" + inviteCode.getNumber(), user.getPhone(),
+			EmchatOperator.modifyChatGroup(inviteCode.getChatroomId(),
+					user.getName() + "的徒弟", "[" + user.getName() + "]新建群" + "_"
+							+ inviteCode.getNumber(), user.getPhone(),
 					new String[] { user.getPhone() });
 		}
 	}
@@ -685,9 +693,11 @@ public class UserLoginController extends BizBaseController {
 		code.setChatroomId(roomId);
 		code.setUserId(user.getId());
 		inviteCodeService.insert(code);
-		
+
 		// 修改聊天室名称为邀请码
-		EmchatOperator.modifyChatGroup(roomId, user.getPhone() + "的徒弟", desc+"_"+code.getNumber() ,user.getPhone() ,new String[] { user.getPhone() });
+		EmchatOperator.modifyChatGroup(roomId, user.getPhone() + "的徒弟", desc
+				+ "_" + code.getNumber(), user.getPhone(),
+				new String[] { user.getPhone() });
 		return code.getNumber();
 	}
 

@@ -201,3 +201,13 @@ URL:https://ip:port/xyp/person/queryPerson.do?pageSize=20&sortField=bill&sortTyp
 20161207  本次更新内容
 1.增加发布活动时的个人权限控制(需在后台管理,用户信息中维护个人发布权限)
 2.修改注册时生成的群名称
+
+
+
+20161210  本次更新内容
+1.修改editUser接口将用户付款状态清空问题
+2.增加发布活动，悬赏，出售服务排序功能
+参数:
+sortType 排序类型 值为desc(降序) asc(升序)
+sortField  排序字段 值可以传 id, type, address, content, date (创建时间), person_id, cost (费用), city, way, payWay
+

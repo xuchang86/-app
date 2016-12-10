@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Rule;
+import com.xiaoyao.login.util.LoginUtil;
 
 /**
  * 逍遥派全局缓存对象
@@ -96,6 +97,9 @@ public final class GlobalCache {
 	 * @return
 	 */
 	public static String getServerIP() {
+		if (getCache(IP) == null)
+			return LoginUtil.getServerIP();
+
 		return String.valueOf(getCache(IP));
 	}
 
@@ -105,6 +109,9 @@ public final class GlobalCache {
 	 * @return
 	 */
 	public static String getServerPort() {
+		if (getCache(PORT) == null) {
+			return LoginUtil.getServerPort();
+		}
 		return String.valueOf(getCache(PORT));
 	}
 

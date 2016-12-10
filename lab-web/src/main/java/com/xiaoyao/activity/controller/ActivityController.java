@@ -91,7 +91,7 @@ public class ActivityController extends BizBaseController {
 		User user = userLoginService.queryUserByPrimaryKey(userId);
 		if (user.getPermission() == null
 				|| user.getPermission().equals(Permission.NORMAL.getValue())) {
-			if (ActivityType.SCHOOL_ACTIVITY.getValue().equals(type)) {//发布活动需要权限
+			if (ActivityType.SCHOOL_ACTIVITY.getValue().equals(type)) {// 发布活动需要权限
 				JSONUtils.ERROR(response, "当前用户没有发布活动权限,请分配权限后使用该功能.");
 				return;
 			}
@@ -200,8 +200,16 @@ public class ActivityController extends BizBaseController {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String city = request(request, "city");
-		JSONUtils.toJSONString(response,
-				activityService.queryAllActivity(pageSize, pageNo, city));
+		String sortType = request(request, "sortType");
+		// id, type, address, content, date, person_id, cost, city, way, payWay
+		String sortField = request(request, "sortField");
+		String orderByClause = null;
+		if (StringUtils.isNotBlank(sortType)
+				&& StringUtils.isNotBlank(sortField)) {
+			orderByClause = sortField + " " + sortType;
+		}
+		JSONUtils.toJSONString(response, activityService.queryAllActivity(
+				pageSize, pageNo, city, orderByClause));
 	}
 
 	/**
@@ -216,8 +224,17 @@ public class ActivityController extends BizBaseController {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String city = request(request, "city");
+		// desc(降序) asc(升序)
+		String sortType = request(request, "sortType");
+		// id, type, address, content, date, person_id, cost, city, way, payWay
+		String sortField = request(request, "sortField");
+		String orderByClause = null;
+		if (StringUtils.isNotBlank(sortType)
+				&& StringUtils.isNotBlank(sortField)) {
+			orderByClause = sortField + " " + sortType;
+		}
 		List<Activity> result = activityService.queryAllTask(pageSize, pageNo,
-				city);
+				city, orderByClause);
 		JSONUtils.toJSONString(response, result);
 	}
 
@@ -233,12 +250,17 @@ public class ActivityController extends BizBaseController {
 		String pageSize = request(request, "pageSize");
 		String pageNo = request(request, "pageNo");
 		String city = request(request, "city");
-		long start = System.currentTimeMillis();
+		String sortType = request(request, "sortType");
+		// id, type, address, content, date, person_id, cost, city, way, payWay
+		String sortField = request(request, "sortField");
+		String orderByClause = null;
+		if (StringUtils.isNotBlank(sortType)
+				&& StringUtils.isNotBlank(sortField)) {
+			orderByClause = sortField + " " + sortType;
+		}
 		List<Activity> result = activityService.queryAllService(pageSize,
-				pageNo, city);
+				pageNo, city, orderByClause);
 		JSONUtils.toJSONString(response, result);
-		long end = System.currentTimeMillis();
-		System.out.println("total time:" + (end - start) / 1000 + "秒");
 	}
 
 	/**
