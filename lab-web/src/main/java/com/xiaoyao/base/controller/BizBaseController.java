@@ -61,9 +61,9 @@ public class BizBaseController extends BaseController {
 	 * @return
 	 */
 	public Person getCurrentPerson(HttpServletRequest request) {
-		if (request.getSession().getAttribute("person") == null) {
-			this.queryCurrentUser(request);
-		}
+		// 每次都实时后台取用户信息
+		this.queryCurrentUser(request);
+
 		return (Person) request.getSession().getAttribute("person");
 	}
 
