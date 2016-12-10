@@ -75,6 +75,8 @@ public class PersonManageService extends BaseService<Person> {
 					new BigDecimal(amount)));
 			savePerson(person);
 		}
+		// 增加平台收入
+		cashPoolService.addCashPool(BigDecimal.ZERO, new BigDecimal(amount));
 	}
 
 	/**
