@@ -12,10 +12,15 @@ public class TransferRecord {
 
 	private Integer accountId;
 
+	/** 银行账户信息 */
+	private BankAccount bankAccount;
+
 	private BigDecimal amount;
 
 	/** 转账状态 {@link com.xiaoyao.pay.model.TransferState} */
 	private String state;
+
+	private Integer userId;
 
 	public Integer getId() {
 		return id;
@@ -63,5 +68,28 @@ public class TransferRecord {
 
 	public void setState(String state) {
 		this.state = state == null ? null : state.trim();
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the bankAccount
+	 */
+	public BankAccount getBankAccount() {
+		return bankAccount;
+	}
+
+	/**
+	 * @param bankAccount
+	 *            the bankAccount to set
+	 */
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
 	}
 }

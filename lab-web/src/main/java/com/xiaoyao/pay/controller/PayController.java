@@ -599,8 +599,13 @@ public class PayController extends BizBaseController {
 		record.setOperator(person.getName());
 		record.setAmount(amount);
 		record.setDate(new Date());
+		record.setUserId(Integer.parseInt(userId));
 		record.setState(TransferState.SUBMIT.getValue());
 		payService.saveTranferRecord(record);
+
+		// 扣减个人逍遥币 ,扣减平台收入
+		payService.tranferBill(record, person);
+
 		JSONUtils.SUCCESS(response, record.getId());
 	}
 
@@ -613,7 +618,13 @@ public class PayController extends BizBaseController {
 	@RequestMapping("viewTranferRecord")
 	public void viewTranferRecord(HttpServletRequest request,
 			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
 
+		String userId = request(request, "userId");
+		JSONUtils.SUCCESS(response, payService.queryTransferRecord(userId));
 	}
 
 	/**

@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
@@ -26,6 +27,7 @@ import com.xiaoyao.pay.model.BankAccount;
 import com.xiaoyao.pay.model.BankAccountExample;
 import com.xiaoyao.pay.model.Order;
 import com.xiaoyao.pay.model.TransferRecord;
+import com.xiaoyao.pay.model.TransferRecordExample;
 
 /**
  * 付款回调业务服务
@@ -56,6 +58,10 @@ public class PayService extends BaseService<Order> {
 	/** 注入 TransferRecordMapper */
 	@Autowired
 	private TransferRecordMapper transferRecordMapper;
+
+	/** 注入CashPoolService */
+	@Autowired
+	private CashPoolService cashPoolService;
 
 	/**
 	 * 保存订单信息
@@ -135,6 +141,20 @@ public class PayService extends BaseService<Order> {
 	}
 
 	/**
+	 * 转账:扣减个人逍遥币,扣减平台收入
+	 * 
+	 * @param record
+	 * @param person
+	 */
+	public void tranferBill(TransferRecord record, Person person) {
+		// 扣减个人逍遥币
+		person.setBill(person.getBill().subtract(record.getAmount()));
+		personManageService.updatePersonByPrimaryKey(person);
+		// 扣减平台收入
+		cashPoolService.reduceCashPool(BigDecimal.ZERO, record.getAmount());
+	}
+
+	/**
 	 * 查询银行账户通过id
 	 * 
 	 * @param id
@@ -154,6 +174,33 @@ public class PayService extends BaseService<Order> {
 		BankAccountExample example = new BankAccountExample();
 		example.or().andUserIdEqualTo(Integer.parseInt(userId));
 		return bankAccountMapper.selectByExample(example);
+	}
+
+	/**
+	 * 查询个人转账记录
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<TransferRecord> queryTransferRecord(String userId) {
+		TransferRecordExample example = new TransferRecordExample();
+		example.or().andUserIdEqualTo(Integer.parseInt(userId));
+		List<TransferRecord> records = transferRecordMapper
+				.selectByExample(example);
+		this.wrapperTransferRecord(records);
+		return records;
+	}
+
+	/**
+	 * 包装转账记录
+	 * 
+	 * @param records
+	 */
+	private void wrapperTransferRecord(List<TransferRecord> records) {
+		for (TransferRecord record : records) {
+			record.setBankAccount(bankAccountMapper.selectByPrimaryKey(record
+					.getAccountId()));
+		}
 	}
 
 	/**

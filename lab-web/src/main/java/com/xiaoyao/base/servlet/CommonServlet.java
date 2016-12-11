@@ -37,13 +37,14 @@ public class CommonServlet extends HttpServlet {
 	 * @throws ServletException
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		System.out.println(getClass().getName() + ":init...");
+		System.out.println("逍遥派" + getClass().getName() + ":init...");
 		super.init(config);
 		// 将会员成长规则算法放入全局缓存
 		RuleService service = SpringContextBeanUtil.getBean(RuleService.class);
 		GlobalCache.putRule(service.queryRule());
-		GlobalCache.put(GlobalCache.CONTEXT_PATH, config.getServletContext().getContextPath());
-		System.out.println(getClass().getName() + ":init end...");
+		GlobalCache.put(GlobalCache.CONTEXT_PATH, config.getServletContext()
+				.getContextPath());
+		System.out.println("逍遥派" + getClass().getName() + ":init end...");
 	}
 
 	/**
