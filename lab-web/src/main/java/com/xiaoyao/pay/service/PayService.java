@@ -8,6 +8,7 @@ package com.xiaoyao.pay.service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,13 @@ import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.PersonManageService;
 import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
+import com.xiaoyao.pay.dao.BankAccountMapper;
 import com.xiaoyao.pay.dao.OrderMapper;
+import com.xiaoyao.pay.dao.TransferRecordMapper;
+import com.xiaoyao.pay.model.BankAccount;
+import com.xiaoyao.pay.model.BankAccountExample;
 import com.xiaoyao.pay.model.Order;
+import com.xiaoyao.pay.model.TransferRecord;
 
 /**
  * 付款回调业务服务
@@ -42,6 +48,14 @@ public class PayService extends BaseService<Order> {
 	/** 注入 PersonManageService */
 	@Autowired
 	private PersonManageService personManageService;
+
+	/** 注入 BankAccountMapper */
+	@Autowired
+	private BankAccountMapper bankAccountMapper;
+
+	/** 注入 TransferRecordMapper */
+	@Autowired
+	private TransferRecordMapper transferRecordMapper;
 
 	/**
 	 * 保存订单信息
@@ -92,6 +106,54 @@ public class PayService extends BaseService<Order> {
 		order.setUserId(Integer.valueOf(userId));
 		this.saveOrder(order);
 		personManageService.rechargeBill(Integer.parseInt(userId), amount);
+	}
+
+	/**
+	 * 保存银行账户
+	 * 
+	 * @param account
+	 */
+	public void saveBankAccount(BankAccount account) {
+		if (account.getId() == null) {
+			bankAccountMapper.insertSelective(account);
+		} else {
+			bankAccountMapper.updateByPrimaryKeySelective(account);
+		}
+	}
+
+	/**
+	 * 保存转账记录
+	 * 
+	 * @param record
+	 */
+	public void saveTranferRecord(TransferRecord record) {
+		if (record.getId() == null) {
+			transferRecordMapper.insertSelective(record);
+		} else {
+			transferRecordMapper.updateByPrimaryKeySelective(record);
+		}
+	}
+
+	/**
+	 * 查询银行账户通过id
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public BankAccount queryBankAccountByPK(String id) {
+		return bankAccountMapper.selectByPrimaryKey(Integer.parseInt(id));
+	}
+
+	/**
+	 * 查询银行账户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<BankAccount> queryBankAccount(String userId) {
+		BankAccountExample example = new BankAccountExample();
+		example.or().andUserIdEqualTo(Integer.parseInt(userId));
+		return bankAccountMapper.selectByExample(example);
 	}
 
 	/**

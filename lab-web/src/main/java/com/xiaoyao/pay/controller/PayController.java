@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
@@ -28,12 +29,20 @@ import com.alipay.util.AlipayNotify;
 import com.group.utils.CommonUtils;
 import com.group.utils.ResponseUtils;
 import com.xiaoyao.base.controller.BizBaseController;
+import com.xiaoyao.base.model.Person;
+import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.login.model.InviteCode;
+import com.xiaoyao.login.model.User;
 import com.xiaoyao.login.service.InviteCodeService;
+import com.xiaoyao.login.service.PersonManageService;
+import com.xiaoyao.login.service.UserLoginService;
 import com.xiaoyao.login.util.LoginUtil;
 import com.xiaoyao.mall.model.GoodsOrder;
 import com.xiaoyao.mall.service.MallService;
+import com.xiaoyao.pay.model.BankAccount;
+import com.xiaoyao.pay.model.TransferRecord;
+import com.xiaoyao.pay.model.TransferState;
 import com.xiaoyao.pay.service.CashPoolService;
 import com.xiaoyao.pay.service.PayService;
 
@@ -66,6 +75,14 @@ public class PayController extends BizBaseController {
 	/** 注入 InviteCodeService */
 	@Autowired
 	private InviteCodeService inviteCodeService;
+
+	/** 注入 UserLoginService */
+	@Autowired
+	private UserLoginService userLoginService;
+
+	/** 注入 PersonManageService */
+	@Autowired
+	private PersonManageService personManageService;
 
 	/**
 	 * 支付宝支付成功反馈信息
@@ -476,6 +493,127 @@ public class PayController extends BizBaseController {
 			LOGGER.error(e.getMessage(), e);
 		}
 		return null;
+	}
+
+	/**
+	 * 添加银行账户
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("addBankAccount")
+	public void addBankAccount(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("name", "银行名称不能为空");
+		validateResult.put("account", "银行账户不能为空");
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		User user = userLoginService.queryUserByPrimaryKey(userId);
+		BankAccount account = BeanUtils.mapConvert2ToBean(BankAccount.class,
+				request);
+		account.setReceiver(user.getName());
+		payService.saveBankAccount(account);
+		JSONUtils.SUCCESS(response, account.getId());
+	}
+
+	/**
+	 * 修改银行账户信息
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("modifyBankAccount")
+	public void modifyBankAccount(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("id", "银行账户id不能为空");
+		validateResult.put("name", "银行名称不能为空");
+		validateResult.put("account", "银行账户不能为空");
+		validateResult.put("receiver", "收款人不能为空");
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		BankAccount bank = BeanUtils.mapConvert2ToBean(BankAccount.class,
+				request);
+		payService.saveBankAccount(bank);
+		JSONUtils.SUCCESS(response, bank.getId());
+	}
+
+	/**
+	 * 查询我的银行账户
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryBankAccount")
+	public void queryBankAccount(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		List<BankAccount> banks = payService.queryBankAccount(userId);
+		JSONUtils.SUCCESS(response, banks);
+	}
+
+	/**
+	 * 转账接口
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("transferBill")
+	public void transferBill(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("accountId", "银行账户id不能为空");
+		validateResult.put("amount", "转账金额不能为空");
+		validateResult.put("userId", "用户id不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		BigDecimal amount = new BigDecimal(request(request, "amount"));
+		String accountId = request(request, "accountId");
+
+		// 校验金额不能大于本人逍遥币
+		List<Person> persons = personManageService.queryPersonByUserId(Integer
+				.parseInt(userId));
+		Person person = persons.get(0);
+		if (amount.compareTo(person.getBill()) > 0) {
+			JSONUtils.ERROR(response, "提现金额[" + amount + "]不能超过本人逍遥币["
+					+ persons.get(0).getBill() + "]");
+			return;
+		}
+
+		// 生成交易记录
+		TransferRecord record = new TransferRecord();
+		record.setAccountId(Integer.parseInt(accountId));
+		record.setOperator(person.getName());
+		record.setAmount(amount);
+		record.setDate(new Date());
+		record.setState(TransferState.SUBMIT.getValue());
+		payService.saveTranferRecord(record);
+		JSONUtils.SUCCESS(response, record.getId());
+	}
+
+	/**
+	 * 查看我的转账记录
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("viewTranferRecord")
+	public void viewTranferRecord(HttpServletRequest request,
+			HttpServletResponse response) {
+
 	}
 
 	/**
