@@ -10,6 +10,7 @@ create table T_TRANSFER_RECORD
    operator             varchar(50) comment '提现人',
    account_id           int comment '提现账户',
    amount               decimal(10,2) comment '提现金额',
+   state                varchar(20) comment '提现状态',
    primary key (id)
 );
 

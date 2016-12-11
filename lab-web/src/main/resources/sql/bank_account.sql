@@ -9,6 +9,7 @@ create table T_BANK_ACCOUNT
    name                 varchar(50) comment '银行名称',
    account              varchar(50) comment '银行账户',
    receiver             varchar(50) comment '收款人',
+   user_id              int comment '用户id',
    primary key (id)
 );
 
