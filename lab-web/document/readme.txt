@@ -211,3 +211,47 @@ URL:https://ip:port/xyp/person/queryPerson.do?pageSize=20&sortField=bill&sortTyp
 sortType 排序类型 值为desc(降序) asc(升序)
 sortField  排序字段 值可以传 id, type, address, content, date (创建时间), person_id, cost (费用), city, way, payWay
 
+
+
+20161211  本次更新内容
+1.新增添加转账银行账户信息接口
+URL:https://ip:port/xyp/pay/addBankAccount.do?name=名称不能为空&account=银行账户不能为空&userId=用户id不能为空
+返回值: 银行账户id
+2.新增修改银行账户信息接口
+URL:https://ip:port/xyp/pay/modifyBankAccount.do?id=银行账户id不能为空&name=银行名称不能为空&account=银行账户不能为空&receiver=收款人不能为空&userId=用户id不能为空
+返回值: 银行账户id
+3.新增查询我的银行账户接口
+URL:https://ip:port/xyp/pay/queryBankAccount.do?userId=用户id不能为空
+返回值:银行账户信息结果集
+结果集属性如下:
+private Integer id;//银行账户id
+private String name;//银行名称
+private String account;//银行账户
+private String receiver;//收款人
+private Integer userId;//用户id
+4.新增转账接口
+URL:https://ip:port/xyp/pay/transferBill.do?accountId=银行账户id不能为空&amount=转账金额不能为空&userId=用户id不能为空
+返回值: 转账记录id
+5.新增查看我的转账记录接口
+URL:https://ip:port/xyp/pay/viewTranferRecord.do?userId=用户id不能为空
+返回值:转账记录结果集
+转账记录属性如下:
+private Integer id;//记录id
+private Date date;//转账日期
+private String operator;//转账人
+private Integer accountId;//账户id
+private BankAccount bankAccount;//银行账户信息
+private BigDecimal amount;//转账金额
+private String state;//转账状态 {@link com.xiaoyao.pay.model.TransferState} 
+private Integer userId;//用户id
+转账状态枚举属性如下:
+/** 已提交 */
+"submit",
+/** 审核通过 */
+"pass",
+/** 审核不通过 */
+"unpass",
+/** 已付款 */
+"pay";
+
+	

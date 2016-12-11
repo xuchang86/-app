@@ -19,7 +19,7 @@ public enum TransferState {
 	SUBMIT("submit"),
 
 	/** 审核通过 */
-	PASS("PASS"),
+	PASS("pass"),
 
 	/** 审核不通过 */
 	UNPASS("unpass"),
