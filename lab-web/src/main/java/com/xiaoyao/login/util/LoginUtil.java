@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.util.IOUtils;
+import com.taobao.api.ApiException;
+import com.taobao.util.MessageUtil;
 import com.xiaoyao.base.cache.GlobalCache;
 
 /**
@@ -71,7 +73,6 @@ public final class LoginUtil {
 	 * @return 手机验证码
 	 */
 	public static int generatePhoneCode(HttpServletRequest request, String phone) {
-		// 产生验证码
 		int code = getSixCode();
 		// 调用服务器发短信服务器
 		sendSMS(phone, code);
@@ -90,9 +91,13 @@ public final class LoginUtil {
 	 *            验证码
 	 */
 	public static void sendSMS(String phone, int code) {
-		LOGGER.info("start sendSMS phone :" + phone + " 验证码:" + code);
-
-		LOGGER.info("end sendSMS...");
+		LOGGER.info("start sendSMS phone :" + phone);
+		try {
+			MessageUtil.sendMessage(phone, "{customer:'逍遥派用户',code:'" + code
+					+ "'}");
+		} catch (ApiException e) {
+			LOGGER.error("调用阿里大鱼短信平台失败:" + e.getMessage(), e);
+		}
 	}
 
 	/**

@@ -86,8 +86,19 @@ public final class MessageUtil {
 		req.setRecNum(phone);
 		req.setSmsTemplateCode(getSmsTemplateCode());
 		AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-		LOGGER.info(rsp.getBody());
+		LOGGER.info("send message result:" + rsp.getBody());
 		return rsp.getBody();
+	}
+
+	/**
+	 * 发送短信
+	 * 
+	 * @param phone
+	 * @return
+	 * @throws ApiException
+	 */
+	public static String sendMessage(String phone) throws ApiException {
+		return sendMessage(phone, "{customer:'逍遥派用户'}");
 	}
 
 	/**
