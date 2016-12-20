@@ -93,7 +93,7 @@ public final class LoginUtil {
 	public static void sendSMS(String phone, int code) {
 		LOGGER.info("start sendSMS phone :" + phone);
 		try {
-			MessageUtil.sendMessage(phone, "{customer:'逍遥派用户',code:'" + code
+			MessageUtil.sendMessage(phone, "{product:'逍遥派',code:'" + code
 					+ "'}");
 		} catch (ApiException e) {
 			LOGGER.error("调用阿里大鱼短信平台失败:" + e.getMessage(), e);

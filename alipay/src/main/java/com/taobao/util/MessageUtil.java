@@ -98,7 +98,7 @@ public final class MessageUtil {
 	 * @throws ApiException
 	 */
 	public static String sendMessage(String phone) throws ApiException {
-		return sendMessage(phone, "{customer:'逍遥派用户'}");
+		return sendMessage(phone, "{product:'逍遥派'}");
 	}
 
 	/**
