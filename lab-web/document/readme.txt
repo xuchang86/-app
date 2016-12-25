@@ -254,4 +254,61 @@ private Integer userId;//用户id
 /** 已付款 */
 "pay";
 
-	
+
+
+20161226  本次更新内容
+1.修改"我参与的活动"接口返回值,
+url:https://ip:port/xyp/activity/ijoin.do?userId=用户id不能为空
+返回值增加活动参与人集合activityPerson	
+活动参与人中增加任务状态:state ,字段类型为string
+/** 未开始 */
+UNDO("undo", 1),
+/** 进行中 */
+DOING("doing", 2),
+/** 已完成 */
+END("end", 3);
+2.修改"申请加入活动"接口,增加申请完活动,活动参与人状态变为 undo(未开始)
+url:https://ip:port/xyp/activity/applyToJoin.do?personId=人物id不能为空&activityId=活动id不能为空
+3.新增"查询活动参与人"接口
+url:https://ip:port/xyp/activity/queryJoinedPerson.do?activityId=活动id不能为空
+返回值: ActivityPerson集合,
+public class ActivityPerson {
+	private Integer id;
+
+	private Integer personId;
+
+	private Integer activityId;
+
+	/** 任务状态 {@link com.xiaoyao.activity.model.TaskState} */
+	private String state;
+
+	/** 人员信息 */
+	private Person person;
+
+	/** 用户信息 */
+	private User user;
+}	
+4.新增"确定悬赏任务/服务/门派任务"接口
+url:https://ip:port/xyp/activity/confirm.do?activityPersonIds=参与人ids不能为空(多个以逗号隔开)
+返回值: "confirm finished"
+5.新增"悬赏任务付款"接口
+url:https://ip:port/xyp/activity/payRewardTask.do?activityPersonIds=参与人ids不能为空(多个以逗号隔开)&activityId=活动id不能为空
+返回值:"paying reward task finished"
+6.新增"出售服务付款"接口
+url:https://ip:port/xyp/activity/payService.do?activityPersonId=活动参与人id不能为空(不支持多选)&activityId=活动id不能为空
+返回值:"paying service finished"
+7.新增"门派活动付款"接口
+url:https://ip:port/xyp/activity/paySchoolActivity.do?activityPersonId=活动参与人id不能为空(不支持多选)&activityId=活动id不能为空&payway=付款方式不能为空
+参数: payway付款方式值可传:
+/** AA付款 */
+aa
+/** 男A女免费 */
+man_a_woman_free
+/** 女A男免费 */
+woman_a_man_free
+/** 全部免费 */
+all_free
+返回值:"paying shool activity finished"
+8.新增"查询剩余会员天数"接口(测试该接口需重新付款)
+url:https://ip:port/xyp/xiaoyao/queryMemberDays.do?userId=用户id不能为空
+返回值:会员剩余天数
