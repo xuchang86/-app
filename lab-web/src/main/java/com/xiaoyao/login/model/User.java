@@ -35,9 +35,12 @@ public class User extends BaseVO {
 
 	/** 个人头像 */
 	private String url;
-	
+
 	/** 人物权限 {@link com.xiaoyao.login.model.Permission} */
 	private Integer permission = Permission.NORMAL.getValue();
+
+	/** 付款日期 */
+	private Date payDate;
 
 	public Integer getId() {
 		return id;
@@ -158,9 +161,25 @@ public class User extends BaseVO {
 	}
 
 	/**
-	 * @param permission the permission to set
+	 * @param permission
+	 *            the permission to set
 	 */
 	public void setPermission(Integer permission) {
 		this.permission = permission;
+	}
+
+	/**
+	 * @return the payDate
+	 */
+	public Date getPayDate() {
+		return payDate;
+	}
+
+	/**
+	 * @param payDate
+	 *            the payDate to set
+	 */
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
 	}
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.easemob.server.example.comm.utils.EmchatOperator;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
+import com.group.utils.DateUtil;
 import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
@@ -299,7 +300,6 @@ public class UserLoginService extends BaseService<User> {
 	 * @return
 	 */
 	public boolean updateIsPay(User user) {
-
 		return wrapperReturnVal(userMapperExt.updateisPay(user));
 	}
 
@@ -310,7 +310,6 @@ public class UserLoginService extends BaseService<User> {
 	 * @return
 	 */
 	public boolean updateByByPrimaryKey(User user) {
-
 		return wrapperReturnVal(userMapperExt.updateByPrimaryKeySelective(user));
 	}
 
@@ -357,4 +356,17 @@ public class UserLoginService extends BaseService<User> {
 		return userMapperExt.queryMaxIndex();
 	}
 
+	/**
+	 * 查询剩余会员天数
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public int queryMemberDays(Integer userId) {
+		User user = queryUserByPrimaryKey(userId);
+		if (user.getPayDate() != null) {
+			return 365 - DateUtil.getBetweenDay(user.getPayDate(), new Date());
+		}
+		return 0;
+	}
 }

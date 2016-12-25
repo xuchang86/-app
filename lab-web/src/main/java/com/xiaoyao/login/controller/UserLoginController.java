@@ -769,4 +769,23 @@ public class UserLoginController extends BizBaseController {
 		JSONUtils.SUCCESS(response, code);
 	}
 
+	/**
+	 * 查询剩余会员天数
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("queryMemberDays")
+	public void queryMemberDays(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "手机号码不能为空.");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		String userId = request(request, "userId");
+		int days = userLoginService.queryMemberDays(Integer.parseInt(userId));
+		JSONUtils.SUCCESS(response, days);
+	}
+
 }

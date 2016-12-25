@@ -10,19 +10,14 @@ public class ActivityPerson {
 
 	private Integer activityId;
 
-	public Integer getId() {
-		return id;
-	}
+	/** 任务状态 {@link com.xiaoyao.activity.model.TaskState} */
+	private String state;
 
 	/** 人员信息 */
 	private Person person;
 
 	/** 用户信息 */
 	private User user;
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Integer getPersonId() {
 		return personId;
@@ -40,6 +35,10 @@ public class ActivityPerson {
 		this.activityId = activityId;
 	}
 
+	public String getState() {
+		return state;
+	}
+
 	/**
 	 * @return the person
 	 */
@@ -53,6 +52,25 @@ public class ActivityPerson {
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public void setState(String state) {
+		this.state = state == null ? null : state.trim();
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**

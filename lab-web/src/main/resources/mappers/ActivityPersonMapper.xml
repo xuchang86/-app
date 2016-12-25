@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaoyao.activity.dao.ActivityPersonMapper" >
+<mapper namespace="com.xiaoyao.activity.dao.ActivityPersonMapperExt" >
   <resultMap id="BaseResultMap" type="com.xiaoyao.activity.model.ActivityPerson" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="person_id" property="personId" jdbcType="INTEGER" />
     <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, person_id, activity_id
+    id, person_id, activity_id, state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityPersonExample" >
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.xiaoyao.activity.model.ActivityPerson" >
-    insert into T_ACTIVITY_PERSON (id, person_id, activity_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{personId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}
-      )
+    insert into T_ACTIVITY_PERSON (id, person_id, activity_id, 
+      state)
+    values (#{id,jdbcType=INTEGER}, #{personId,jdbcType=INTEGER}, #{activityId,jdbcType=INTEGER}, 
+      #{state,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.activity.model.ActivityPerson" >
     insert into T_ACTIVITY_PERSON
@@ -115,6 +116,9 @@
       <if test="activityId != null" >
         activity_id,
       </if>
+      <if test="state != null" >
+        state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -125,6 +129,9 @@
       </if>
       <if test="activityId != null" >
         #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="record.activityId != null" >
         activity_id = #{record.activityId,jdbcType=INTEGER},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +165,8 @@
     update T_ACTIVITY_PERSON
     set id = #{record.id,jdbcType=INTEGER},
       person_id = #{record.personId,jdbcType=INTEGER},
-      activity_id = #{record.activityId,jdbcType=INTEGER}
+      activity_id = #{record.activityId,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -169,13 +180,33 @@
       <if test="activityId != null" >
         activity_id = #{activityId,jdbcType=INTEGER},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xiaoyao.activity.model.ActivityPerson" >
     update T_ACTIVITY_PERSON
     set person_id = #{personId,jdbcType=INTEGER},
-      activity_id = #{activityId,jdbcType=INTEGER}
+      activity_id = #{activityId,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- 分页查询  -->
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.xiaoyao.activity.model.ActivityPersonExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_ACTIVITY_PERSON
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

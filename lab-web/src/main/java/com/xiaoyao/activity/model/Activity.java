@@ -187,4 +187,5 @@ public class Activity extends BaseVO {
 	public void setPayway(String payway) {
 		this.payway = payway;
 	}
+
 }

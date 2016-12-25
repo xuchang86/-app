@@ -19,6 +19,7 @@ create table T_LOGIN_USER
    isPay                int comment '是否支付',
    url                  varchar(100) comment '个人头像',
    permission           int comment '权限等级',
+   pay_date             timestamp comment '付款日期',
    primary key (id)
 );
 

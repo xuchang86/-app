@@ -253,6 +253,18 @@ public class PersonManageService extends BaseService<Person> {
 	}
 
 	/**
+	 * 查询完整人物信息
+	 * 
+	 * @param pk
+	 * @return
+	 */
+	public Person queryPerson4ByPrimaryKey(Integer pk) {
+		Person person = queryPersonByPrimaryKey(pk);
+		wrapperPerson(person);
+		return person;
+	}
+
+	/**
 	 * 逍遥币排行榜查询
 	 * 
 	 * @param pageSize

@@ -212,6 +212,7 @@ public class PayService extends BaseService<Order> {
 		User user = new User();
 		user.setIspay(IsPay.IS_PAY.getValue());
 		user.setId(Integer.valueOf(userId));
+		user.setPayDate(new Date());
 		userLoginService.updateByByPrimaryKey(user);
 	}
 

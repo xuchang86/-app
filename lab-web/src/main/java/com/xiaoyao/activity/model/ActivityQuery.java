@@ -24,6 +24,12 @@ public class ActivityQuery extends BaseVO {
 
 	private String city;
 
+	/** 活动参与人id */
+	private int joinedId;
+
+	/** 参与活动状态 */
+	private String state;
+
 	/** 发布的图片 */
 	private String urls;
 
@@ -111,5 +117,35 @@ public class ActivityQuery extends BaseVO {
 	 */
 	public void setUrls(String urls) {
 		this.urls = urls;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state
+	 *            the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the joinedId
+	 */
+	public int getJoinedId() {
+		return joinedId;
+	}
+
+	/**
+	 * @param joinedId
+	 *            the joinedId to set
+	 */
+	public void setJoinedId(int joinedId) {
+		this.joinedId = joinedId;
 	}
 }

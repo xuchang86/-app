@@ -1061,6 +1061,66 @@ public class UserExample {
             addCriterion("permission not between", value1, value2, "permission");
             return (Criteria) this;
         }
+
+        public Criteria andPayDateIsNull() {
+            addCriterion("pay_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateIsNotNull() {
+            addCriterion("pay_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateEqualTo(Date value) {
+            addCriterion("pay_date =", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateNotEqualTo(Date value) {
+            addCriterion("pay_date <>", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateGreaterThan(Date value) {
+            addCriterion("pay_date >", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("pay_date >=", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateLessThan(Date value) {
+            addCriterion("pay_date <", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateLessThanOrEqualTo(Date value) {
+            addCriterion("pay_date <=", value, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateIn(List<Date> values) {
+            addCriterion("pay_date in", values, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateNotIn(List<Date> values) {
+            addCriterion("pay_date not in", values, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateBetween(Date value1, Date value2) {
+            addCriterion("pay_date between", value1, value2, "payDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayDateNotBetween(Date value1, Date value2) {
+            addCriterion("pay_date not between", value1, value2, "payDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

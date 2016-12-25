@@ -8,6 +8,7 @@ create table T_ACTIVITY_PERSON
    id                   int not null auto_increment comment '主键',
    person_id            int comment '参与人id',
    activity_id          int comment '活动id',
+   state                varchar(20) comment '任务状态',
    primary key (id)
 );
 
