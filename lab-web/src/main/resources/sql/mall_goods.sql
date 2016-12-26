@@ -20,6 +20,7 @@ create table T_MALL_GOODS
    vip_price            decimal(10,2) comment '会员价格',
    level                int comment '商品等级',
    model                varchar(500) comment '商品型号',
+   freight              decimal(10,2) comment '运费',
    primary key (id)
 );
 

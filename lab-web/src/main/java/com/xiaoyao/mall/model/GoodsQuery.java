@@ -68,6 +68,9 @@ public class GoodsQuery extends BaseVO {
 	/** 商品型号 */
 	private String model;
 
+	/** 运费 */
+	private BigDecimal freight;
+
 	private String orderByClause;
 
 	/**
@@ -287,10 +290,26 @@ public class GoodsQuery extends BaseVO {
 	}
 
 	/**
-	 * @param model the model to set
+	 * @param model
+	 *            the model to set
 	 */
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	/**
+	 * @return the freight
+	 */
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	/**
+	 * @param freight
+	 *            the freight to set
+	 */
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
 	}
 
 }

@@ -63,9 +63,12 @@ public class Goods extends BaseVO {
 
 	/** 商品等级 {@link com.xiaoyao.mall.model.GoodsLevel} */
 	private Integer level;
-	
+
 	/** 商品型号 */
 	private String model;
+
+	/** 运费 */
+	private BigDecimal freight;
 
 	/** 商品评论 */
 	private List<Comment> comments = new ArrayList<Comment>();
@@ -290,9 +293,24 @@ public class Goods extends BaseVO {
 	}
 
 	/**
-	 * @param model the model to set
+	 * @param model
+	 *            the model to set
 	 */
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	/**
+	 * @return the freight
+	 */
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	/**
+	 * @param freight the freight to set
+	 */
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
 	}
 }

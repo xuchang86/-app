@@ -17,6 +17,7 @@
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="LONGVARCHAR" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
   </resultMap>
   <resultMap id="Base4ResultMap" type="com.xiaoyao.mall.model.GoodsQuery" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -34,6 +35,7 @@
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="model" property="model" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="LONGVARCHAR" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
     <result column="sales" property="sales" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.xiaoyao.mall.model.Goods" extends="BaseResultMap" >
@@ -99,7 +101,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, name, description, number, type_id, price, user_id, create_date, area, is_sale, 
-    seller_id, vip_price, level, model ,url
+    seller_id, vip_price, level, model, url ,freight
   </sql>
   <sql id="Blob_Column_List" >
     url
@@ -157,14 +159,14 @@
       number, type_id, price, 
       user_id, create_date, area, 
       is_sale, seller_id, vip_price, 
-      level, model, url
-      )
+      level, model, freight, 
+      url)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{number,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
       #{userId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{area,jdbcType=VARCHAR}, 
       #{isSale,jdbcType=BIT}, #{sellerId,jdbcType=INTEGER}, #{vipPrice,jdbcType=DECIMAL}, 
-      #{level,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{url,jdbcType=LONGVARCHAR}
-      )
+      #{level,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{freight,jdbcType=DECIMAL}, 
+      #{url,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiaoyao.mall.model.Goods" useGeneratedKeys="true" keyProperty="id">
     insert into T_MALL_GOODS
@@ -210,6 +212,9 @@
       </if>
       <if test="model != null" >
         model,
+      </if>
+      <if test="freight != null" >
+        freight,
       </if>
       <if test="url != null" >
         url,
@@ -257,6 +262,9 @@
       </if>
       <if test="model != null" >
         #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DECIMAL},
       </if>
       <if test="url != null" >
         #{url,jdbcType=LONGVARCHAR},
@@ -314,6 +322,9 @@
       <if test="record.model != null" >
         model = #{record.model,jdbcType=VARCHAR},
       </if>
+      <if test="record.freight != null" >
+        freight = #{record.freight,jdbcType=DECIMAL},
+      </if>
       <if test="record.url != null" >
         url = #{record.url,jdbcType=LONGVARCHAR},
       </if>
@@ -338,6 +349,7 @@
       vip_price = #{record.vipPrice,jdbcType=DECIMAL},
       level = #{record.level,jdbcType=INTEGER},
       model = #{record.model,jdbcType=VARCHAR},
+      freight = #{record.freight,jdbcType=DECIMAL},
       url = #{record.url,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -358,7 +370,8 @@
       seller_id = #{record.sellerId,jdbcType=INTEGER},
       vip_price = #{record.vipPrice,jdbcType=DECIMAL},
       level = #{record.level,jdbcType=INTEGER},
-      model = #{record.model,jdbcType=VARCHAR}
+      model = #{record.model,jdbcType=VARCHAR},
+      freight = #{record.freight,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -405,6 +418,9 @@
       <if test="model != null" >
         model = #{model,jdbcType=VARCHAR},
       </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
       <if test="url != null" >
         url = #{url,jdbcType=LONGVARCHAR},
       </if>
@@ -426,6 +442,7 @@
       vip_price = #{vipPrice,jdbcType=DECIMAL},
       level = #{level,jdbcType=INTEGER},
       model = #{model,jdbcType=VARCHAR},
+      freight = #{freight,jdbcType=DECIMAL},
       url = #{url,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -443,7 +460,8 @@
       seller_id = #{sellerId,jdbcType=INTEGER},
       vip_price = #{vipPrice,jdbcType=DECIMAL},
       level = #{level,jdbcType=INTEGER},
-      model = #{model,jdbcType=VARCHAR}
+      model = #{model,jdbcType=VARCHAR},
+      freight = #{freight,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -463,12 +481,12 @@
    </if>
  </select>
  
-  <!-- 查询商品信息分页(包括查询销量) -->
+ <!-- 查询商品信息分页(包括查询销量) -->
  <select id="querySalesByPage" resultMap="Base4ResultMap" parameterType="com.xiaoyao.mall.model.GoodsQuery" >
    SELECT  
    t1.id, t1.name, t1.description, t1.number, t1.type_id, 
    t1.price, t1.user_id, t1.create_date, t1.url, t1.area, 
-   t1.is_sale, t1.seller_id, t1.vip_price, t1.level,t1.model,
+   t1.is_sale, t1.seller_id, t1.vip_price, t1.level,t1.model,t1.freight,
    count(t2.id) sales 
    FROM T_MALL_GOODS t1 
    LEFT JOIN T_GOODS_ORDER t2 on t2.goods_id = t1.id 
@@ -502,6 +520,9 @@
     </if>
     <if test="model !=null">
      AND t1.model = #{model}
+    </if>
+    <if test="freight !=null">
+     AND t1.freight = #{freight}
     </if>
     <if test="price !=null">
      AND t1.price = #{price}
