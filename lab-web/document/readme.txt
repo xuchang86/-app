@@ -312,3 +312,8 @@ all_free
 8.新增"查询剩余会员天数"接口(测试该接口需重新付款)
 url:https://ip:port/xyp/xiaoyao/queryMemberDays.do?userId=用户id不能为空
 返回值:会员剩余天数
+
+
+
+20161227 本次更新内容
+商城中物品增加运费字段freight,在确认付款订单时需用商品价格+运费=amount 参数传入
