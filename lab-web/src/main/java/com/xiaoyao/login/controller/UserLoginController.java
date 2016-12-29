@@ -434,9 +434,9 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("test")
 	public void test(HttpServletRequest request, HttpServletResponse response) {
-		ResponseWrapper resp = EmchatOperator
-				.exportChatMessage(20, "asdsdfaee", "select+*+where+timestamp<"
-						+ new Date().getTime());
+		ResponseWrapper resp = EmchatOperator.sendMessage("users",
+				new String[] { "18627014275" }, "10001", null, "hello");
+
 		JSONUtils.SUCCESS(response, resp);
 	}
 
