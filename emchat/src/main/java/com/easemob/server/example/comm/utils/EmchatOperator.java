@@ -6,15 +6,19 @@
  *****************************************************************************/
 package com.easemob.server.example.comm.utils;
 
+import java.util.Map;
+
 import com.easemob.server.example.api.ChatGroupAPI;
 import com.easemob.server.example.api.ChatMessageAPI;
 import com.easemob.server.example.api.ChatRoomAPI;
 import com.easemob.server.example.api.IMUserAPI;
+import com.easemob.server.example.api.SendMessageAPI;
 import com.easemob.server.example.comm.ClientContext;
 import com.easemob.server.example.comm.EasemobRestAPIFactory;
 import com.easemob.server.example.comm.body.ChatGroupBody;
 import com.easemob.server.example.comm.body.ChatRoomBody;
 import com.easemob.server.example.comm.body.IMUserBody;
+import com.easemob.server.example.comm.body.TextMessageBody;
 import com.easemob.server.example.comm.body.UserNamesBody;
 import com.easemob.server.example.comm.wrapper.ResponseWrapper;
 
@@ -46,6 +50,9 @@ public final class EmchatOperator {
 	/** 聊天消息API */
 	private static ChatMessageAPI CHATMESSAGE_API = null;
 
+	/** 发送消息API */
+	private static SendMessageAPI SendMessageAPI = null;
+
 	/** EasemobRestAPIFactory */
 	private static final EasemobRestAPIFactory FACTORY = ClientContext
 			.getInstance().init(ClientContext.INIT_FROM_PROPERTIES)
@@ -62,6 +69,19 @@ public final class EmchatOperator {
 					.newInstance(EasemobRestAPIFactory.CHATROOM_CLASS);
 		}
 		return CHATROOM_API;
+	}
+
+	/**
+	 * 获取发送消息实例
+	 * 
+	 * @return
+	 */
+	public static synchronized SendMessageAPI getSendMessageInstance() {
+		if (null == SendMessageAPI) {
+			SendMessageAPI = (SendMessageAPI) FACTORY
+					.newInstance(EasemobRestAPIFactory.SEND_MESSAGE_CLASS);
+		}
+		return SendMessageAPI;
 	}
 
 	/**
@@ -308,5 +328,22 @@ public final class EmchatOperator {
 			String query) {
 		return (ResponseWrapper) getChatMessageInstance().exportChatMessages(
 				limit, cursor, query);
+	}
+
+	/**
+	 * 发送消息接口
+	 * 
+	 * @param targetType
+	 * @param targets
+	 * @param from
+	 * @param ext
+	 * @param msg
+	 * @return
+	 */
+	public static ResponseWrapper sendMessage(String targetType,
+			String[] targets, String from, Map<String, String> ext, String msg) {
+		TextMessageBody body = new TextMessageBody(targetType, targets, from,
+				ext, msg);
+		return (ResponseWrapper) getSendMessageInstance().sendMessage(body);
 	}
 }
