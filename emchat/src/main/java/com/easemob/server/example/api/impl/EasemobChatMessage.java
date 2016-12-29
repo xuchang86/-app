@@ -12,11 +12,11 @@ public class EasemobChatMessage extends EasemobRestAPI implements ChatMessageAPI
     private static final String ROOT_URI = "chatmessages";
 
     public Object exportChatMessages(Long limit, String cursor, String query) {
-        String url = getContext().getSeriveURL() + getResourceRootURI();
+		String url = getContext().getSeriveURL() + "/" + getResourceRootURI();
         HeaderWrapper header = HeaderHelper.getDefaultHeaderWithToken();
         QueryWrapper queryWrapper = QueryWrapper.newInstance().addLimit(limit).addCursor(cursor).addQueryLang(query);
 
-        return getInvoker().sendRequest(HTTPMethod.METHOD_DELETE, url, header, null, queryWrapper);
+        return getInvoker().sendRequest(HTTPMethod.METHOD_GET, url, header, queryWrapper);
     }
 
     @Override

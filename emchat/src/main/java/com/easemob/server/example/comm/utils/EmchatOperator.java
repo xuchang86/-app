@@ -7,6 +7,7 @@
 package com.easemob.server.example.comm.utils;
 
 import com.easemob.server.example.api.ChatGroupAPI;
+import com.easemob.server.example.api.ChatMessageAPI;
 import com.easemob.server.example.api.ChatRoomAPI;
 import com.easemob.server.example.api.IMUserAPI;
 import com.easemob.server.example.comm.ClientContext;
@@ -42,6 +43,9 @@ public final class EmchatOperator {
 	/** 群组API */
 	private static ChatGroupAPI CHATGROUP_API = null;
 
+	/** 聊天消息API */
+	private static ChatMessageAPI CHATMESSAGE_API = null;
+
 	/** EasemobRestAPIFactory */
 	private static final EasemobRestAPIFactory FACTORY = ClientContext
 			.getInstance().init(ClientContext.INIT_FROM_PROPERTIES)
@@ -58,6 +62,19 @@ public final class EmchatOperator {
 					.newInstance(EasemobRestAPIFactory.CHATROOM_CLASS);
 		}
 		return CHATROOM_API;
+	}
+
+	/**
+	 * 获取聊天消息实例
+	 * 
+	 * @return
+	 */
+	public static synchronized ChatMessageAPI getChatMessageInstance() {
+		if (null == CHATMESSAGE_API) {
+			CHATMESSAGE_API = (ChatMessageAPI) FACTORY
+					.newInstance(EasemobRestAPIFactory.MESSAGE_CLASS);
+		}
+		return CHATMESSAGE_API;
 	}
 
 	/**
@@ -277,5 +294,19 @@ public final class EmchatOperator {
 
 		return (ResponseWrapper) getChatGroupInstance().getChatGroupUsers(
 				groupId);
+	}
+
+	/**
+	 * 获取群聊天记录
+	 * 
+	 * @param limit
+	 * @param cursor
+	 * @param query
+	 * @return
+	 */
+	public static ResponseWrapper exportChatMessage(long limit, String cursor,
+			String query) {
+		return (ResponseWrapper) getChatMessageInstance().exportChatMessages(
+				limit, cursor, query);
 	}
 }

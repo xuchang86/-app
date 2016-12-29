@@ -8,7 +8,6 @@ package com.xiaoyao.login.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -39,6 +38,7 @@ import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.util.BeanUtils;
 import com.xiaoyao.base.util.JSONUtils;
 import com.xiaoyao.base.util.MD5Util;
+import com.xiaoyao.login.model.ChatRecord;
 import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
@@ -434,9 +434,10 @@ public class UserLoginController extends BizBaseController {
 	 */
 	@RequestMapping("test")
 	public void test(HttpServletRequest request, HttpServletResponse response) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		System.out.println("XYP-" + sdf.format(new Date()));
-		JSONUtils.SUCCESS(response, "success");
+		ResponseWrapper resp = EmchatOperator
+				.exportChatMessage(20, "asdsdfaee", "select+*+where+timestamp<"
+						+ new Date().getTime());
+		JSONUtils.SUCCESS(response, resp);
 	}
 
 	/**
@@ -786,6 +787,29 @@ public class UserLoginController extends BizBaseController {
 		String userId = request(request, "userId");
 		int days = userLoginService.queryMemberDays(Integer.parseInt(userId));
 		JSONUtils.SUCCESS(response, days);
+	}
+
+	/**
+	 * 保存聊天记录
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("saveChatRecord")
+	public void saveChatRecord(HttpServletRequest request,
+			HttpServletResponse response) {
+		Map<String, String> validateResult = new HashMap<String, String>();
+		validateResult.put("userId", "用户id不能为空");
+		validateResult.put("content", "聊天内容不能为空");
+		validateResult.put("fromId", "环信聊天发起人不能空");
+		validateResult.put("toId", "环信聊天接收人不能为空");
+		if (!validateParamBlank(request, response, validateResult))
+			return;
+
+		ChatRecord chatRecord = BeanUtils.mapConvert2ToBean(ChatRecord.class,
+				request);
+		userLoginService.saveChatRecord(chatRecord);
+		JSONUtils.SUCCESS(response, chatRecord.getId());
 	}
 
 }

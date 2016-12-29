@@ -258,4 +258,21 @@ public class JerseyRestAPIInvoker implements RestAPIInvoker {
 		return null;
 	}
 
+	/** 
+	 *
+	 * @param method
+	 * @param url
+	 * @param header
+	 * @param query
+	 * @return
+	 *		
+	 * @see com.easemob.server.example.api.RestAPIInvoker#sendRequest(java.lang.String, java.lang.String, com.easemob.server.example.comm.wrapper.HeaderWrapper, com.easemob.server.example.comm.wrapper.QueryWrapper)
+	 */
+	@Override
+	public ResponseWrapper sendRequest(String method, String url,
+			HeaderWrapper header, QueryWrapper query) {
+		// TODO 自动生成方法存根注释，方法实现时请删除此注释
+		return null;
+	}
+
 }

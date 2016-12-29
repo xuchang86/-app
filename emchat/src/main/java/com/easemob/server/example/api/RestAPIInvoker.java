@@ -9,6 +9,7 @@ import java.io.File;
 
 public interface RestAPIInvoker {
 	ResponseWrapper sendRequest(String method, String url, HeaderWrapper header, BodyWrapper body, QueryWrapper query);
+	ResponseWrapper sendRequest(String method, String url, HeaderWrapper header, QueryWrapper query);
 	ResponseWrapper sendRequest(String method, String url, HeaderWrapper header);
 	ResponseWrapper uploadFile(String url, HeaderWrapper header, File file);
     ResponseWrapper downloadFile(String url, HeaderWrapper header, QueryWrapper query);

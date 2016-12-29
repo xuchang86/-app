@@ -23,7 +23,9 @@ import com.group.utils.DateUtil;
 import com.xiaoyao.base.model.Level;
 import com.xiaoyao.base.model.Person;
 import com.xiaoyao.base.service.BaseService;
+import com.xiaoyao.login.dao.ChatRecordMapper;
 import com.xiaoyao.login.dao.UserMapperExt;
+import com.xiaoyao.login.model.ChatRecord;
 import com.xiaoyao.login.model.InviteCode;
 import com.xiaoyao.login.model.IsPay;
 import com.xiaoyao.login.model.User;
@@ -57,6 +59,10 @@ public class UserLoginService extends BaseService<User> {
 	/** 注入 CashPoolService */
 	@Autowired
 	private CashPoolService cashPoolService;
+
+	/** 注入 ChatRecordMapper */
+	@Autowired
+	private ChatRecordMapper chatRecordMapper;
 
 	/** 日志记录 */
 	private static final Logger LOGGER = LoggerFactory
@@ -368,5 +374,18 @@ public class UserLoginService extends BaseService<User> {
 			return 365 - DateUtil.getBetweenDay(user.getPayDate(), new Date());
 		}
 		return 0;
+	}
+
+	/**
+	 * 保存聊天记录
+	 * 
+	 * @param chatRecord
+	 */
+	public void saveChatRecord(ChatRecord chatRecord) {
+		if (chatRecord.getId() != null) {
+			chatRecordMapper.updateByPrimaryKeySelective(chatRecord);
+		} else {
+			chatRecordMapper.insertSelective(chatRecord);
+		}
 	}
 }
