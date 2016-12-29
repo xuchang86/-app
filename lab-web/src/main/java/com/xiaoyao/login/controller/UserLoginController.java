@@ -808,6 +808,7 @@ public class UserLoginController extends BizBaseController {
 
 		ChatRecord chatRecord = BeanUtils.mapConvert2ToBean(ChatRecord.class,
 				request);
+		chatRecord.setCreateTime(new Date());
 		userLoginService.saveChatRecord(chatRecord);
 		JSONUtils.SUCCESS(response, chatRecord.getId());
 	}

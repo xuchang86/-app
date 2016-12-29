@@ -10,6 +10,7 @@ create table T_CHAT_RECORD
    from_id              varchar(50) comment '发起人id',
    to_id                varchar(50) comment '接收人id',
    content              varchar(2000) comment '内容',
+   create_time          timestamp comment '创建时间',
    primary key (id)
 );
 
