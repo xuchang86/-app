@@ -103,7 +103,7 @@ public class PersonController extends BizBaseController {
 			return;
 		}
 
-		personManageService.rechargeBill(targetPersonId, amount);
+		personManageService.rechargeBill(targetPersonId, amount, person);
 		JSONUtils.SUCCESS(response, "充值[" + amount + "]成功.");
 	}
 

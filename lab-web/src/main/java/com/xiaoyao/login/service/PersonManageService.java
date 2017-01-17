@@ -80,15 +80,25 @@ public class PersonManageService extends BaseService<Person> {
 	}
 
 	/**
-	 * 个人充值
+	 * 金额互换
 	 * 
 	 * @param personId
 	 * @param amount
+	 *            转账金额
+	 * @param srcPerson
+	 *            来源对象
 	 */
-	public void rechargeBill(Integer personId, BigDecimal amount) {
-		Person person = queryPersonByPrimaryKey(personId);
-		person.setBill(NumberUtils.releaseNull(person.getBill()).add(amount));
-		savePerson(person);
+	public void rechargeBill(Integer targetPersonId, BigDecimal amount,
+			Person srcPerson) {
+		// 目标对象金额增加
+		Person targetPerson = queryPersonByPrimaryKey(targetPersonId);
+		targetPerson.setBill(NumberUtils.releaseNull(targetPerson.getBill())
+				.add(amount));
+		savePerson(targetPerson);
+		// 来源对象金额减少
+		srcPerson.setBill(NumberUtils.releaseNull(srcPerson.getBill())
+				.subtract(amount));
+		savePerson(srcPerson);
 	}
 
 	/**

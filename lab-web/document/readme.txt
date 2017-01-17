@@ -317,3 +317,8 @@ url:https://ip:port/xyp/xiaoyao/queryMemberDays.do?userId=用户id不能为空
 
 20161227 本次更新内容
 商城中物品增加运费字段freight,在确认付款订单时需用商品价格+运费=amount 参数传入
+
+
+20161230 本次更新内容
+增加与客户聊天保存记录接口
+url:https://ip:port/xyp/xiaoyao/saveChatRecord.do?userId=用户id不能为空&content=聊天内容不能为空&fromId=环信聊天发起人不能空&toId=环信聊天接收人不能为空(客服)
